@@ -1,0 +1,6 @@
+{
+  "otpFeatures": {
+    "FloatingBike": false,
+    "MinimumTransferTimeIsDefinitive": true
+  }
+}

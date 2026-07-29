@@ -1,0 +1,220 @@
+/* MapLibre GL JS — must be before @tailwind */
+@import 'maplibre-gl/dist/maplibre-gl.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Système « Casbah » — modes officiels + neutres chauds (voir tailwind.config.js) */
+  --metro-color: #1E3A8A;
+  --tram-color: #059669;
+  --bus-color: #D97706;
+  --brand-color: #1D6FE0;
+  --surface: #ffffff;
+  --surface-2: #F9FAFB;
+  --border: #E5E7EB;
+  --text: #111827;
+  --text-muted: #6B7280;
+  --text-faint: #9CA3AF;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.dark {
+  --surface: #1e2533;
+  --surface-2: #252d3d;
+  --border: #374151;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+}
+
+* { box-sizing: border-box; }
+
+/* Force light mode partout — bloque Safari dark mode */
+html {
+  color-scheme: light only !important;
+  background: #ffffff !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #ffffff !important;
+  color: #111827 !important;
+}
+
+/* Tous les éléments sheet/panel forcés en blanc */
+[class*="bg-white"],
+[class*="bg-gray-50"] {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html, body, #__next {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+}
+
+#__next { height: 100%; }
+
+/* Map container */
+.map-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+/* Panel slide-up (keep for reference) */
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Left panel entry */
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.panel-animate {
+  animation: slideInLeft 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Dropdown fade */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-animate {
+  animation: fadeIn 200ms ease;
+}
+
+/* Micro-bounce for interactive elements */
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+.pop-animate { animation: pop 200ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* Custom MapLibre popup */
+.maplibregl-popup-content {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+  padding: 12px 14px !important;
+  border: 1px solid var(--border);
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-width: 160px;
+}
+
+.maplibregl-popup-close-button {
+  font-size: 18px;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+.maplibregl-popup-tip { border-top-color: var(--surface) !important; }
+
+/* Scale control only (custom zoom/locate buttons are React components) */
+
+.maplibregl-ctrl-scale {
+  border-radius: 4px;
+  background: rgba(255,255,255,0.9) !important;
+  font-size: 10px !important;
+  border-color: #94a3b8 !important;
+  color: #475569 !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--surface-2); }
+::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 2px; }
+
+/* Masquer scrollbar horizontale (cards résultats) */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Toast slide-up */
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Squelette de chargement (handoff 1j) : pulsation opacité 1→.55, 1,2 s —
+   uniquement sur les gabarits de rangées, jamais de spinner plein écran. */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+.skeleton-pulse { animation: skeleton-pulse 1.2s ease-in-out infinite; }
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer utilities {
+  /* Horaires et durées : chiffres à chasse fixe (alignement vertical propre) */
+  .tnum { font-variant-numeric: tabular-nums; }
+  /* Tap 120 ms (spec motion planche) : la rangée passe à #F9FAFB —
+     pas de ripple, pas de scale. */
+  .tap { transition: background-color 120ms ease; }
+  .tap:active { background-color: #F9FAFB; }
+}
+
+/* État 200 ms (spec motion planche) : changement d'onglet ou de langue
+   = crossfade opacité, rien d'autre. */
+@keyframes state-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+/* Pas de `both` : avec fill-mode, un élément dont l animation ne démarre pas
+   (onglet en arrière-plan au montage, économiseur de batterie, moteur qui met
+   l animation en pause) reste FIGÉ sur son image de départ — donc invisible ou
+   hors écran, définitivement. L état de repos doit être l état FINAL ;
+   l animation ne fait que l amener depuis ailleurs. */
+.state-fade { animation: state-fade 200ms ease; }
+
+/* Feuille basse 320 ms (spec motion planche) : translateY, jamais de fondu. */
+@keyframes sheet-in {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.sheet-in { animation: sheet-in 320ms cubic-bezier(0.2, 0, 0, 1); }
+
+/* Carte d'étape (navigation) : glisse depuis le haut, même courbe. */
+@keyframes card-in-top {
+  from { transform: translateY(calc(-100% - 20px)); }
+  to   { transform: translateY(0); }
+}
+.card-in-top { animation: card-in-top 320ms cubic-bezier(0.2, 0, 0, 1); }
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand text-white px-4 py-2 rounded-lg font-medium hover:bg-brand-dark transition-colors;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 rounded-control text-body transition-colors
+      border border-line bg-white text-ink-900 placeholder-ink-400
+      focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand;
+  }
+
+  .surface-card {
+    @apply bg-white border border-line;
+  }
+}

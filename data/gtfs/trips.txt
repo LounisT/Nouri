@@ -1,0 +1,72 @@
+route_id,service_id,trip_id,trip_headsign,trip_short_name,direction_id,block_id,shape_id,wheelchair_accessible,bikes_allowed
+L1-metro,all-week,metro-out-1,Harrach Centre,M1,0,,,1,0
+L1-metro,all-week,metro-in-1,Tafourah Grande Poste,M1,1,,,1,0
+L1-tram,all-week,tram-east-1,Dergana Centre,T1,0,,,1,0
+L1-tram,all-week,tram-west-1,Ruisseau-Les Annassers,T1,1,,,1,0
+ETUSA-3,all-week,ETUSA-3-dir0,Souidania,3,0,,ETUSA-3-dir0-shape-deduit,0,0
+ETUSA-3,all-week,ETUSA-3-dir1,Chevalley,3,1,,ETUSA-3-dir1-shape-deduit,0,0
+ETUSA-6,all-week,ETUSA-6-dir0,Place des Martyrs,6,0,,ETUSA-6-dir0-shape,0,0
+ETUSA-6,all-week,ETUSA-6-dir1,Vieux Kouba,6,1,,ETUSA-6-dir1-shape-deduit,0,0
+ETUSA-10,all-week,ETUSA-10-dir0,Bouzareah,10,0,,ETUSA-10-dir0-shape,0,0
+ETUSA-10,all-week,ETUSA-10-dir1,1er Mai => Bouzareah,10,1,,ETUSA-10-dir1-shape,0,0
+ETUSA-12,all-week,ETUSA-12-dir0,سطاوالي,12,0,,ETUSA-12-dir0-shape-deduit,0,0
+ETUSA-12,all-week,ETUSA-12-dir1,ساحة الشهداء,12,1,,ETUSA-12-dir1-shape-deduit,0,0
+ETUSA-14,all-week,ETUSA-14-dir0,Bir Mourad Rais,14,0,,ETUSA-14-dir0-shape-deduit,0,0
+ETUSA-14,all-week,ETUSA-14-dir1,1er Mai,14,1,,ETUSA-14-dir1-shape,0,0
+ETUSA-15,all-week,ETUSA-15-dir0,Grande Poste,15,0,,ETUSA-15-dir0-shape,0,0
+ETUSA-15,all-week,ETUSA-15-dir1,1er Mai,15,1,,ETUSA-15-dir1-shape,0,0
+ETUSA-16,all-week,ETUSA-16-dir0,1er Mai,16,0,,ETUSA-16-dir0-shape,0,0
+ETUSA-16,all-week,ETUSA-16-dir1,El Madania,16,1,,ETUSA-16-dir1-shape,0,0
+ETUSA-18,all-week,ETUSA-18-dir0,Hôpital Militaire,18,0,,ETUSA-18-dir0-shape-deduit,0,0
+ETUSA-19,all-week,ETUSA-19-dir0,Bab Ezzouar,19,0,,ETUSA-19-dir0-shape-deduit,0,0
+ETUSA-19,all-week,ETUSA-19-dir1,Place Aissat Idir,19,1,,ETUSA-19-dir1-shape,0,0
+ETUSA-21,all-week,ETUSA-21-dir0,Sidi Youcef,21,0,,ETUSA-21-dir0-shape,0,0
+ETUSA-21,all-week,ETUSA-21-dir1,Bouzareah,21,1,,ETUSA-21-dir1-shape,0,0
+ETUSA-27,all-week,ETUSA-27-dir0,Palais de la Culture (Diar El Afia),27,0,,ETUSA-27-dir0-shape,0,0
+ETUSA-27,all-week,ETUSA-27-dir1,1e Mai,27,1,,ETUSA-27-dir1-shape,0,0
+ETUSA-31,all-week,ETUSA-31-dir0,Place Audin,31,0,,ETUSA-31-dir0-shape,0,0
+ETUSA-31,all-week,ETUSA-31-dir1,Hydra,31,1,,ETUSA-31-dir1-shape,0,0
+ETUSA-34,all-week,ETUSA-34-dir0,Birkhadem,34,0,,ETUSA-34-dir0-shape-deduit,0,0
+ETUSA-34,all-week,ETUSA-34-dir1,1e Mai,34,1,,ETUSA-34-dir1-shape-deduit,0,0
+ETUSA-37,all-week,ETUSA-37-dir0,وادي قريش,37,0,,,0,0
+ETUSA-45,all-week,ETUSA-45-dir0,ساحة الشهداء,45,0,,ETUSA-45-dir0-shape,0,0
+ETUSA-45,all-week,ETUSA-45-dir1,بوزريعة,45,1,,ETUSA-45-dir1-shape-deduit,0,0
+ETUSA-50,all-week,ETUSA-50-dir0,Ben Aknoun,50,0,,ETUSA-50-dir0-shape,0,0
+ETUSA-50,all-week,ETUSA-50-dir1,Place des Martyrs,50,1,,ETUSA-50-dir1-shape-deduit,0,0
+ETUSA-54,all-week,ETUSA-54-dir0,Place Audin,54,0,,ETUSA-54-dir0-shape,0,0
+ETUSA-54,all-week,ETUSA-54-dir1,El Mouradia,54,1,,ETUSA-54-dir1-shape,0,0
+ETUSA-58,all-week,ETUSA-58-dir0,شوفالي,58,0,,ETUSA-58-dir0-shape,0,0
+ETUSA-58,all-week,ETUSA-58-dir1,ساحة الشهداء,58,1,,ETUSA-58-dir1-shape,0,0
+ETUSA-66,all-week,ETUSA-66-dir0,Aissat Idir,66,0,,ETUSA-66-dir0-shape,0,0
+ETUSA-66,all-week,ETUSA-66-dir1,Bachdjerrah,66,1,,ETUSA-66-dir1-shape,0,0
+ETUSA-72,all-week,ETUSA-72-dir0,Rouiba,72,0,,,0,0
+ETUSA-72,all-week,ETUSA-72-dir1,Place des Martyrs,72,1,,ETUSA-72-dir1-shape,0,0
+ETUSA-74,all-week,ETUSA-74-dir0,Bach Djarah,74,0,,ETUSA-74-dir0-shape-deduit,0,0
+ETUSA-74,all-week,ETUSA-74-dir1,Place des Martyrs,74,1,,ETUSA-74-dir1-shape,0,0
+ETUSA-82,all-week,ETUSA-82-dir0,Station Ain Naâdja,82,0,,ETUSA-82-dir0-shape,0,0
+ETUSA-82,all-week,ETUSA-82-dir1,Bach Djarah,82,1,,ETUSA-82-dir1-shape-deduit,0,0
+ETUSA-88,all-week,ETUSA-88-dir0,1er Mai,88,0,,ETUSA-88-dir0-shape,0,0
+ETUSA-88,all-week,ETUSA-88-dir1,Hydra,88,1,,ETUSA-88-dir1-shape,0,0
+ETUSA-90,all-week,ETUSA-90-dir0,Bab El Oued (Ali Basta),90,0,,ETUSA-90-dir0-shape,0,0
+ETUSA-90,all-week,ETUSA-90-dir1,1e Mai,90,1,,ETUSA-90-dir1-shape-deduit,0,0
+ETUSA-98,all-week,ETUSA-98-dir0,Place Ferhani,98,0,,ETUSA-98-dir0-shape,0,0
+ETUSA-98,all-week,ETUSA-98-dir1,Cité 5 Juillet,98,1,,,0,0
+ETUSA-99,all-week,ETUSA-99-dir0,عين البنيان,99,0,,ETUSA-99-dir0-shape,0,0
+ETUSA-100,all-week,ETUSA-100-dir0,المطار,100,0,,ETUSA-100-dir0-shape,0,0
+ETUSA-100,all-week,ETUSA-100-dir1,ساحة الشهداء,100,1,,ETUSA-100-dir1-shape,0,0
+ETUSA-101,all-week,ETUSA-101-dir0,Birtouta,101,0,,ETUSA-101-dir0-shape-deduit,0,0
+ETUSA-105,all-week,ETUSA-105-dir0,Gare Routière de Baraki,105,0,,ETUSA-105-dir0-shape,0,0
+ETUSA-113,all-week,ETUSA-113-dir0,Place des Martyrs,113,0,,ETUSA-113-dir0-shape,0,0
+ETUSA-113,all-week,ETUSA-113-dir1,Gare Routière,113,1,,ETUSA-113-dir1-shape-deduit,0,0
+ETUSA-178,all-week,ETUSA-178-dir0,Aéroport d'Alger H.b,178,0,,ETUSA-178-dir0-shape,0,0
+ETUSA-604,all-week,ETUSA-604-dir0,El Kerrouche Reghaia,604,0,,ETUSA-604-dir0-shape-deduit,0,0
+ETUSA-606,all-week,ETUSA-606-dir0,Aïn Taya,606,0,,ETUSA-606-dir0-shape,0,0
+ETUSA-643,all-week,ETUSA-643-dir0,El Harrach,643,0,,ETUSA-643-dir0-shape-deduit,0,0
+ETUSA-643,all-week,ETUSA-643-dir1,Cité Youcef Boubaya (SOBIMAF),643,1,,ETUSA-643-dir1-shape-deduit,0,0
+ETUSA-701,all-week,ETUSA-701-dir0,Chevalley,701,0,,ETUSA-701-dir0-shape-deduit,0,0
+ETUSA-701,all-week,ETUSA-701-dir1,Zéralda G.R,701,1,,ETUSA-701-dir1-shape-deduit,0,0
+ETUSA-707,all-week,ETUSA-707-dir0,Ain Benian,707,0,,ETUSA-707-dir0-shape-deduit,0,0
+ETUSA-731,all-week,ETUSA-731-dir0,Chevalley,731,0,,ETUSA-731-dir0-shape,0,0
+ETUSA-731,all-week,ETUSA-731-dir1,Sidi Abd Allah,731,1,,,0,0
+ETUSA-732,all-week,ETUSA-732-dir0,Station 2 Mai,732,0,,ETUSA-732-dir0-shape,0,0
+ETUSA-732,all-week,ETUSA-732-dir1,Sidi Abd Allah,732,1,,ETUSA-732-dir1-shape,0,0

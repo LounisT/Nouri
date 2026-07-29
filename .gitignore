@@ -1,0 +1,40 @@
+# OTP — graphe généré (binaire lourd)
+data/*.obj
+data/report/
+
+# OSM (fichier lourd, téléchargeable séparément)
+data/*.pbf
+
+# GTFS zippé (reconstruit depuis data/gtfs/)
+data/gtfs-alger.zip
+
+# Node
+node_modules/
+web/node_modules/
+web/.next/
+web/out/
+web/.turbo/
+
+# Service worker et Workbox — générés par next-pwa au build
+web/public/sw.js
+web/public/sw.js.map
+web/public/workbox-*.js
+web/public/swe-worker-*.js
+web/public/fallback-*.js
+
+# TypeScript build info
+web/tsconfig.tsbuildinfo
+
+# Variables d'environnement
+.env
+.env.*
+web/.env.local
+web/.env.*.local
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

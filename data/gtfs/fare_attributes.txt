@@ -1,0 +1,7 @@
+fare_id,price,currency_type,payment_method,transfers,transfer_duration
+metro_flat,50.00,DZD,0,0,
+tram_flat,50.00,DZD,0,0,
+F20,20,DZD,0,0,
+F30,30,DZD,0,0,
+F40,40,DZD,0,0,
+F50,50,DZD,0,0,

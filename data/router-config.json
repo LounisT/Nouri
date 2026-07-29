@@ -1,0 +1,9 @@
+{
+  "routingDefaults": {
+    "numItineraries": 3,
+    "transferSlack": "PT1M",
+    "boardSlack": "PT30S",
+    "alightSlack": "PT30S"
+  },
+  "updaters": []
+}

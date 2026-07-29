@@ -1,0 +1,16 @@
+{
+  "transitServiceStart": "-P1Y",
+  "transitServiceEnd": "P3Y",
+  "_comment_snap": "400 m, aligné sur MAX_STOP_TO_SHAPE_M de build_etusa_gtfs.py. À 150 m (défaut OTP), un seul arrêt trop éloigné faisait rejeter TOUTE la shape du pattern : la ligne 113 retombait sur 8 points en droites et traversait la baie d'Alger. Nos arrêts viennent d'OSM et sont parfois posés à 300 m de la voie ; le script garantit déjà qu'aucun ne dépasse 400 m.",
+  "maxStopToShapeSnapDistance": 400,
+  "dataImportReport": false,
+  "osmDefaults": {
+    "timeZone": "Africa/Algiers"
+  },
+  "osm": [
+    { "source": "algeria-260228.osm.pbf" }
+  ],
+  "transitFeeds": [
+    { "type": "gtfs", "feedId": "alger", "source": "gtfs-alger.zip" }
+  ]
+}

@@ -1,0 +1,4 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone
+metro-alger,Métro d'Alger,https://www.metroalger.dz,Africa/Algiers,fr,+213 21 74 00 00
+tram-alger,Tramway d'Alger (SETRAM),https://www.setram-alger.dz,Africa/Algiers,fr,+213 21 48 00 00
+etusa,ETUSA,https://etusa.dz,Africa/Algiers,fr,+213 23 58 00 00

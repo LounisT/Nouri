@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  otp:
+    image: opentripplanner/opentripplanner:2.5.0
+    container_name: alger-otp
+    entrypoint: ["/bin/sh", "/var/opentripplanner/start-otp.sh"]
+    command: []
+    volumes:
+      - ./data:/var/opentripplanner
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Xmx4g -Xms1g -XX:+UseG1GC
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/otp/routers/default"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 180s
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: alger-web
+    ports:
+      - "3000:3000"
+    environment:
+      # URL serveur (proxy /api/otp) — nom de service Docker, PAS localhost
+      # (dans le conteneur, localhost = le conteneur web lui-même, pas OTP)
+      - OTP_INTERNAL_URL=http://otp:8080
+      - NEXT_PUBLIC_OTP_URL=http://otp:8080
+      - NEXT_PUBLIC_TILE_URL=https://demotiles.maplibre.org/style.json
+    depends_on:
+      otp:
+        condition: service_healthy
+    restart: unless-stopped
