@@ -27,7 +27,9 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
+    // Même valeur que la balise <meta> plus bas : la page dessine elle-même
+    // sous la barre d'état (safe-area-inset-top), comme une app native.
+    statusBarStyle: 'black-translucent',
     title: 'Nouri',
   },
   icons: {

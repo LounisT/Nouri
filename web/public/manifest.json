@@ -2,6 +2,7 @@
   "name": "Nouri — نوري",
   "short_name": "Nouri",
   "description": "Métro, tramway et bus d’Alger — horaires estimés et itinéraires, sans temps réel",
+  "id": "/",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1D6FE0",
@@ -11,6 +12,7 @@
   "dir": "ltr",
   "scope": "/",
   "categories": ["transportation", "navigation"],
+  "launch_handler": { "client_mode": "focus-existing" },
   "icons": [
     {
       "src": "/icons/icon-72x72.png",
