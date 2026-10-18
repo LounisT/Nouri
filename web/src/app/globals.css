@@ -63,6 +63,29 @@ html, body {
 
 #__next { height: 100%; }
 
+/* Sensations natives (PWA installée) :
+   - pas de « tirer pour rafraîchir » d'Android ni de rebond de la page
+     entière sous iOS : seules les listes défilent, comme dans une app ;
+   - pas de halo bleu au toucher ni de menu « copier » sur un appui long ;
+   - pas de délai de double-tap zoom sur les boutons. */
+html, body {
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, [role="button"], nav {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* Une liste arrivée en butée ne fait pas défiler l'écran du dessous. */
+.overflow-y-auto, .overflow-auto {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Map container */
 .map-container {
   width: 100%;

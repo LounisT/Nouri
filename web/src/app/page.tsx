@@ -16,6 +16,9 @@ import { useRecentSearches } from '@/hooks/useRecentSearches'
 import { useGeolocation } from '@/hooks/useGeolocation'
 import { useUserPosition } from '@/hooks/useUserPosition'
 import { useWakeLock } from '@/hooks/useWakeLock'
+import { useBackHandler } from '@/hooks/useBackHandler'
+import { useEdgeSwipeBack } from '@/hooks/useEdgeSwipeBack'
+import { haptic } from '@/lib/haptics'
 import { useTranslation } from '@/hooks/useTranslation'
 import { buildLegGeometries, progressFromElapsed, progressFromPosition } from '@/lib/navigation'
 
@@ -81,6 +84,9 @@ export default function Home() {
   // le poser à la main, sinon l'écran Résultats reste tabulable une fois sorti
   // de l'écran — aria-hidden ne retire que l'annonce, pas le focus.
   const resultsPanelRef = useRef<HTMLDivElement>(null)
+  const detailPanelRef = useRef<HTMLDivElement>(null)
+  // Contenu des onglets : un second appui sur l'onglet actif y remonte en haut.
+  const tabContentRef = useRef<HTMLDivElement>(null)
   // Résultats façon RATP : la liste et le détail sont deux écrans distincts.
   const [detailOpen, setDetailOpen] = useState(false)
   // Hors-ligne (PWA) : bandeau plat informatif, le statique reste consultable.
@@ -173,11 +179,19 @@ export default function Home() {
   }, [sheet])
 
   const handleTabChange = useCallback((tab: Tab) => {
+    haptic('selection')
+    // Comme sur iOS et Android : toucher l'onglet déjà actif ramène sa liste
+    // tout en haut au lieu de ne rien faire.
+    if (tab === activeTab && sheet === 'home') {
+      tabContentRef.current?.querySelectorAll<HTMLElement>('*').forEach((el) => {
+        if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
+      })
+    }
     setActiveTab(tab)
     setSheet('home')
     // L'onglet Carte centre automatiquement sur la position de l'utilisateur.
     if (tab === 'map') setLocateSignal((n) => n + 1)
-  }, [])
+  }, [activeTab, sheet])
 
   // Une destination choisie ailleurs (carte, ligne, arrêt) remplit le
   // formulaire d'accueil et y ramène l'utilisateur.
@@ -303,6 +317,7 @@ export default function Home() {
   }, [])
 
   const handleGo = useCallback(() => {
+    haptic('impact')
     setConfirmedIndex(previewIndex)
     setNavMode(true)
     setNavStartedAt(Date.now())
@@ -322,6 +337,29 @@ export default function Home() {
     setNavMode(false)
     setSheet('results')
   }, [])
+
+  const handleCloseDetail = useCallback(() => setDetailOpen(false), [])
+
+  // Retour système (bouton Android, geste iOS, touche retour) : il referme
+  // l'écran du dessus au lieu de quitter l'app. Les écrans restent « ouverts »
+  // sous la navigation pour que le retour en sorte vers le détail du trajet.
+  const resultsOpen = sheet === 'results' || navMode
+  useBackHandler(resultsOpen, handleReset)
+  useBackHandler(resultsOpen && detailOpen, handleCloseDetail)
+  useBackHandler(navMode, handleExitNav)
+
+  // Glisser depuis le bord : referme le détail, sinon la liste des résultats.
+  const rtl = locale === 'ar'
+  useEdgeSwipeBack(resultsPanelRef, {
+    enabled: sheet === 'results' && !detailOpen,
+    rtl,
+    onBack: handleReset,
+  })
+  useEdgeSwipeBack(detailPanelRef, {
+    enabled: sheet === 'results' && detailOpen,
+    rtl,
+    onBack: handleCloseDetail,
+  })
 
   const displayedItinerary = itineraries[confirmedIndex ?? previewIndex] ?? null
   const navItinerary = navMode && confirmedIndex !== null ? itineraries[confirmedIndex] ?? null : null
@@ -420,7 +458,7 @@ export default function Home() {
         )}
 
         {/* Crossfade 200 ms au changement d'onglet ou de langue (spec motion) */}
-        <div className="min-h-0 flex-1">
+        <div ref={tabContentRef} className="min-h-0 flex-1">
           {activeTab === 'home' && (
             <div key={`home-${locale}`} className="state-fade h-full">
               <SearchBar
@@ -519,7 +557,7 @@ export default function Home() {
             style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}
           >
             <button
-              onClick={() => setDetailOpen(false)}
+              onClick={handleCloseDetail}
               aria-label={t('back')}
               className="tap relative shrink-0 pe-0.5 pt-0.5 after:absolute after:-inset-[11px] after:content-['']"
             >
@@ -715,6 +753,7 @@ export default function Home() {
 
           {/* Couche détail (planche 1h) : glisse depuis le côté au-dessus de la liste */}
           <div
+            ref={detailPanelRef}
             className={`absolute inset-0 flex flex-col bg-white transition-transform duration-[320ms] ease-[cubic-bezier(0.2,0,0,1)] ${
               detailOpen ? 'translate-x-0' : 'ltr:translate-x-full rtl:-translate-x-full'
             }`}
