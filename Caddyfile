@@ -1,0 +1,42 @@
+{$DOMAIN} {
+	encode zstd gzip
+
+	# En-têtes de sécurité, posés après la réponse de Next (defer) pour
+	# qu'aucun en-tête amont ne les écrase.
+	#
+	# CSP : origines réellement utilisées par l'app (grep de web/src) :
+	#  - tiles.openfreemap.org : style, TileJSON, tuiles, sprites, glyphes, relief
+	#    (MapLibre les charge par fetch dans ses workers, d'où connect-src) ;
+	#  - photon.komoot.io, nominatim.openstreetmap.org : géocodage ;
+	#  - blob: pour les workers de MapLibre et les images décodées (sprites) ;
+	#  - 'unsafe-inline' (scripts) : charge utile RSC de Next et script de
+	#    langue de layout.tsx ; (styles) : attributs style de React/framer-motion.
+	# Avec 'unsafe-inline', cette CSP ne protège pas d'une injection de script :
+	# son apport tient à frame-ancestors, à la liste fermée des origines et à
+	# object-src/base-uri. Si NEXT_PUBLIC_TILE_URL pointe un jour ailleurs,
+	# ajouter son origine à connect-src et img-src.
+	header {
+		defer
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "geolocation=(self), screen-wake-lock=(self), accelerometer=(self), gyroscope=(self), magnetometer=(self), camera=(), microphone=(), payment=(), usb=()"
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://tiles.openfreemap.org https://photon.komoot.io https://nominatim.openstreetmap.org; worker-src 'self' blob:; child-src 'self' blob:; manifest-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+		-X-Powered-By
+	}
+
+	# HSTS seulement en HTTPS et hors localhost (valeur par défaut de DOMAIN
+	# dans docker-compose.prod.yml) : forcer HTTPS sur localhost gênerait le
+	# développement. Pas d'includeSubDomains : les autres sous-domaines ne
+	# sont pas les nôtres à engager.
+	@hsts {
+		protocol https
+		not host localhost 127.0.0.1
+	}
+	header @hsts {
+		defer
+		Strict-Transport-Security "max-age=31536000"
+	}
+
+	reverse_proxy web:3000
+}

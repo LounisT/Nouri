@@ -1,0 +1,39 @@
+# Production (Docker Compose v2.24+ requis pour les tags !reset / !override) :
+#   DOMAIN=nouri.example.com docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+# DOMAIN peut aussi être défini dans un fichier .env à la racine (voir .env.example).
+# Le fond de carte (OpenFreeMap) est le défaut du code : aucune variable de build à fournir.
+services:
+  otp:
+    # OTP reste privé : aucun port publié, joignable uniquement via le front.
+    ports: !reset []
+    # JAVA_OPTS : on garde -Xmx4g du compose de base. La construction du graphe
+    # (Algérie entière) plante en OutOfMemoryError avec 2 Go de heap.
+
+  web:
+    ports: !reset []
+    # Ne pas bloquer web (et donc Caddy/HTTPS) tant qu'OTP construit son graphe :
+    # le front signale lui-même un calculateur injoignable.
+    depends_on: !override
+      otp:
+        condition: service_started
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: alger-caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      - DOMAIN=${DOMAIN:-localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

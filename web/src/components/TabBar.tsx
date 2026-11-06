@@ -57,7 +57,7 @@ export default function TabBar({ active, onChange }: TabBarProps) {
     <nav
       className="flex shrink-0 items-stretch border-t border-line bg-white"
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
-      aria-label="Navigation principale"
+      aria-label={t('ux_mainNav')}
     >
       {tabs.map((tab) => {
         const isActive = active === tab.id
@@ -72,7 +72,7 @@ export default function TabBar({ active, onChange }: TabBarProps) {
             aria-current={isActive ? 'page' : undefined}
           >
             <TabIcon tab={tab.id} color={color} rtl={rtl} />
-            <span className="text-[11px] font-medium">{tab.label}</span>
+            <span className="text-[11px] font-medium leading-[14px]">{tab.label}</span>
           </button>
         )
       })}

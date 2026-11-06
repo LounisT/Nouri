@@ -3,13 +3,19 @@
 import { useState, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { useSavedPlaces, SavedPlaceKey } from '@/hooks/useSavedPlaces'
-import { searchPlaces } from '@/lib/geocoding'
+import { ADDRESS_DEBOUNCE_MS, searchAddresses, searchLocal, type AddressStatus, type PlaceResult } from '@/lib/geocoding'
 import type { Coordinate } from '@/lib/otp'
 import { useTranslation } from '@/hooks/useTranslation'
+import { useBackHandler } from '@/hooks/useBackHandler'
 import { HomeIcon, WorkIcon, ResultIcon, TrashIcon } from '@/components/icons'
 
 interface SavedPlacesProps {
-  onSelect: (coord: Coordinate) => void
+  /**
+   * La coordonnée porte `savedKey` : le formulaire affiche « Maison » /
+   * « Travail » dans la langue courante (et non le texte figé au toucher), et
+   * les récents rejouent l'adresse ACTUELLE du lieu.
+   */
+  onSelect: (coord: Coordinate & { savedKey?: SavedPlaceKey }) => void
 }
 
 const PLACE_KEYS: SavedPlaceKey[] = ['home', 'work']
@@ -19,8 +25,10 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
   const { t, locale } = useTranslation()
   const [editing, setEditing] = useState<SavedPlaceKey | null>(null)
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<Awaited<ReturnType<typeof searchPlaces>>>([])
+  const [results, setResults] = useState<PlaceResult[]>([])
   const [searching, setSearching] = useState(false)
+  // État de la recherche d'adresses : réseau lent ou indisponible se disent.
+  const [addressStatus, setAddressStatus] = useState<AddressStatus | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   // Hauteur du clavier virtuel : la feuille est ancrée en bas, mais un champ
   // dans un élément `position: fixed` reste SOUS le clavier (le navigateur ne
@@ -77,7 +85,7 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
   function handleChipPress(key: SavedPlaceKey) {
     const saved = places[key]
     if (saved) {
-      onSelect({ lat: saved.lat, lon: saved.lon, name: getTranslatedLabel(key) })
+      onSelect({ lat: saved.lat, lon: saved.lon, name: getTranslatedLabel(key), savedKey: key })
     } else {
       openEdit(key)
     }
@@ -88,6 +96,7 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
     setQuery('')
     queryRef.current = ''
     setResults([])
+    setAddressStatus(null)
   }
 
   function closeEdit() {
@@ -95,6 +104,7 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
     abortRef.current?.abort()
     if (timerRef.current) clearTimeout(timerRef.current)
     setSearching(false)
+    setAddressStatus(null)
     setEditing(null)
     // Le focus revient au bouton d'action de la rangée éditée, une fois la
     // feuille démontée. rAF laisse React retirer le dialogue d'abord.
@@ -102,6 +112,9 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
       if (key) actionRefs.current[key]?.focus()
     })
   }
+
+  // Retour Android / geste iOS : referme la feuille au lieu de quitter l'app.
+  useBackHandler(editing !== null, closeEdit)
 
   function handleQueryChange(val: string) {
     setQuery(val)
@@ -111,23 +124,28 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
     if (val.trim().length < 2) {
       setResults([])
       setSearching(false)
+      setAddressStatus(null)
       return
     }
+    // Stations et arrêts tout de suite (index local), adresses ensuite.
+    const local = searchLocal(val, locale)
+    setResults(local)
+    setAddressStatus(null)
+    setSearching(true)
     const ctrl = new AbortController()
     abortRef.current = ctrl
     timerRef.current = setTimeout(async () => {
-      setSearching(true)
       try {
-        const res = await searchPlaces(val, ctrl.signal, locale)
-        if (queryRef.current === val) setResults(res)   // ignore une réponse périmée
-      } catch (err) {
-        if (!(err instanceof Error && err.name === 'AbortError') && queryRef.current === val) {
-          setResults([])
-        }
-      } finally {
-        if (queryRef.current === val) setSearching(false)
+        const found = await searchAddresses(val, { signal: ctrl.signal, locale })
+        if (queryRef.current !== val) return // réponse périmée
+        const seen = new Set(local.map((p) => p.id))
+        setResults([...local, ...found.results.filter((p) => !seen.has(p.id))].slice(0, 8))
+        setAddressStatus(found.status)
+        setSearching(false)
+      } catch {
+        // Annulée par une frappe plus récente.
       }
-    }, 300)
+    }, ADDRESS_DEBOUNCE_MS)
   }
 
   function handleSelectResult(r: (typeof results)[0]) {
@@ -154,7 +172,7 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
   // s'échapperait vers la page derrière. On boucle sur les éléments focusables
   // du dialogue.
   function handleDialogKeyDown(e: React.KeyboardEvent) {
-    if (e.key === 'Escape') { closeEdit(); return }
+    if (e.key === 'Escape') { e.preventDefault(); closeEdit(); return }
     if (e.key !== 'Tab' || !dialogRef.current) return
     const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
       'button, input, [href], [tabindex]:not([tabindex="-1"])',
@@ -205,9 +223,16 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
         </div>
 
         <div className="shrink-0 px-5 pb-3">
+          <label htmlFor="saved-place-query" className="sr-only">{t('searchAddressPlaceholder')}</label>
           <input
+            id="saved-place-query"
             autoFocus
             type="text"
+            enterKeyHint="search"
+            autoComplete="off"
+            // Vide, dir=auto vaut LTR (spéc. HTML) et le placeholder arabe partirait
+            // à gauche : on suit alors la langue de l'interface (comme LineView).
+            dir={query ? 'auto' : locale === 'ar' ? 'rtl' : 'ltr'}
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
             placeholder={t('searchAddressPlaceholder')}
@@ -218,10 +243,16 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
         {/* Une seule ligne d'état à la fois, en gris : recherche en cours, puis
             « aucun résultat » — jamais un écran muet. */}
         {searching && (
-          <p className="shrink-0 px-5 pb-3 text-label text-ink-400" role="status">{t('searching')}</p>
+          <p className="shrink-0 px-5 pb-3 text-label text-ink-600" role="status">{t('searchingAddress')}</p>
         )}
-        {!searching && query.trim().length >= 2 && results.length === 0 && (
-          <p className="shrink-0 px-5 pb-3 text-label text-ink-400" role="status">{t('noResults')}</p>
+        {!searching && (addressStatus === 'slow' || addressStatus === 'unavailable') && (
+          <p className="shrink-0 px-5 pb-3 text-label text-ink-600" role="status">
+            {t(addressStatus === 'slow' ? 'itin_geoSlow' : 'itin_geoUnavailable')}
+          </p>
+        )}
+        {!searching && addressStatus !== 'slow' && addressStatus !== 'unavailable'
+          && query.trim().length >= 2 && results.length === 0 && (
+          <p className="shrink-0 px-5 pb-3 text-label text-ink-600" role="status">{t('itin_geoNoResults')}</p>
         )}
 
         {/* Résultats : `max-h` plutôt que `flex-1` — la feuille reste au contenu
@@ -240,8 +271,8 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
                     <ResultIcon kind={r.kind} stationType={r.stationType} />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-emph text-ink-900">{r.name}</span>
-                    <span className="block truncate text-label text-ink-400">{r.fullName}</span>
+                    <span className="block truncate text-emph text-ink-900"><bdi>{r.name}</bdi></span>
+                    <span className="block truncate text-label text-ink-400"><bdi>{r.fullName}</bdi></span>
                   </span>
                 </button>
               </li>
@@ -318,7 +349,7 @@ export default function SavedPlaces({ onSelect }: SavedPlacesProps) {
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-emph text-ink-900">{translatedLabel}</span>
                   {saved && (
-                    <span className="block truncate text-label text-ink-400">{saved.address}</span>
+                    <span className="block truncate text-label text-ink-400"><bdi>{saved.address}</bdi></span>
                   )}
                 </span>
               </button>

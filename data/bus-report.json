@@ -1,0 +1,1712 @@
+{
+ "speed_kmh": 15.0,
+ "speed_fast_kmh": 35.0,
+ "excluded_lines": {
+  "ETUSA-37": "relation OSM 2847141 incohérente (PTv1, sens mélangés, terminus sans nom)"
+ },
+ "directions": [
+  {
+   "trip_id": "ETUSA-3-dir0",
+   "osm_relation": 7986853,
+   "stops": 14,
+   "relation_entry": {
+    "node": 5390507837,
+    "name": "Chevalley",
+    "lat": 36.7694389,
+    "lon": 3.0070359
+   },
+   "relation_exit": {
+    "node": 3670328313,
+    "name": "Station Souidania",
+    "lat": 36.7088543,
+    "lon": 2.9106908
+   },
+   "shape": "deduit",
+   "length_m": 16329,
+   "outside_relation_m": 1192,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 8473,
+   "max_stop_snap_m": 20,
+   "notes": [
+    "demi-tour à l'arrêt (point 386), voies de la relation"
+   ],
+   "minutes": 46
+  },
+  {
+   "trip_id": "ETUSA-3-dir1",
+   "osm_relation": 7986887,
+   "stops": 14,
+   "relation_entry": {
+    "node": 5390507859,
+    "name": "Station Souidania",
+    "lat": 36.708835,
+    "lon": 2.9106637
+   },
+   "relation_exit": {
+    "node": 1166453231,
+    "name": "Chevalley",
+    "lat": 36.7689518,
+    "lon": 3.0074936
+   },
+   "missing_named_stops": [
+    {
+     "node": 5045336761,
+     "name": "Hôtel Dar Diaf",
+     "distance_m": 1168
+    }
+   ],
+   "shape": "deduit",
+   "length_m": 15641,
+   "outside_relation_m": 290,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 8002,
+   "max_stop_snap_m": 32,
+   "notes": [],
+   "minutes": 44
+  },
+  {
+   "trip_id": "ETUSA-6-dir0",
+   "osm_relation": 7996451,
+   "stops": 18,
+   "relation_entry": {
+    "node": 326421421,
+    "name": "Vieux Kouba",
+    "lat": 36.7296338,
+    "lon": 3.0750476
+   },
+   "shape": "osm",
+   "length_m": 9905,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 10,
+   "notes": [],
+   "minutes": 40
+  },
+  {
+   "trip_id": "ETUSA-6-dir1",
+   "osm_relation": 7996457,
+   "stops": 20,
+   "relation_entry": {
+    "node": 5374461220,
+    "name": "Place des Martyrs",
+    "lat": 36.7855432,
+    "lon": 3.0630657
+   },
+   "relation_exit": {
+    "node": 2268895854,
+    "name": "Vieux Kouba",
+    "lat": 36.7296189,
+    "lon": 3.0750519
+   },
+   "shape": "osm",
+   "length_m": 9742,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 16,
+   "notes": [],
+   "minutes": 39
+  },
+  {
+   "trip_id": "ETUSA-10-dir0",
+   "osm_relation": 7998869,
+   "stops": 17,
+   "relation_entry": {
+    "node": 5387202968,
+    "name": "1er Mai",
+    "lat": 36.7599597,
+    "lon": 3.0573645
+   },
+   "relation_exit": {
+    "node": 287870239,
+    "name": "Bouzareah",
+    "lat": 36.7901906,
+    "lon": 3.0171987
+   },
+   "shape": "osm",
+   "length_m": 8953,
+   "outside_relation_m": 83,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 1540,
+   "max_stop_snap_m": 45,
+   "notes": [
+    "arrêt 1 à 45 m de la voie"
+   ],
+   "minutes": 32
+  },
+  {
+   "trip_id": "ETUSA-10-dir1",
+   "osm_relation": 7999026,
+   "stops": 16,
+   "relation_entry": {
+    "node": 5400906393,
+    "name": "Bouzareah",
+    "lat": 36.7902092,
+    "lon": 3.0172099
+   },
+   "relation_exit": {
+    "node": 5387202969,
+    "name": "1er Mai",
+    "lat": 36.7599092,
+    "lon": 3.0573535
+   },
+   "missing_named_stops": [
+    {
+     "node": 5396439176,
+     "name": "Jardin Tunis",
+     "distance_m": 344
+    }
+   ],
+   "shape": "osm",
+   "length_m": 9686,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 1614,
+   "max_stop_snap_m": 11,
+   "notes": [
+    "détour arrêts 7→8 : 822 m pour 316 m à vol d'oiseau (voies de la relation)"
+   ],
+   "minutes": 35
+  },
+  {
+   "trip_id": "ETUSA-12-dir0",
+   "osm_relation": 2881745,
+   "stops": 24,
+   "relation_entry": {
+    "node": 5365648460,
+    "name": "Place des Martyrs",
+    "lat": 36.7864097,
+    "lon": 3.0632537
+   },
+   "relation_exit": {
+    "node": 5375889198,
+    "name": "Staouali",
+    "lat": 36.7575669,
+    "lon": 2.8908205
+   },
+   "missing_named_stops": [
+    {
+     "node": 5375889208,
+     "name": "Copemad",
+     "distance_m": 467
+    }
+   ],
+   "shape": "osm",
+   "length_m": 21740,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 2213,
+   "max_stop_snap_m": 44,
+   "notes": [
+    "arrêt 22 à 44 m de la voie"
+   ],
+   "minutes": 82
+  },
+  {
+   "trip_id": "ETUSA-12-dir1",
+   "osm_relation": 7936377,
+   "stops": 27,
+   "relation_entry": {
+    "node": 2268754433,
+    "name": "Staouali",
+    "lat": 36.7576207,
+    "lon": 2.8908112
+   },
+   "relation_exit": {
+    "node": 3791500961,
+    "name": "Place des Martyrs",
+    "lat": 36.7864019,
+    "lon": 3.0631841
+   },
+   "shape": "osm",
+   "length_m": 21512,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 2200,
+   "max_stop_snap_m": 35,
+   "notes": [],
+   "minutes": 81
+  },
+  {
+   "trip_id": "ETUSA-14-dir0",
+   "osm_relation": 3101476,
+   "stops": 13,
+   "shape": "osm",
+   "length_m": 6546,
+   "outside_relation_m": 136,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 25,
+   "notes": [],
+   "minutes": 26
+  },
+  {
+   "trip_id": "ETUSA-14-dir1",
+   "osm_relation": 7936576,
+   "stops": 11,
+   "relation_entry": {
+    "node": 2232554803,
+    "name": "Station Bir Morade Rais",
+    "lat": 36.7398299,
+    "lon": 3.0491246
+   },
+   "relation_exit": {
+    "node": 287469933,
+    "name": "1er Mai",
+    "lat": 36.7600878,
+    "lon": 3.0567062
+   },
+   "shape": "osm",
+   "length_m": 7254,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 24,
+   "notes": [],
+   "minutes": 29
+  },
+  {
+   "trip_id": "ETUSA-15-dir0",
+   "osm_relation": 2865635,
+   "stops": 12,
+   "relation_entry": {
+    "node": 5380774823,
+    "name": "1er Mai",
+    "lat": 36.7599996,
+    "lon": 3.0569475
+   },
+   "shape": "osm",
+   "length_m": 5423,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 937,
+   "max_stop_snap_m": 25,
+   "notes": [
+    "détour arrêts 11→12 : 980 m pour 321 m à vol d'oiseau (voies de la relation)"
+   ],
+   "minutes": 20
+  },
+  {
+   "trip_id": "ETUSA-15-dir1",
+   "osm_relation": 7937507,
+   "stops": 9,
+   "relation_exit": {
+    "node": 5380774823,
+    "name": "1er Mai",
+    "lat": 36.7599996,
+    "lon": 3.0569475
+   },
+   "missing_named_stops": [
+    {
+     "node": 5393691264,
+     "name": "Krim Belkacem",
+     "distance_m": 209
+    }
+   ],
+   "shape": "osm",
+   "length_m": 4330,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 1215,
+   "max_stop_snap_m": 24,
+   "notes": [],
+   "minutes": 15
+  },
+  {
+   "trip_id": "ETUSA-16-dir0",
+   "osm_relation": 8006784,
+   "stops": 3,
+   "relation_entry": {
+    "node": 1876263692,
+    "name": "El Madania",
+    "lat": 36.7421646,
+    "lon": 3.0652595
+   },
+   "relation_exit": {
+    "node": 287469933,
+    "name": "1er Mai",
+    "lat": 36.7600878,
+    "lon": 3.0567062
+   },
+   "shape": "osm",
+   "length_m": 4547,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 1229,
+   "max_stop_snap_m": 24,
+   "notes": [],
+   "minutes": 15
+  },
+  {
+   "trip_id": "ETUSA-16-dir1",
+   "osm_relation": 8006787,
+   "stops": 12,
+   "relation_entry": {
+    "node": 5380774823,
+    "name": "1er Mai",
+    "lat": 36.7599996,
+    "lon": 3.0569475
+   },
+   "relation_exit": {
+    "node": 319619368,
+    "name": "El Madania",
+    "lat": 36.7422063,
+    "lon": 3.0652571
+   },
+   "missing_named_stops": [
+    {
+     "node": 5380213983,
+     "name": "Hôtel El Djazair",
+     "distance_m": 238
+    }
+   ],
+   "shape": "osm",
+   "length_m": 5649,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 25,
+   "notes": [],
+   "minutes": 23
+  },
+  {
+   "trip_id": "ETUSA-18-dir0",
+   "osm_relation": 8086697,
+   "stops": 7,
+   "relation_entry": {
+    "node": 5387204318,
+    "name": "STATION HAI EL BADR",
+    "lat": 36.7246342,
+    "lon": 3.1014571
+   },
+   "relation_exit": {
+    "node": 3103526388,
+    "name": "HÔPITAL MILITAIRE",
+    "lat": 36.7230905,
+    "lon": 3.0647142
+   },
+   "shape": "osm",
+   "length_m": 5855,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 1635,
+   "max_stop_snap_m": 11,
+   "notes": [
+    "détour arrêts 6→7 : 2046 m pour 776 m à vol d'oiseau (voies de la relation)"
+   ],
+   "minutes": 20
+  },
+  {
+   "trip_id": "ETUSA-19-dir0",
+   "osm_relation": 7937923,
+   "stops": 13,
+   "relation_entry": {
+    "node": 5387202985,
+    "name": "Station Aissat Idir",
+    "lat": 36.756984,
+    "lon": 3.0615624
+   },
+   "relation_exit": {
+    "node": 4876709921,
+    "name": "LES HOTELS",
+    "lat": 36.7151845,
+    "lon": 3.1980057
+   },
+   "missing_named_stops": [
+    {
+     "node": 3010708034,
+     "name": "PONT DES FUSILLES",
+     "distance_m": 1094
+    }
+   ],
+   "shape": "osm",
+   "length_m": 15162,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 11741,
+   "max_stop_snap_m": 11,
+   "notes": [],
+   "minutes": 34
+  },
+  {
+   "trip_id": "ETUSA-19-dir1",
+   "osm_relation": 8061132,
+   "stops": 18,
+   "relation_entry": {
+    "node": 3889238953,
+    "name": "LES HOTELS",
+    "lat": 36.7152105,
+    "lon": 3.1979991
+   },
+   "relation_exit": {
+    "node": 5387202986,
+    "name": "Station Aissat Idir",
+    "lat": 36.7570157,
+    "lon": 3.0616021
+   },
+   "shape": "osm",
+   "length_m": 18463,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 15917,
+   "max_stop_snap_m": 13,
+   "notes": [
+    "détour arrêts 16→17 : 1798 m pour 498 m à vol d'oiseau (voies de la relation)"
+   ],
+   "minutes": 37
+  },
+  {
+   "trip_id": "ETUSA-21-dir0",
+   "osm_relation": 3105911,
+   "stops": 9,
+   "relation_entry": {
+    "node": 287870239,
+    "name": "Bouzareah",
+    "lat": 36.7901906,
+    "lon": 3.0171987
+   },
+   "relation_exit": {
+    "node": 5363953272,
+    "name": "Station Sidi Youcef",
+    "lat": 36.7840499,
+    "lon": 2.96412
+   },
+   "shape": "osm",
+   "length_m": 5873,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 28,
+   "notes": [],
+   "minutes": 23
+  },
+  {
+   "trip_id": "ETUSA-21-dir1",
+   "osm_relation": 7937708,
+   "stops": 11,
+   "relation_entry": {
+    "node": 5363953272,
+    "name": "Station Sidi Youcef",
+    "lat": 36.7840499,
+    "lon": 2.96412
+   },
+   "relation_exit": {
+    "node": 287870239,
+    "name": "Bouzareah",
+    "lat": 36.7901906,
+    "lon": 3.0171987
+   },
+   "shape": "osm",
+   "length_m": 5898,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 14,
+   "notes": [],
+   "minutes": 24
+  },
+  {
+   "trip_id": "ETUSA-27-dir0",
+   "osm_relation": 7968277,
+   "stops": 10,
+   "relation_entry": {
+    "node": 5380774823,
+    "name": "1er Mai",
+    "lat": 36.7599996,
+    "lon": 3.0569475
+   },
+   "relation_exit": {
+    "node": 961009284,
+    "name": "Garidi 2",
+    "lat": 36.7332546,
+    "lon": 3.0635654
+   },
+   "shape": "osm",
+   "length_m": 6374,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 1461,
+   "max_stop_snap_m": 68,
+   "notes": [
+    "arrêt 10 à 68 m de la voie"
+   ],
+   "minutes": 22
+  },
+  {
+   "trip_id": "ETUSA-27-dir1",
+   "osm_relation": 7968313,
+   "stops": 7,
+   "relation_entry": {
+    "node": 5380774414,
+    "name": "Garidi 2",
+    "lat": 36.7333466,
+    "lon": 3.0635187
+   },
+   "relation_exit": {
+    "node": 287469933,
+    "name": "1er Mai",
+    "lat": 36.7600878,
+    "lon": 3.0567062
+   },
+   "shape": "osm",
+   "length_m": 7737,
+   "outside_relation_m": 54,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 2663,
+   "max_stop_snap_m": 62,
+   "notes": [
+    "arrêt 1 à 62 m de la voie"
+   ],
+   "minutes": 25
+  },
+  {
+   "trip_id": "ETUSA-31-dir0",
+   "osm_relation": 8086826,
+   "stops": 10,
+   "relation_entry": {
+    "node": 2401310896,
+    "name": "PLACE AL SMAA",
+    "lat": 36.7432975,
+    "lon": 3.0421447
+   },
+   "relation_exit": {
+    "node": 3138306727,
+    "name": "Place Maurice Audin",
+    "lat": 36.7687344,
+    "lon": 3.0546351
+   },
+   "shape": "osm",
+   "length_m": 4954,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 9,
+   "notes": [],
+   "minutes": 20
+  },
+  {
+   "trip_id": "ETUSA-31-dir1",
+   "osm_relation": 8086827,
+   "stops": 8,
+   "relation_entry": {
+    "node": 317902162,
+    "name": "Place Maurice Audin",
+    "lat": 36.7687503,
+    "lon": 3.0545958
+   },
+   "relation_exit": {
+    "node": 1337246343,
+    "name": "PLACE AL SMAA",
+    "lat": 36.7432605,
+    "lon": 3.0420933
+   },
+   "shape": "osm",
+   "length_m": 5082,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 9,
+   "notes": [],
+   "minutes": 20
+  },
+  {
+   "trip_id": "ETUSA-34-dir0",
+   "osm_relation": 7996214,
+   "stops": 17,
+   "relation_entry": {
+    "node": 5380774823,
+    "name": "1er Mai",
+    "lat": 36.7599996,
+    "lon": 3.0569475
+   },
+   "relation_exit": {
+    "node": 4534861291,
+    "name": "Birkhadem",
+    "lat": 36.715151,
+    "lon": 3.0492887
+   },
+   "shape": "osm",
+   "length_m": 11157,
+   "outside_relation_m": 136,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 2757,
+   "max_stop_snap_m": 62,
+   "notes": [
+    "arrêt 16 à 62 m de la voie"
+   ],
+   "minutes": 38
+  },
+  {
+   "trip_id": "ETUSA-34-dir1",
+   "osm_relation": 7996275,
+   "stops": 16,
+   "relation_entry": {
+    "node": 333296123,
+    "name": "Birkhadem",
+    "lat": 36.7151881,
+    "lon": 3.0492384
+   },
+   "relation_exit": {
+    "node": 287469933,
+    "name": "1er Mai",
+    "lat": 36.7600878,
+    "lon": 3.0567062
+   },
+   "missing_named_stops": [
+    {
+     "node": 5363723126,
+     "name": "Les Jasmins",
+     "distance_m": 534
+    }
+   ],
+   "shape": "osm",
+   "length_m": 10187,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 54,
+   "max_stop_snap_m": 24,
+   "notes": [],
+   "minutes": 41
+  },
+  {
+   "trip_id": "ETUSA-45-dir0",
+   "osm_relation": 7941445,
+   "stops": 20,
+   "relation_entry": {
+    "node": 5400974172,
+    "name": "Bouzaréah - Départ ETUSA",
+    "lat": 36.7899632,
+    "lon": 3.0174629
+   },
+   "relation_exit": {
+    "node": 3791500961,
+    "name": "Place des Martyrs",
+    "lat": 36.7864019,
+    "lon": 3.0631841
+   },
+   "shape": "osm",
+   "length_m": 9183,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 3030,
+   "max_stop_snap_m": 14,
+   "notes": [],
+   "minutes": 30
+  },
+  {
+   "trip_id": "ETUSA-45-dir1",
+   "osm_relation": 8005583,
+   "stops": 19,
+   "relation_entry": {
+    "node": 5607225199,
+    "name": "Place des Martyrs",
+    "lat": 36.7857278,
+    "lon": 3.0628513
+   },
+   "relation_exit": {
+    "node": 287870239,
+    "name": "Bouzareah",
+    "lat": 36.7901906,
+    "lon": 3.0171987
+   },
+   "missing_named_stops": [
+    {
+     "node": 3943953990,
+     "name": "Carnot",
+     "distance_m": 251
+    },
+    {
+     "node": 2657681840,
+     "name": "Carnot",
+     "distance_m": 252
+    }
+   ],
+   "shape": "osm",
+   "length_m": 9592,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 3070,
+   "max_stop_snap_m": 29,
+   "notes": [
+    "détour arrêts 11→12 : 1776 m pour 586 m à vol d'oiseau (voies de la relation)"
+   ],
+   "minutes": 31
+  },
+  {
+   "trip_id": "ETUSA-50-dir0",
+   "osm_relation": 7966489,
+   "stops": 11,
+   "relation_entry": {
+    "node": 5607225199,
+    "name": "Place des Martyrs",
+    "lat": 36.7857278,
+    "lon": 3.0628513
+   },
+   "relation_exit": {
+    "node": 5358485987,
+    "name": "Ben Aknoun Station",
+    "lat": 36.7527145,
+    "lon": 3.0056647
+   },
+   "shape": "osm",
+   "length_m": 9763,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 100,
+   "notes": [
+    "arrêt 11 à 100 m de la voie"
+   ],
+   "minutes": 39
+  },
+  {
+   "trip_id": "ETUSA-50-dir1",
+   "osm_relation": 7966499,
+   "stops": 13,
+   "relation_entry": {
+    "node": 5358485987,
+    "name": "Ben Aknoun Station",
+    "lat": 36.7527145,
+    "lon": 3.0056647
+   },
+   "relation_exit": {
+    "node": 3791500961,
+    "name": "Place des Martyrs",
+    "lat": 36.7864019,
+    "lon": 3.0631841
+   },
+   "missing_named_stops": [
+    {
+     "node": 5379379961,
+     "name": "Les Tagarins",
+     "distance_m": 167
+    }
+   ],
+   "shape": "osm",
+   "length_m": 9424,
+   "outside_relation_m": 114,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 103,
+   "notes": [
+    "arrêt 1 à 103 m de la voie"
+   ],
+   "minutes": 38
+  },
+  {
+   "trip_id": "ETUSA-54-dir0",
+   "osm_relation": 3112924,
+   "stops": 4,
+   "relation_entry": {
+    "node": 5380201315,
+    "name": "El Mouradia",
+    "lat": 36.7476584,
+    "lon": 3.0507279
+   },
+   "relation_exit": {
+    "node": 3138306727,
+    "name": "Place Maurice Audin",
+    "lat": 36.7687344,
+    "lon": 3.0546351
+   },
+   "missing_named_stops": [
+    {
+     "node": 287186997,
+     "name": "Descartes",
+     "distance_m": 170
+    }
+   ],
+   "shape": "osm",
+   "length_m": 3471,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 8,
+   "notes": [],
+   "minutes": 14
+  },
+  {
+   "trip_id": "ETUSA-54-dir1",
+   "osm_relation": 7935973,
+   "stops": 8,
+   "relation_entry": {
+    "node": 317902162,
+    "name": "Place Maurice Audin",
+    "lat": 36.7687503,
+    "lon": 3.0545958
+   },
+   "relation_exit": {
+    "node": 2867724831,
+    "name": "El Mouradia",
+    "lat": 36.747648,
+    "lon": 3.0508147
+   },
+   "missing_named_stops": [
+    {
+     "node": 5380213983,
+     "name": "Hôtel El Djazair",
+     "distance_m": 238
+    }
+   ],
+   "shape": "osm",
+   "length_m": 3699,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 9,
+   "notes": [],
+   "minutes": 15
+  },
+  {
+   "trip_id": "ETUSA-58-dir0",
+   "osm_relation": 7953670,
+   "stops": 13,
+   "relation_entry": {
+    "node": 5607225199,
+    "name": "Place des Martyrs",
+    "lat": 36.7857278,
+    "lon": 3.0628513
+   },
+   "relation_exit": {
+    "node": 3082556555,
+    "name": "Chevalley",
+    "lat": 36.7688411,
+    "lon": 3.0086703
+   },
+   "shape": "osm",
+   "length_m": 8153,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 4213,
+   "max_stop_snap_m": 14,
+   "notes": [],
+   "minutes": 23
+  },
+  {
+   "trip_id": "ETUSA-58-dir1",
+   "osm_relation": 7953809,
+   "stops": 12,
+   "relation_entry": {
+    "node": 5374462031,
+    "name": "Chevalley",
+    "lat": 36.7690702,
+    "lon": 3.0071614
+   },
+   "relation_exit": {
+    "node": 3791500961,
+    "name": "Place des Martyrs",
+    "lat": 36.7864019,
+    "lon": 3.0631841
+   },
+   "missing_named_stops": [
+    {
+     "node": 3082567100,
+     "name": "Bazita",
+     "distance_m": 285
+    }
+   ],
+   "shape": "osm",
+   "length_m": 7211,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 4276,
+   "max_stop_snap_m": 14,
+   "notes": [],
+   "minutes": 19
+  },
+  {
+   "trip_id": "ETUSA-66-dir0",
+   "osm_relation": 7980541,
+   "stops": 13,
+   "relation_entry": {
+    "node": 5387202973,
+    "name": "Gare routière Bachdjerrah 2 -ETUSA-",
+    "lat": 36.7214097,
+    "lon": 3.1157118
+   },
+   "relation_exit": {
+    "node": 5387202986,
+    "name": "Station Aissat Idir",
+    "lat": 36.7570157,
+    "lon": 3.0616021
+   },
+   "missing_named_stops": [
+    {
+     "node": 5387202990,
+     "name": "Cité Amirouche",
+     "distance_m": 317
+    }
+   ],
+   "shape": "osm",
+   "length_m": 9934,
+   "outside_relation_m": 54,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 449,
+   "max_stop_snap_m": 14,
+   "notes": [],
+   "minutes": 39
+  },
+  {
+   "trip_id": "ETUSA-66-dir1",
+   "osm_relation": 7980628,
+   "stops": 10,
+   "relation_entry": {
+    "node": 5387202985,
+    "name": "Station Aissat Idir",
+    "lat": 36.756984,
+    "lon": 3.0615624
+   },
+   "relation_exit": {
+    "node": 2274503073,
+    "name": "Gare routière Bachdjerrah 2 -ETUSA-",
+    "lat": 36.7214326,
+    "lon": 3.115703
+   },
+   "missing_named_stops": [
+    {
+     "node": 5387202989,
+     "name": "Cité Amirouche",
+     "distance_m": 262
+    }
+   ],
+   "shape": "osm",
+   "length_m": 8569,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 2164,
+   "max_stop_snap_m": 11,
+   "notes": [],
+   "minutes": 29
+  },
+  {
+   "trip_id": "ETUSA-72-dir0",
+   "osm_relation": 8086283,
+   "stops": 25,
+   "relation_entry": {
+    "node": 5374461220,
+    "name": "Place des Martyrs",
+    "lat": 36.7855432,
+    "lon": 3.0630657
+   },
+   "relation_exit": {
+    "node": 5459784852,
+    "name": "ROUIBA CASTOR",
+    "lat": 36.7366874,
+    "lon": 3.2857557
+   },
+   "shape": "osm",
+   "length_m": 24393,
+   "outside_relation_m": 92,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 22392,
+   "max_stop_snap_m": 16,
+   "notes": [],
+   "minutes": 46
+  },
+  {
+   "trip_id": "ETUSA-72-dir1",
+   "osm_relation": 8086416,
+   "stops": 24,
+   "relation_entry": {
+    "node": 5459904222,
+    "name": "ROUIBA CASTOR",
+    "lat": 36.7367175,
+    "lon": 3.2857516
+   },
+   "shape": "osm",
+   "length_m": 24968,
+   "outside_relation_m": 87,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 21867,
+   "max_stop_snap_m": 13,
+   "notes": [],
+   "minutes": 50
+  },
+  {
+   "trip_id": "ETUSA-74-dir0",
+   "osm_relation": 7980785,
+   "stops": 13,
+   "relation_entry": {
+    "node": 5365648460,
+    "name": "Place des Martyrs",
+    "lat": 36.7864097,
+    "lon": 3.0632537
+   },
+   "relation_exit": {
+    "node": 2274503073,
+    "name": "Gare routière Bachdjerrah 2 -ETUSA-",
+    "lat": 36.7214326,
+    "lon": 3.115703
+   },
+   "shape": "deduit",
+   "length_m": 12589,
+   "outside_relation_m": 367,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 6905,
+   "max_stop_snap_m": 14,
+   "notes": [],
+   "minutes": 35
+  },
+  {
+   "trip_id": "ETUSA-74-dir1",
+   "osm_relation": 7980872,
+   "stops": 13,
+   "relation_entry": {
+    "node": 5387202973,
+    "name": "Gare routière Bachdjerrah 2 -ETUSA-",
+    "lat": 36.7214097,
+    "lon": 3.1157118
+   },
+   "shape": "osm",
+   "length_m": 12435,
+   "outside_relation_m": 46,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 8551,
+   "max_stop_snap_m": 13,
+   "notes": [],
+   "minutes": 30
+  },
+  {
+   "trip_id": "ETUSA-82-dir0",
+   "osm_relation": 7980943,
+   "stops": 9,
+   "relation_entry": {
+    "node": 5387202973,
+    "name": "Gare routière Bachdjerrah 2 -ETUSA-",
+    "lat": 36.7214097,
+    "lon": 3.1157118
+   },
+   "relation_exit": {
+    "node": 5387523816,
+    "name": "Aïn Naâdja",
+    "lat": 36.6956306,
+    "lon": 3.076825
+   },
+   "shape": "osm",
+   "length_m": 6095,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 9,
+   "notes": [],
+   "minutes": 24
+  },
+  {
+   "trip_id": "ETUSA-82-dir1",
+   "osm_relation": 7982428,
+   "stops": 10,
+   "shape": "osm",
+   "length_m": 6044,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 10,
+   "notes": [],
+   "minutes": 24
+  },
+  {
+   "trip_id": "ETUSA-88-dir0",
+   "osm_relation": 7996003,
+   "stops": 6,
+   "relation_entry": {
+    "node": 2401310896,
+    "name": "PLACE AL SMAA",
+    "lat": 36.7432975,
+    "lon": 3.0421447
+   },
+   "relation_exit": {
+    "node": 287469933,
+    "name": "1er Mai",
+    "lat": 36.7600878,
+    "lon": 3.0567062
+   },
+   "shape": "osm",
+   "length_m": 4374,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 1229,
+   "max_stop_snap_m": 24,
+   "notes": [],
+   "minutes": 15
+  },
+  {
+   "trip_id": "ETUSA-88-dir1",
+   "osm_relation": 7996006,
+   "stops": 10,
+   "relation_entry": {
+    "node": 5380774823,
+    "name": "1er Mai",
+    "lat": 36.7599996,
+    "lon": 3.0569475
+   },
+   "relation_exit": {
+    "node": 1337246343,
+    "name": "PLACE AL SMAA",
+    "lat": 36.7432605,
+    "lon": 3.0420933
+   },
+   "missing_named_stops": [
+    {
+     "node": 5380213983,
+     "name": "Hôtel El Djazair",
+     "distance_m": 214
+    }
+   ],
+   "shape": "osm",
+   "length_m": 4998,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 25,
+   "notes": [],
+   "minutes": 20
+  },
+  {
+   "trip_id": "ETUSA-90-dir0",
+   "osm_relation": 8082020,
+   "stops": 7,
+   "relation_entry": {
+    "node": 5394260853,
+    "name": "1er Mai",
+    "lat": 36.7606403,
+    "lon": 3.0573025
+   },
+   "relation_exit": {
+    "node": 5457517260,
+    "name": "Bab El Oued (Ali Basta)",
+    "lat": 36.7918807,
+    "lon": 3.0526093
+   },
+   "shape": "osm",
+   "length_m": 4374,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 8,
+   "notes": [],
+   "minutes": 18
+  },
+  {
+   "trip_id": "ETUSA-90-dir1",
+   "osm_relation": 8082021,
+   "stops": 9,
+   "relation_entry": {
+    "node": 5457517259,
+    "name": "Bab El Oued (Ali Basta)",
+    "lat": 36.7918588,
+    "lon": 3.0526124
+   },
+   "relation_exit": {
+    "node": 3122540287,
+    "name": "1er Mai",
+    "lat": 36.7606491,
+    "lon": 3.0573406
+   },
+   "shape": "osm",
+   "length_m": 4661,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 11,
+   "notes": [],
+   "minutes": 19
+  },
+  {
+   "trip_id": "ETUSA-98-dir0",
+   "osm_relation": 8086495,
+   "stops": 19,
+   "relation_entry": {
+    "node": 283464371,
+    "name": "Cité du 5 Juillet",
+    "lat": 36.7204142,
+    "lon": 3.2018113
+   },
+   "relation_exit": {
+    "node": 4937988329,
+    "name": "Place Ferhani",
+    "lat": 36.7935528,
+    "lon": 3.0536521
+   },
+   "shape": "osm",
+   "length_m": 18912,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 15496,
+   "max_stop_snap_m": 13,
+   "notes": [],
+   "minutes": 40
+  },
+  {
+   "trip_id": "ETUSA-98-dir1",
+   "osm_relation": 8086496,
+   "stops": 21,
+   "relation_entry": {
+    "node": 5401302839,
+    "name": "Place Ferhani",
+    "lat": 36.7934659,
+    "lon": 3.0534697
+   },
+   "relation_exit": {
+    "node": 3370017395,
+    "name": "05 juillet",
+    "lat": 36.7202581,
+    "lon": 3.2016214
+   },
+   "shape": "osm",
+   "length_m": 18378,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 15045,
+   "max_stop_snap_m": 25,
+   "notes": [],
+   "minutes": 39
+  },
+  {
+   "trip_id": "ETUSA-99-dir0",
+   "osm_relation": 7996705,
+   "stops": 30,
+   "relation_entry": {
+    "node": 5394260853,
+    "name": "1er Mai",
+    "lat": 36.7606403,
+    "lon": 3.0573025
+   },
+   "relation_exit": {
+    "node": 3152308097,
+    "name": "Aïn Benian - Gare routière",
+    "lat": 36.8018341,
+    "lon": 2.9102717
+   },
+   "shape": "osm",
+   "length_m": 19266,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 13,
+   "notes": [],
+   "minutes": 77
+  },
+  {
+   "trip_id": "ETUSA-100-dir0",
+   "osm_relation": 7608188,
+   "stops": 2,
+   "shape": "osm",
+   "length_m": 19070,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 18319,
+   "max_stop_snap_m": 82,
+   "notes": [
+    "arrêt 1 à 82 m de la voie"
+   ],
+   "minutes": 34
+  },
+  {
+   "trip_id": "ETUSA-100-dir1",
+   "osm_relation": 11273930,
+   "stops": 2,
+   "shape": "osm",
+   "length_m": 19589,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 18021,
+   "max_stop_snap_m": 15,
+   "notes": [],
+   "minutes": 37
+  },
+  {
+   "trip_id": "ETUSA-101-dir0",
+   "osm_relation": 8093276,
+   "stops": 15,
+   "relation_entry": {
+    "node": 5374461220,
+    "name": "Place des Martyrs",
+    "lat": 36.7855432,
+    "lon": 3.0630657
+   },
+   "relation_exit": {
+    "node": 4527029581,
+    "name": "Birtouta",
+    "lat": 36.6410304,
+    "lon": 3.0008624
+   },
+   "shape": "deduit",
+   "length_m": 26626,
+   "outside_relation_m": 6257,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 20682,
+   "max_stop_snap_m": 42,
+   "notes": [
+    "arrêt 14 à 42 m de la voie"
+   ],
+   "minutes": 59
+  },
+  {
+   "trip_id": "ETUSA-105-dir0",
+   "osm_relation": 7982528,
+   "stops": 11,
+   "relation_entry": {
+    "node": 5387202973,
+    "name": "Gare routière Bachdjerrah 2 -ETUSA-",
+    "lat": 36.7214097,
+    "lon": 3.1157118
+   },
+   "relation_exit": {
+    "node": 5422040731,
+    "name": "GARE ROUTIERE DE BARAKI",
+    "lat": 36.6729173,
+    "lon": 3.085858
+   },
+   "missing_named_stops": [
+    {
+     "node": 5389073466,
+     "name": "PONT SMAR",
+     "distance_m": 303
+    }
+   ],
+   "shape": "osm",
+   "length_m": 8043,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 12,
+   "notes": [],
+   "minutes": 32
+  },
+  {
+   "trip_id": "ETUSA-113-dir0",
+   "osm_relation": 8086568,
+   "stops": 6,
+   "relation_entry": {
+    "node": 5387463214,
+    "name": "Gare Routière du Caroubier",
+    "lat": 36.7425332,
+    "lon": 3.1058753
+   },
+   "shape": "osm",
+   "length_m": 7068,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 5665,
+   "max_stop_snap_m": 13,
+   "notes": [],
+   "minutes": 15
+  },
+  {
+   "trip_id": "ETUSA-113-dir1",
+   "osm_relation": 8086569,
+   "stops": 8,
+   "relation_entry": {
+    "node": 5374461220,
+    "name": "Place des Martyrs",
+    "lat": 36.7855432,
+    "lon": 3.0630657
+   },
+   "relation_exit": {
+    "node": 1185935485,
+    "name": null,
+    "lat": 36.7430507,
+    "lon": 3.1092389
+   },
+   "shape": "osm",
+   "length_m": 7991,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 4412,
+   "max_stop_snap_m": 25,
+   "notes": [],
+   "minutes": 22
+  },
+  {
+   "trip_id": "ETUSA-178-dir0",
+   "osm_relation": 7937889,
+   "stops": 3,
+   "relation_entry": {
+    "node": 5383645081,
+    "name": null,
+    "lat": 36.7430561,
+    "lon": 3.1093895
+   },
+   "relation_exit": {
+    "node": 5364197628,
+    "name": "Aéroport d'Alger",
+    "lat": 36.7025758,
+    "lon": 3.208677
+   },
+   "shape": "osm",
+   "length_m": 11581,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 11139,
+   "max_stop_snap_m": 13,
+   "notes": [],
+   "minutes": 21
+  },
+  {
+   "trip_id": "ETUSA-604-dir0",
+   "osm_relation": 8066402,
+   "stops": 17,
+   "relation_entry": {
+    "node": 5399926688,
+    "name": "DERGANA",
+    "lat": 36.7722816,
+    "lon": 3.2600912
+   },
+   "relation_exit": {
+    "node": 5448314880,
+    "name": "EL KERROUCHE",
+    "lat": 36.7298968,
+    "lon": 3.3809513
+   },
+   "shape": "deduit",
+   "length_m": 14779,
+   "outside_relation_m": 784,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 6725,
+   "max_stop_snap_m": 79,
+   "notes": [
+    "arrêt 9 à 79 m de la voie"
+   ],
+   "minutes": 44
+  },
+  {
+   "trip_id": "ETUSA-606-dir0",
+   "osm_relation": 8003403,
+   "stops": 13,
+   "relation_entry": {
+    "node": 5399926688,
+    "name": "DERGANA",
+    "lat": 36.7722816,
+    "lon": 3.2600912
+   },
+   "relation_exit": {
+    "node": 3266800497,
+    "name": "Aïn Taya",
+    "lat": 36.7928809,
+    "lon": 3.2929232
+   },
+   "shape": "osm",
+   "length_m": 9484,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 12,
+   "notes": [],
+   "minutes": 38
+  },
+  {
+   "trip_id": "ETUSA-643-dir0",
+   "osm_relation": 8186188,
+   "stops": 9,
+   "relation_entry": {
+    "node": 5422040731,
+    "name": "GARE ROUTIERE DE BARAKI",
+    "lat": 36.6729173,
+    "lon": 3.085858
+   },
+   "relation_exit": {
+    "node": 2398209928,
+    "name": "ETUSA El Harrach",
+    "lat": 36.7215731,
+    "lon": 3.1359499
+   },
+   "shape": "deduit",
+   "length_m": 8220,
+   "outside_relation_m": 173,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 17,
+   "notes": [],
+   "minutes": 33
+  },
+  {
+   "trip_id": "ETUSA-643-dir1",
+   "osm_relation": 8186196,
+   "stops": 9,
+   "relation_entry": {
+    "node": 5465191124,
+    "name": "ETUSA El Harrach",
+    "lat": 36.7215787,
+    "lon": 3.1359817
+   },
+   "relation_exit": {
+    "node": 5422040731,
+    "name": "GARE ROUTIERE DE BARAKI",
+    "lat": 36.6729173,
+    "lon": 3.085858
+   },
+   "shape": "osm",
+   "length_m": 7776,
+   "outside_relation_m": 0,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 0,
+   "max_stop_snap_m": 13,
+   "notes": [],
+   "minutes": 31
+  },
+  {
+   "trip_id": "ETUSA-701-dir0",
+   "osm_relation": 8001650,
+   "stops": 21,
+   "relation_entry": {
+    "node": 5398740349,
+    "name": "Gare Routière de Zéralda",
+    "lat": 36.7129404,
+    "lon": 2.834557
+   },
+   "relation_exit": {
+    "node": 1166453231,
+    "name": "Chevalley",
+    "lat": 36.7689518,
+    "lon": 3.0074936
+   },
+   "shape": "absent",
+   "reasons": [
+    "demi-tour sur voirie déduite au point 398"
+   ],
+   "times": "chemin écarté",
+   "minutes": 60
+  },
+  {
+   "trip_id": "ETUSA-701-dir1",
+   "osm_relation": 8001677,
+   "stops": 23,
+   "relation_entry": {
+    "node": 5390507837,
+    "name": "Chevalley",
+    "lat": 36.7694389,
+    "lon": 3.0070359
+   },
+   "relation_exit": {
+    "node": 5398740349,
+    "name": "Gare Routière de Zéralda",
+    "lat": 36.7129404,
+    "lon": 2.834557
+   },
+   "shape": "deduit",
+   "length_m": 21740,
+   "outside_relation_m": 1475,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 12021,
+   "max_stop_snap_m": 20,
+   "notes": [
+    "demi-tour à l'arrêt (point 385), voies de la relation"
+   ],
+   "minutes": 60
+  },
+  {
+   "trip_id": "ETUSA-707-dir0",
+   "osm_relation": 8066555,
+   "stops": 11,
+   "shape": "deduit",
+   "length_m": 13988,
+   "outside_relation_m": 2222,
+   "oneway_ignored_m": 0,
+   "fast_road_m": 5958,
+   "max_stop_snap_m": 28,
+   "notes": [],
+   "minutes": 42
+  },
+  {
+   "trip_id": "ETUSA-731-dir0",
+   "osm_relation": 8000586,
+   "stops": 16,
+   "relation_entry": {
+    "node": 5397813391,
+    "name": "Sidi Abdellah",
+    "lat": 36.6733853,
+    "lon": 2.891137
+   },
+   "relation_exit": {
+    "node": 1166453231,
+    "name": "Chevalley",
+    "lat": 36.7689518,
+    "lon": 3.0074936
+   },
+   "shape": "absent",
+   "reasons": [
+    "détour arrêts 5→6 : 3088 m pour 834 m à vol d'oiseau (sur voirie déduite)"
+   ],
+   "times": "chemin écarté",
+   "minutes": 71
+  },
+  {
+   "trip_id": "ETUSA-731-dir1",
+   "osm_relation": 8000607,
+   "stops": 13,
+   "relation_entry": {
+    "node": 5390507837,
+    "name": "Chevalley",
+    "lat": 36.7694389,
+    "lon": 3.0070359
+   },
+   "relation_exit": {
+    "node": 5397813391,
+    "name": "Sidi Abdellah",
+    "lat": 36.6733853,
+    "lon": 2.891137
+   },
+   "shape": "absent",
+   "reasons": [
+    "détour arrêts 8→9 : 2590 m pour 722 m à vol d'oiseau (sur voirie déduite)"
+   ],
+   "times": "chemin écarté",
+   "minutes": 77
+  },
+  {
+   "trip_id": "ETUSA-732-dir0",
+   "osm_relation": 8408345,
+   "stops": 11,
+   "relation_entry": {
+    "node": 5397813391,
+    "name": "Sidi Abdellah",
+    "lat": 36.6733853,
+    "lon": 2.891137
+   },
+   "relation_exit": {
+    "node": 5448089871,
+    "name": "STATION 1 MAI",
+    "lat": 36.7648788,
+    "lon": 3.0583895
+   },
+   "shape": "absent",
+   "reasons": [
+    "détour arrêts 5→6 : 3088 m pour 834 m à vol d'oiseau (sur voirie déduite)"
+   ],
+   "times": "chemin écarté",
+   "minutes": 83
+  },
+  {
+   "trip_id": "ETUSA-732-dir1",
+   "osm_relation": 8409605,
+   "stops": 11,
+   "relation_entry": {
+    "node": 5448089870,
+    "name": "STATION 2 MAI",
+    "lat": 36.7648811,
+    "lon": 3.0584158
+   },
+   "relation_exit": {
+    "node": 5397813391,
+    "name": "Sidi Abdellah",
+    "lat": 36.6733853,
+    "lon": 2.891137
+   },
+   "missing_named_stops": [
+    {
+     "node": 5397813383,
+     "name": "Centre cynégétique de Zéralda",
+     "distance_m": 1020
+    }
+   ],
+   "shape": "absent",
+   "reasons": [
+    "détour arrêts 6→7 : 2590 m pour 722 m à vol d'oiseau (sur voirie déduite)"
+   ],
+   "times": "chemin écarté",
+   "minutes": 84
+  }
+ ],
+ "stops": 513
+}

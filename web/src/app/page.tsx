@@ -1,26 +1,43 @@
 'use client'
 
+// Écran principal : orchestre les onglets (Itinéraire, Lignes, Carte), la
+// recherche, l'écran Résultats et la navigation pas à pas. Ce fichier ne
+// calcule rien lui-même : la recherche vient de searchItineraries (otp.ts,
+// erreurs typées, jamais de trajet fabriqué), la mise en forme des rangées de
+// results-format.ts, la navigation de useNavigationSession (machine à états
+// de navigation.ts, persistance, GPS, écran allumé).
+
 import dynamic from 'next/dynamic'
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
-import SearchBar from '@/components/SearchBar'
-import ItineraryPanel from '@/components/ItineraryPanel'
-import NearbyStations from '@/components/NearbyStations'
+import SearchBar, { type SearchWhen } from '@/components/SearchBar'
 import SavedPlaces from '@/components/SavedPlaces'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import LineView from '@/components/LineView'
 import TabBar, { type Tab } from '@/components/TabBar'
-import { allLines, metroLine, estimatedHeadwayMin } from '@/lib/lines'
-import { planTrip, mockPlanTrip, checkOtpHealth, OtpItinerary, Coordinate, formatDuration, formatTime, getLegColor } from '@/lib/otp'
-import { useRecentSearches } from '@/hooks/useRecentSearches'
+import NavigationBanner from '@/components/NavigationBanner'
+import UpdateNotice from '@/components/UpdateNotice'
+import ResultsScreen, { START_LATER_MS, type DetailSnap } from '@/components/ResultsScreen'
+import MapErrorBoundary from '@/components/MapErrorBoundary'
+import type { MapFocusLine, MapPadding } from '@/components/MapView'
+import {
+  describePlanError,
+  resolvePlanQuery,
+  searchItineraries,
+  watchOtpHealth,
+  type Coordinate,
+  type PlanOutcome,
+  type PlanWhen,
+} from '@/lib/otp'
+import { resultsAnnouncement, stateIsDemo, stateItineraries, type SearchState } from '@/lib/results-format'
+import { useRecentSearches, type MarkedCoordinate } from '@/hooks/useRecentSearches'
 import { useGeolocation } from '@/hooks/useGeolocation'
-import { useUserPosition } from '@/hooks/useUserPosition'
-import { useWakeLock } from '@/hooks/useWakeLock'
+import { useNavigationSession } from '@/hooks/useNavigationSession'
 import { useBackHandler } from '@/hooks/useBackHandler'
 import { useEdgeSwipeBack } from '@/hooks/useEdgeSwipeBack'
+import { useInert } from '@/hooks/useInert'
 import { haptic } from '@/lib/haptics'
 import { useTranslation } from '@/hooks/useTranslation'
-import { buildLegGeometries, progressFromElapsed, progressFromPosition } from '@/lib/navigation'
 
 // Fond d'attente de la carte : neutre et statique — jamais de spinner
 // plein écran (règle squelette du handoff 1j).
@@ -28,7 +45,10 @@ function MapLoadingFallback() {
   const { t } = useTranslation()
 
   return (
-    <div className="flex h-full w-full items-center justify-center" style={{ backgroundColor: '#F7F8FA' }}>
+    // Purement visuel et rendu en permanence sous la carte : masqué aux
+    // lecteurs d'écran, sinon « Chargement… » restait annoncé carte chargée
+    // ou en échec (MapErrorBoundary dit lui-même l'échec).
+    <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#F7F8FA' }}>
       <p className="text-body text-ink-400">{t('loading')}</p>
     </div>
   )
@@ -36,62 +56,168 @@ function MapLoadingFallback() {
 
 // ssr:false sans option `loading` : le serveur et le premier rendu client
 // émettent tous deux « rien » (pas de mismatch d'hydratation). Le fond de
-// chargement est rendu en couche permanente sous la carte (voir <main>).
+// chargement est rendu en couche permanente sous la carte.
 const MapView = dynamic(() => import('@/components/MapView'), { ssr: false })
 
-type OtpStatus = 'unknown' | 'online' | 'offline'
+/** Largeur de la colonne de l'app sur grand écran (globals.css, .app-column). */
+const COLUMN_PX = 420
+/** Une session quittée peut être reprise pendant ce délai (useNavigationSession). */
+const RESUME_OFFER_MS = 10 * 60_000
+// Emprise acceptée pour un lien partagé (?from=…&to=…) : le Grand Alger avec
+// une large marge. Au-delà, des coordonnées farfelues ne lancent aucune
+// recherche ; à l'intérieur, le proxy dit lui-même « hors zone couverte ».
+const LINK_BOUNDS = { minLat: 36.4, maxLat: 37.0, minLon: 2.6, maxLon: 3.6 }
 
-// Tarif estimé d'un itinéraire : chaque tronçon transport = un ticket (le
-// réseau algérois n'a pas de correspondance tarifaire). On additionne les
-// tarifs connus des lignes empruntées.
-function estimateFare(legs: { mode: string; routeShortName?: string }[]): string | null {
-  let total = 0
-  let found = false
-  for (const leg of legs) {
-    if (leg.mode === 'WALK') continue
-    const line = allLines.find((l) => l.shortName === leg.routeShortName)
-    const price = line?.fare ? parseInt(line.fare, 10) : NaN
-    if (!Number.isNaN(price)) { total += price; found = true }
+/**
+ * Un point d'un lien partagé : « lat,lon,nom ». Jamais d'exception : un nom
+ * contenant « % » (ancien lien doublement décodé) faisait tomber toute l'app.
+ */
+function parseLinkPoint(value: string | null): MarkedCoordinate | null {
+  if (!value) return null
+  const parts = value.split(',')
+  if (parts.length < 2) return null
+  const lat = Number(parts[0])
+  const lon = Number(parts[1])
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null
+  if (lat < LINK_BOUNDS.minLat || lat > LINK_BOUNDS.maxLat || lon < LINK_BOUNDS.minLon || lon > LINK_BOUNDS.maxLon) return null
+  const raw = parts.slice(2).join(',').trim()
+  let name = raw
+  try {
+    name = decodeURIComponent(raw)
+  } catch {
+    // « % » isolé : le nom tel quel.
   }
-  return found ? `${total} DZD` : null
+  name = name.slice(0, 120).trim()
+  return { lat, lon, name: name || undefined }
+}
+
+/** Grand écran (tablette, téléphone en paysage) et hauteur visible. */
+function useViewport() {
+  const [viewport, setViewport] = useState({ wide: false, height: 800 })
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 768px)')
+    const update = () => setViewport({ wide: query.matches, height: window.innerHeight })
+    update()
+    window.addEventListener('resize', update)
+    query.addEventListener?.('change', update)
+    return () => {
+      window.removeEventListener('resize', update)
+      query.removeEventListener?.('change', update)
+    }
+  }, [])
+  return viewport
+}
+
+function outcomeToState(out: PlanOutcome): SearchState {
+  if (out.status === 'error') {
+    return {
+      status: 'error',
+      query: out.query,
+      error: out.error,
+      itineraries: out.error.walkFallback ? [out.error.walkFallback] : [],
+    }
+  }
+  if (out.status === 'nextService') {
+    return {
+      status: 'nextService',
+      query: out.query,
+      itineraries: out.itineraries,
+      dayOffset: out.dayOffset,
+      fallback: out.fallback,
+      serviceQuery: out.serviceQuery,
+    }
+  }
+  return { status: 'ok', query: out.query, itineraries: out.itineraries, notice: out.notice, demo: out.demo }
+}
+
+interface LastSearch {
+  from: MarkedCoordinate
+  to: MarkedCoordinate
+  when: PlanWhen
+  arriveBy: boolean
 }
 
 export default function Home() {
-  const [itineraries, setItineraries] = useState<OtpItinerary[]>([])
+  const { t, locale } = useTranslation()
+  const rtl = locale === 'ar'
+  const { wide, height: viewportHeight } = useViewport()
+
+  // ── État de l'écran ────────────────────────────────────────────────────────
+  const [search, setSearch] = useState<SearchState>({ status: 'idle' })
   const [previewIndex, setPreviewIndex] = useState(0)
-  const [confirmedIndex, setConfirmedIndex] = useState<number | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [demoMode, setDemoMode] = useState(false)
-  const [otpStatus, setOtpStatus] = useState<OtpStatus>('unknown')
-  const [clickMode, setClickMode] = useState<'from' | 'to' | null>(null)
-  const [externalFrom, setExternalFrom] = useState<Coordinate | null>(null)
-  const [externalTo, setExternalTo] = useState<Coordinate | null>(null)
+  // Résultats façon RATP : la liste et le détail sont deux écrans distincts.
+  const [detailOpen, setDetailOpen] = useState(false)
+  // Feuille du détail sur téléphone : réduit / milieu (défaut) / plein.
+  const [detailSnap, setDetailSnap] = useState<DetailSnap>('mid')
+  // Hauteur de carte cachée par la feuille arrêtée (hors plein écran) : la
+  // carte cadre le trajet au-dessus (DetailSheet).
+  const [detailMapInset, setDetailMapInset] = useState<number | null>(null)
+  // Bouton flottant du détail : recadrer la carte sur le trajet.
+  const [fitSignal, setFitSignal] = useState(0)
+  const [externalFrom, setExternalFrom] = useState<MarkedCoordinate | null>(null)
+  const [externalTo, setExternalTo] = useState<MarkedCoordinate | null>(null)
   const [fromName, setFromName] = useState<string | undefined>()
   const [toName, setToName] = useState<string | undefined>()
   // L'accueil EST le formulaire d'itinéraire : il ne reste que deux niveaux,
   // les onglets (« home ») et l'écran de résultats poussé par-dessus.
   const [sheet, setSheet] = useState<'home' | 'results'>('home')
   const [activeTab, setActiveTab] = useState<Tab>('home')
-  const [navMode, setNavMode] = useState(false)
-  // Navigation : la progression se mesure depuis l'appui sur « Commencer »
-  // (durées cumulées des étapes), pas sur les horodatages OTP — un trajet
-  // calculé pour 10 h et lancé le soir n'est pas « déjà terminé ».
-  const [navNow, setNavNow] = useState(() => Date.now())
-  const [navStartedAt, setNavStartedAt] = useState<number | null>(null)
   const [locateSignal, setLocateSignal] = useState(0)
-  // React 18 ne sérialise pas l'attribut `inert` (arrivé en React 19) : il faut
-  // le poser à la main, sinon l'écran Résultats reste tabulable une fois sorti
-  // de l'écran — aria-hidden ne retire que l'annonce, pas le focus.
-  const resultsPanelRef = useRef<HTMLDivElement>(null)
-  const detailPanelRef = useRef<HTMLDivElement>(null)
-  // Contenu des onglets : un second appui sur l'onglet actif y remonte en haut.
-  const tabContentRef = useRef<HTMLDivElement>(null)
-  // Résultats façon RATP : la liste et le détail sont deux écrans distincts.
-  const [detailOpen, setDetailOpen] = useState(false)
+  // « Y aller » : la destination remplie, SearchBar lance la recherche si le
+  // départ est déjà résolu (sinon il attend l'usager).
+  const [submitSignal, setSubmitSignal] = useState(0)
+  // Ligne montrée seule sur la carte (fiche d'arrêt, catalogue des lignes).
+  const [focusLine, setFocusLine] = useState<MapFocusLine | null>(null)
+  // Ré-appui sur l'onglet Lignes déjà actif : retour au catalogue.
+  const [linesResetSignal, setLinesResetSignal] = useState(0)
+  // « Voir les lignes proches du départ » (recherche sans résultat) : le
+  // catalogue s'ouvre sur les lignes autour de CE point, pas sur la liste A-Z.
+  const [nearPoint, setNearPoint] = useState<{ lat: number; lon: number; name: string } | null>(null)
   // Hors-ligne (PWA) : bandeau plat informatif, le statique reste consultable.
   const [isOffline, setIsOffline] = useState(false)
+  // Calculateur injoignable : information seulement, chaque recherche le retente.
+  const [otpDown, setOtpDown] = useState(false)
+  // « Reprendre la navigation » après une sortie (pas après une arrivée).
+  const [resumeOffer, setResumeOffer] = useState<{ toName: string; until: number } | null>(null)
 
+  const tabContentRef = useRef<HTMLDivElement>(null)
+  const homePanelRef = useRef<HTMLDivElement>(null)
+  const tabLayerRef = useRef<HTMLDivElement>(null)
+  const tabBarRef = useRef<HTMLDivElement>(null)
+  const mapWrapRef = useRef<HTMLDivElement>(null)
+  const resultsPanelRef = useRef<HTMLDivElement>(null)
+  const detailPanelRef = useRef<HTMLDivElement>(null)
+  const navWrapRef = useRef<HTMLDivElement>(null)
+
+  const { searches: recentSearches, addSearch } = useRecentSearches()
+
+  // ── Navigation et position (une seule session GPS) ─────────────────────────
+  // Hors navigation, la position n'est suivie (basse précision) que lorsque
+  // la carte est à l'écran ; le hook passe seul en haute précision pendant la
+  // navigation, garde l'écran allumé et relâche tout après l'arrivée.
+  const mapTabShown = activeTab === 'map' && sheet === 'home'
+  const nav = useNavigationSession({ idlePosition: mapTabShown ? 'low' : 'off' })
+  const navMode = nav.active
+  const positionApi = nav.position
+  const userPosition = positionApi.position
+  const geo = useGeolocation(positionApi)
+
+  // Navigation restaurée au chargement (rechargement, onglet tué puis rendu
+  // par le système) : la carte reprend le suivi de la position, comme à
+  // l'entrée en navigation. resumed ne passe à vrai qu'au montage.
+  useEffect(() => {
+    if (nav.resumed) setLocateSignal((n) => n + 1)
+  }, [nav.resumed])
+  // Le formulaire juge l'âge d'une position sur l'horloge du téléphone
+  // (receivedAt) : certains appareils datent le fix avec l'horloge GPS.
+  const formPosition = useMemo(
+    () => (userPosition
+      ? { lat: userPosition.lat, lon: userPosition.lon, accuracy: userPosition.accuracy, timestamp: userPosition.receivedAt }
+      : null),
+    [userPosition],
+  )
+
+  // ── Réseau et calculateur ──────────────────────────────────────────────────
   useEffect(() => {
     const goOffline = () => setIsOffline(true)
     const goOnline = () => setIsOffline(false)
@@ -104,308 +230,416 @@ export default function Home() {
     }
   }, [])
 
-  const autoSearchRef = useRef(false)
-  // Tronçon le plus avancé déjà atteint : empêche la progression de reculer si
-  // le trajet repasse au même endroit ou si le GPS saute.
-  const reachedLegRef = useRef(0)
-  const { searches: recentSearches, addSearch } = useRecentSearches()
-  const geo = useGeolocation()
-  // Suivi continu de la position, actif dès l'entrée en navigation.
-  const { position: userPosition, error: positionError, start: requestPosition } = useUserPosition(navMode)
-  // L'écran reste allumé tant qu'on navigue : sinon il s'éteint toutes les 30 s
-  // et l'usager doit le rallumer à chaque carrefour.
-  useWakeLock(navMode)
-  const { t, locale } = useTranslation()
+  // Le statut d'OTP n'est qu'un bandeau : il ne bloque plus aucune recherche
+  // et se revérifie seul (retour du réseau, retour au premier plan).
+  useEffect(() => watchOtpHealth((info) => setOtpDown(!info.ok)), [])
 
-  const getModeLabel = useCallback((mode: string) => {
-    if (mode === 'SUBWAY') return t('metro')
-    if (mode === 'TRAM') return t('tram')
-    return t('walk')
-  }, [t])
+  // ── Recherche ──────────────────────────────────────────────────────────────
+  // Une seule recherche vivante : la précédente est annulée, et une réponse
+  // arrivée après un retour ou une nouvelle recherche est ignorée (elle
+  // rouvrait l'écran Résultats sous les doigts de l'usager).
+  const reqIdRef = useRef(0)
+  const ctrlRef = useRef<AbortController | null>(null)
+  const lastSearchRef = useRef<LastSearch | null>(null)
 
-  const getItineraryAria = useCallback((itinerary: OtpItinerary) => {
-    const modes = itinerary.legs
-      .filter((leg) => leg.mode !== 'WALK')
-      .map((leg) => getModeLabel(leg.mode))
-      .join(' + ')
+  const runSearch = useCallback(async (from: MarkedCoordinate, to: MarkedCoordinate, when: PlanWhen, arriveBy: boolean) => {
+    ctrlRef.current?.abort()
+    const ctrl = new AbortController()
+    ctrlRef.current = ctrl
+    const id = ++reqIdRef.current
+    lastSearchRef.current = { from, to, when, arriveBy }
 
-    return `${t('journey')}: ${modes || t('onFoot')}`
-  }, [getModeLabel, t])
+    setResumeOffer(null)
+    setFromName(from.name)
+    setToName(to.name)
+    setDetailOpen(false)
+    setDetailSnap('mid')
+    setPreviewIndex(0)
+    // Handoff 1j : l'écran Résultats s'ouvre tout de suite avec des rangées
+    // squelettes — jamais de spinner plein écran. L'en-tête dit déjà l'heure
+    // demandée (« maintenant » = l'instant de l'envoi).
+    setSearch({ status: 'loading', query: resolvePlanQuery(when, arriveBy) })
+    setSheet('results')
 
-  useEffect(() => {
-    checkOtpHealth().then((ok) => setOtpStatus(ok ? 'online' : 'offline'))
-  }, [])
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const fromParam = params.get('from')
-    const toParam = params.get('to')
-    if (!fromParam || !toParam) return
-
-    const parse = (value: string): Coordinate | null => {
-      const parts = value.split(',')
-      if (parts.length < 2) return null
-      const lat = parseFloat(parts[0])
-      const lon = parseFloat(parts[1])
-      if (Number.isNaN(lat) || Number.isNaN(lon)) return null
-      return {
-        lat,
-        lon,
-        name: parts.slice(2).map(decodeURIComponent).join(',') || undefined,
-      }
+    let out: PlanOutcome
+    try {
+      out = await searchItineraries(
+        { lat: from.lat, lon: from.lon, name: from.name },
+        { lat: to.lat, lon: to.lon, name: to.name },
+        // locale 'fr' : OTP traduit désormais girouettes et arrêts
+        // (translations.txt) ; les rapprochements par girouette (sens d'une
+        // ligne, tracé déduit) attendent le français du GTFS. L'arabe est
+        // choisi au rendu (placeName, legHeadsign).
+        { when, arriveBy, signal: ctrl.signal, locale: 'fr' },
+      )
+    } catch {
+      // searchItineraries ne lève pas ; garde-fou contre une réponse imprévue.
+      out = { status: 'error', error: { kind: 'otpUnavailable' }, query: resolvePlanQuery(when, arriveBy) }
     }
+    if (id !== reqIdRef.current) return
+    ctrlRef.current = null
+    if (out.status === 'error' && out.error.kind === 'aborted') return
+    setSearch(outcomeToState(out))
+    if (out.status !== 'error') addSearch(from, to)
+  }, [addSearch])
 
-    const from = parse(fromParam)
-    const to = parse(toParam)
+  // Signature de SearchBar : `when` détaille l'heure choisie (heure murale
+  // d'Alger) ; `date` n'est qu'un repli.
+  const handleSearch = useCallback((
+    from: Coordinate | null,
+    to: Coordinate | null,
+    date?: Date,
+    arriveBy?: boolean,
+    when?: SearchWhen,
+  ) => {
+    if (!from || !to) return
+    const planWhen: PlanWhen = when && when.kind !== 'now' && when.date && when.time
+      ? { date: when.date, time: when.time }
+      : date ?? 'now'
+    void runSearch(from, to, planWhen, Boolean(arriveBy))
+  }, [runSearch])
+
+  const handleRetry = useCallback(() => {
+    const last = lastSearchRef.current
+    if (last) void runSearch(last.from, last.to, last.when, last.arriveBy)
+  }, [runSearch])
+
+  // ── Liens partagés et raccourcis de l'app installée ────────────────────────
+  const autoSearchRef = useRef(false)
+  // Quitter la navigation depuis l'effet des liens, qui ne doit tourner qu'une fois.
+  const navQuitRef = useRef(nav.quit)
+  navQuitRef.current = nav.quit
+  useEffect(() => {
+    const applyTab = (tab: string | null) => {
+      if (tab !== 'lines' && tab !== 'map' && tab !== 'home') return
+      setActiveTab(tab)
+      setSheet('home')
+      if (tab === 'map') setLocateSignal((n) => n + 1)
+    }
+    const params = new URLSearchParams(window.location.search)
+    const from = parseLinkPoint(params.get('from'))
+    const to = parseLinkPoint(params.get('to'))
     if (from && to) {
+      // Un lien explicite remplace une navigation restaurée (session en
+      // localStorage) : sinon la carte d'étape recouvrait les résultats du
+      // lien. Même règle que handleReroute (quit puis recherche). La
+      // restauration (useNavigationSession, appelé plus haut) a déjà eu lieu.
+      navQuitRef.current()
       setExternalFrom(from)
       setExternalTo(to)
       autoSearchRef.current = true
+    } else {
+      applyTab(params.get('tab'))
     }
+    // L'adresse redevient « / » : un rechargement ne rejoue pas la recherche
+    // du lien, et le retour système reste celui de l'app.
+    if (params.has('from') || params.has('to') || params.has('tab')) {
+      try {
+        window.history.replaceState(window.history.state, '', window.location.pathname)
+      } catch {
+        // Historique verrouillé (aperçus intégrés) : sans conséquence.
+      }
+    }
+    // App déjà ouverte : un raccourci du manifeste arrive par launchQueue.
+    const launchQueue = (window as Window & {
+      launchQueue?: { setConsumer: (consumer: (params: { targetURL?: string }) => void) => void }
+    }).launchQueue
+    launchQueue?.setConsumer((launch) => {
+      try {
+        if (launch.targetURL) applyTab(new URL(launch.targetURL).searchParams.get('tab'))
+      } catch {
+        // URL illisible : on reste où l'on est.
+      }
+    })
   }, [])
 
   useEffect(() => {
     if (!autoSearchRef.current || !externalFrom || !externalTo) return
     autoSearchRef.current = false
-    void handleSearch(externalFrom, externalTo)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [externalFrom, externalTo])
+    void runSearch(externalFrom, externalTo, 'now', false)
+  }, [externalFrom, externalTo, runSearch])
 
-  useEffect(() => {
-    const panel = resultsPanelRef.current
-    if (!panel) return
-    if (sheet === 'results') panel.removeAttribute('inert')
-    else panel.setAttribute('inert', '')
-  }, [sheet])
-
+  // ── Onglets et choix venus d'ailleurs ──────────────────────────────────────
   const handleTabChange = useCallback((tab: Tab) => {
     haptic('selection')
     // Comme sur iOS et Android : toucher l'onglet déjà actif ramène sa liste
-    // tout en haut au lieu de ne rien faire.
+    // tout en haut (et, pour les Lignes, au catalogue) au lieu de ne rien faire.
     if (tab === activeTab && sheet === 'home') {
       tabContentRef.current?.querySelectorAll<HTMLElement>('*').forEach((el) => {
         if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
       })
+      if (tab === 'lines') setLinesResetSignal((n) => n + 1)
     }
     setActiveTab(tab)
     setSheet('home')
-    // L'onglet Carte centre automatiquement sur la position de l'utilisateur.
-    if (tab === 'map') setLocateSignal((n) => n + 1)
-  }, [activeTab, sheet])
+    // L'onglet Carte centre sur l'usager, sauf si une ligne y est montrée.
+    if (tab === 'map' && !focusLine) setLocateSignal((n) => n + 1)
+  }, [activeTab, sheet, focusLine])
 
-  // Une destination choisie ailleurs (carte, ligne, arrêt) remplit le
-  // formulaire d'accueil et y ramène l'utilisateur.
-  const handlePickDestination = useCallback((coord: Coordinate) => {
+  // Une destination choisie ailleurs (carte, ligne, arrêt, raccourci) remplit
+  // le formulaire d'accueil et y ramène l'usager. Le formulaire restant monté,
+  // le départ déjà saisi n'est plus perdu.
+  const handlePickDestination = useCallback((coord: MarkedCoordinate) => {
     setExternalTo(coord)
     setActiveTab('home')
     setSheet('home')
   }, [])
 
-  const handleSearch = useCallback(async (
-    from: Coordinate | null,
-    to: Coordinate | null,
-    date?: Date,
-    arriveBy?: boolean,
-  ) => {
-    if (!from || !to) return
-
-    setLoading(true)
-    setError(null)
-    setDemoMode(false)
-    setClickMode(null)
-    setDetailOpen(false)
-    setFromName(from.name)
-    setToName(to.name)
-    // Handoff 1j : on ouvre l'écran résultats tout de suite avec des rangées
-    // squelettes — jamais de spinner plein écran.
-    setItineraries([])
-    setSheet('results')
-
-    if (otpStatus !== 'offline') {
-      try {
-        const result = await planTrip(
-          { lat: from.lat, lon: from.lon, name: from.name },
-          { lat: to.lat, lon: to.lon, name: to.name },
-          date,
-          arriveBy,
-        )
-
-        // OTP signale « trivial distance » sous ~1,5 km TOUT EN renvoyant un
-        // itinéraire à pied parfaitement valable. Ne jamais court-circuiter sur
-        // une erreur si un plan accompagne la réponse — sinon tous les trajets
-        // de centre-ville affichent « points trop proches » pour rien.
-        const hasPlan = Boolean(result.plan?.itineraries?.length)
-
-        if (result.error && !hasPlan) {
-          const otpCode = result.error.message ?? ''
-          const otpMsg = result.error.msg?.toLowerCase() ?? ''
-
-          if (otpMsg.includes('trivial distance')) {
-            setError(t('tooClose'))
-            setLoading(false)
-            return
-          }
-
-          if (
-            otpCode !== 'PATH_NOT_FOUND' &&
-            otpCode !== 'LOCATION_NOT_ACCESSIBLE' &&
-            !otpMsg.includes('unknown') &&
-            !result.error.noPath
-          ) {
-            setError(`${t('impossible')} - ${otpCode || otpMsg || t('error')}`)
-            setLoading(false)
-            return
-          }
-        }
-
-        if (result.plan?.itineraries.length) {
-          setItineraries(result.plan.itineraries)
-          setPreviewIndex(0)
-          setConfirmedIndex(null)
-          setSheet('results')
-          setOtpStatus('online')
-          addSearch(from, to)
-          setLoading(false)
-          return
-        }
-      } catch {
-        setOtpStatus('offline')
-      }
-    }
-
-    const mock = mockPlanTrip(
-      { lat: from.lat, lon: from.lon, name: from.name },
-      { lat: to.lat, lon: to.lon, name: to.name },
-    )
-
-    if (mock.plan?.itineraries.length) {
-      setItineraries(mock.plan.itineraries)
-      setPreviewIndex(0)
-      setConfirmedIndex(null)
-      setSheet('results')
-      setDemoMode(true)
-      addSearch(from, to)
-    } else {
-      // Explication planche 1j : factuelle, avec le dernier départ utile.
-      setError(
-        `${t('noRouteExplain')}${metroLine.hours ? ` ${t('lastDeparture').charAt(0).toUpperCase()}${t('lastDeparture').slice(1)} M1 : ${metroLine.hours.last}.` : ''}`,
-      )
-    }
-
-    setLoading(false)
-  }, [addSearch, otpStatus, t])
-
-  const handleMapClick = useCallback((coord: Coordinate) => {
-    if (clickMode === 'from') {
-      setExternalFrom(coord)
-      setClickMode('to')
-    } else if (clickMode === 'to') {
-      setExternalTo(coord)
-      setClickMode(null)
-    }
-  }, [clickMode])
-
-  const handleReset = useCallback(() => {
-    setItineraries([])
-    setConfirmedIndex(null)
-    setDemoMode(false)
-    setDetailOpen(false)
-    setError(null)
-    // Retour planche 1g : les résultats reviennent au formulaire (l'accueil).
+  const handlePickOrigin = useCallback((coord: MarkedCoordinate) => {
+    // Indispensable : sur téléphone, le formulaire n'est pas visible depuis
+    // l'onglet Carte.
+    setExternalFrom(coord)
     setActiveTab('home')
     setSheet('home')
   }, [])
 
-  const handleGo = useCallback(() => {
-    haptic('impact')
-    setConfirmedIndex(previewIndex)
-    setNavMode(true)
-    setNavStartedAt(Date.now())
+  // « Y aller » / « Partir d'ici » depuis la fiche d'arrêt ou un point choisi.
+  const handleNavigateTo = useCallback((coord: Coordinate, name: string) => {
+    handlePickDestination({ lat: coord.lat, lon: coord.lon, name: coord.name ?? name })
+    setSubmitSignal((n) => n + 1)
+  }, [handlePickDestination])
+
+  const handleDepartFrom = useCallback((coord: Coordinate, name: string) => {
+    handlePickOrigin({ lat: coord.lat, lon: coord.lon, name: coord.name ?? name })
+  }, [handlePickOrigin])
+
+  /** Ligne montrée seule sur la carte (catalogue des lignes → « Voir sur la carte »). */
+  const handleShowLineOnMap = useCallback((lineId: string, directionIndex: number) => {
+    setFocusLine({ lineId, directionIndex })
+    // Pas de handleTabChange('map') : il recentrerait la carte sur l'usager
+    // et lui ferait quitter le cadrage de la ligne.
+    setActiveTab('map')
     setSheet('home')
-    // Façon Apple Plans : entrer en navigation active le suivi de position.
-    setLocateSignal((n) => n + 1)
-  }, [previewIndex])
+  }, [])
 
-  useEffect(() => {
-    if (!navMode) return
-    setNavNow(Date.now())
-    const id = setInterval(() => setNavNow(Date.now()), 30000)
-    return () => clearInterval(id)
-  }, [navMode])
+  // ── Résultats ──────────────────────────────────────────────────────────────
+  const itineraries = stateItineraries(search)
 
-  const handleExitNav = useCallback(() => {
-    setNavMode(false)
-    setSheet('results')
+  const handleReset = useCallback(() => {
+    // Invalide et annule la recherche en cours : sa réponse ne rouvrira pas
+    // l'écran, et le bouton du formulaire ne reste pas sur « Recherche… ».
+    reqIdRef.current += 1
+    ctrlRef.current?.abort()
+    ctrlRef.current = null
+    setSearch({ status: 'idle' })
+    setDetailOpen(false)
+    // Retour planche 1g : les résultats reviennent au formulaire (l'accueil).
+    setActiveTab('home')
+    setSheet('home')
+    // Le focus revient au bouton du formulaire, pas au début de la page.
+    requestAnimationFrame(() => {
+      homePanelRef.current?.querySelector<HTMLElement>('button[type="submit"]')?.focus({ preventScroll: true })
+    })
+  }, [])
+
+  const handleOpenDetail = useCallback((index: number) => {
+    setPreviewIndex(index)
+    setDetailSnap('mid')
+    setDetailOpen(true)
   }, [])
 
   const handleCloseDetail = useCallback(() => setDetailOpen(false), [])
+  const handleRefitRoute = useCallback(() => setFitSignal((n) => n + 1), [])
 
-  // Retour système (bouton Android, geste iOS, touche retour) : il referme
-  // l'écran du dessus au lieu de quitter l'app. Les écrans restent « ouverts »
-  // sous la navigation pour que le retour en sorte vers le détail du trajet.
-  const resultsOpen = sheet === 'results' || navMode
+  const handleSeeNearbyLines = useCallback(() => {
+    const from = lastSearchRef.current?.from
+    if (from) {
+      const name = from.nouriKind === 'myLocation' ? t('myLocation') : from.name || t('from')
+      setNearPoint({ lat: from.lat, lon: from.lon, name })
+    }
+    setSearch({ status: 'idle' })
+    setDetailOpen(false)
+    setSheet('home')
+    setActiveTab('lines')
+    setLinesResetSignal((n) => n + 1)
+  }, [t])
+
+  // Sans point explicite : les lignes autour de la position obtenue par « Ma
+  // position » (formulaire), si elle a moins de 15 min — au-delà, l'usager a
+  // pu se déplacer. Réévalué à l'ouverture de l'onglet.
+  const nearForLines = useMemo(() => {
+    if (nearPoint) return nearPoint
+    if (geo.lat === null || geo.lon === null || geo.receivedAt === null) return null
+    if (activeTab !== 'lines' || Date.now() - geo.receivedAt > 15 * 60_000) return null
+    return { lat: geo.lat, lon: geo.lon }
+  }, [nearPoint, geo.lat, geo.lon, geo.receivedAt, activeTab])
+  const clearNearPoint = useCallback(() => setNearPoint(null), [])
+
+  // ── Navigation ─────────────────────────────────────────────────────────────
+  const handleGo = useCallback(() => {
+    const it = itineraries[previewIndex]
+    if (!it) return
+    // Trajet qui part bien plus tard (nuit, « Départ 18:00 » cherché à 14:00) :
+    // la navigation compterait depuis maintenant — arrivée inventée. Le
+    // bouton est déjà remplacé par une phrase (ResultsScreen) ; garde-fou.
+    if (it.startTime - Date.now() > START_LATER_MS) return
+    haptic('impact')
+    nav.start(it, { fromName, toName, demo: stateIsDemo(search) || Boolean(it.demo) })
+    setResumeOffer(null)
+    setSheet('home')
+    // Façon Apple Plans : entrer en navigation recentre sur la position.
+    setLocateSignal((n) => n + 1)
+  }, [itineraries, previewIndex, nav, fromName, toName, search])
+
+  const handleExitNav = useCallback(() => {
+    const finished = Boolean(nav.banner?.arrived)
+    const legs = nav.itinerary?.legs
+    const destination = nav.meta?.toName ?? legs?.[legs.length - 1]?.to.name ?? ''
+    nav.quit()
+    // Sortie par erreur (retour système, mauvais bouton) : la session reste
+    // reprenable quelques minutes. Pas après une arrivée.
+    setResumeOffer(finished ? null : { toName: destination, until: Date.now() + RESUME_OFFER_MS })
+    setSheet(itineraries.length ? 'results' : 'home')
+  }, [nav, itineraries.length])
+
+  const handleResumeNav = useCallback(() => {
+    nav.resume()
+    setResumeOffer(null)
+    setSheet('home')
+    // Reprise : la carte suit de nouveau la position (comme handleGo).
+    setLocateSignal((n) => n + 1)
+  }, [nav])
+
+  useEffect(() => {
+    if (!resumeOffer) return
+    const id = setTimeout(() => setResumeOffer(null), Math.max(0, resumeOffer.until - Date.now()))
+    return () => clearTimeout(id)
+  }, [resumeOffer])
+
+  // Hors trajet constaté : nouveau calcul depuis la position actuelle.
+  const handleReroute = useCallback(() => {
+    const target = nav.rerouteTarget
+    if (!target) return
+    nav.quit()
+    void runSearch(
+      { lat: target.from.lat, lon: target.from.lon, name: t('myLocation'), nouriKind: 'myLocation' },
+      { lat: target.to.lat, lon: target.to.lon, name: target.to.name },
+      'now',
+      false,
+    )
+  }, [nav, runSearch, t])
+
+  // Hauteurs réelles de la carte d'étape et de la feuille basse : la carte y
+  // centre le point bleu et y place « Recentrer » et ses messages.
+  const [navInsets, setNavInsets] = useState<{ top: number; bottom: number } | null>(null)
+  useEffect(() => {
+    if (!navMode) {
+      setNavInsets(null)
+      return
+    }
+    const measure = () => {
+      const root = navWrapRef.current?.firstElementChild as HTMLElement | null
+      const top = root?.children[0] as HTMLElement | undefined
+      const bottom = root?.children[1] as HTMLElement | undefined
+      if (!root || !top || !bottom) return
+      // offsetTop/offsetHeight ignorent les animations d'entrée (transform).
+      const next = { top: top.offsetTop + top.offsetHeight, bottom: root.clientHeight - bottom.offsetTop }
+      setNavInsets((prev) => (prev && Math.abs(prev.top - next.top) < 2 && Math.abs(prev.bottom - next.bottom) < 2 ? prev : next))
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [navMode, nav.banner])
+
+  // ── Retour système et gestes ───────────────────────────────────────────────
+  // Le retour (bouton Android, geste iOS, touche retour) referme l'écran du
+  // dessus au lieu de quitter l'app. Les résultats restent « ouverts » sous la
+  // navigation pour que le retour en sorte vers le détail du trajet. La fiche
+  // d'arrêt, la ligne consultée (carte) et le détail de ligne (catalogue) ont
+  // leur propre entrée.
+  const resultsOpen = sheet === 'results' || (navMode && itineraries.length > 0)
   useBackHandler(resultsOpen, handleReset)
   useBackHandler(resultsOpen && detailOpen, handleCloseDetail)
   useBackHandler(navMode, handleExitNav)
 
-  // Glisser depuis le bord : referme le détail, sinon la liste des résultats.
-  const rtl = locale === 'ar'
-  useEdgeSwipeBack(resultsPanelRef, {
-    enabled: sheet === 'results' && !detailOpen,
-    rtl,
-    onBack: handleReset,
-  })
-  useEdgeSwipeBack(detailPanelRef, {
-    enabled: sheet === 'results' && detailOpen,
-    rtl,
-    onBack: handleCloseDetail,
-  })
+  // Glisser depuis le bord (PWA iOS) : referme le détail, sinon la liste.
+  useEdgeSwipeBack(resultsPanelRef, { enabled: sheet === 'results' && !detailOpen, rtl, onBack: handleReset })
+  useEdgeSwipeBack(detailPanelRef, { enabled: sheet === 'results' && detailOpen, rtl, onBack: handleCloseDetail })
 
-  const displayedItinerary = itineraries[confirmedIndex ?? previewIndex] ?? null
-  const navItinerary = navMode && confirmedIndex !== null ? itineraries[confirmedIndex] ?? null : null
+  // ── Ce qui est à l'écran ───────────────────────────────────────────────────
+  // Détail sur téléphone : la carte est sous la feuille glissable.
+  const mobileDetail = sheet === 'results' && detailOpen && !wide
+  // La couche des onglets s'efface pour laisser voir la carte : onglet Carte,
+  // navigation, et détail (le trajet apparaît au-dessus de la feuille).
+  const tabLayerHidden = navMode || (sheet === 'home' && activeTab === 'map') || mobileDetail
+  // Carte visible (sinon recouverte : hors du parcours clavier et des
+  // lecteurs d'écran). Feuille en plein écran : il n'en reste qu'une bande.
+  const mapVisible = wide || navMode || (sheet === 'home' && activeTab === 'map') || (mobileDetail && detailSnap !== 'full')
 
-  // Géométrie décodée une seule fois par trajet : la projection de la position
-  // s'en sert à chaque rafraîchissement du GPS.
-  const navGeometries = useMemo(
-    () => (navItinerary ? buildLegGeometries(navItinerary) : null),
-    [navItinerary],
+  useInert(tabLayerRef, sheet === 'results' || tabLayerHidden)
+  useInert(tabBarRef, sheet === 'results' || navMode)
+  useInert(mapWrapRef, !mapVisible)
+
+  const mapItinerary = navMode ? nav.itinerary : sheet === 'results' ? itineraries[previewIndex] ?? null : null
+
+  // Cadrage du trajet ou d'une ligne : la zone de carte réellement visible.
+  const fitPadding = useMemo<MapPadding | undefined>(() => {
+    if (wide) {
+      if (mapTabShown) return { top: 80, bottom: 90, left: 60, right: 60 }
+      const start = COLUMN_PX + 40
+      return rtl ? { top: 60, bottom: 60, left: 60, right: start } : { top: 60, bottom: 60, left: start, right: 60 }
+    }
+    if (sheet === 'results' && detailOpen) {
+      // Handoff : haut 64, côtés 24 / 70 (le bouton flottant est côté fin de
+      // lecture), bas = hauteur cachée par la feuille + 20. La valeur ne
+      // change pas en plein écran : la carte n'y est pas recadrée.
+      const bottom = (detailMapInset ?? Math.round(viewportHeight * (514 / 844))) + 20
+      return rtl ? { top: 64, bottom, left: 70, right: 24 } : { top: 64, bottom, left: 24, right: 70 }
+    }
+    return undefined
+  }, [wide, mapTabShown, rtl, sheet, detailOpen, viewportHeight, detailMapInset])
+
+  const cameraPadding = useMemo(() => {
+    if (!navInsets) return undefined
+    const sides = wide ? (rtl ? { right: COLUMN_PX } : { left: COLUMN_PX }) : {}
+    return { top: navInsets.top + 8, bottom: navInsets.bottom + 8, ...sides }
+  }, [navInsets, wide, rtl])
+
+  // Messages empilés avec ceux de la carte (onglet Carte, navigation) : le
+  // bandeau hors ligne de l'accueil y est masqué.
+  const mapNotices = useMemo(
+    () => (isOffline && (navMode || mapTabShown) ? [t('offlineBanner')] : undefined),
+    [isOffline, navMode, mapTabShown, t],
   )
 
-  // Progression de navigation : calculée UNE fois ici, puis partagée avec la
-  // carte. Elle suit la POSITION réelle ; l'horloge n'est qu'un repli quand le
-  // GPS est indisponible (http non sécurisé, permission refusée, signal perdu).
-  const navProgress = useMemo(() => {
-    if (!navItinerary || !navGeometries) return null
+  // Annonce vocale de l'écran Résultats (région live hors du panneau, jamais
+  // rendue inerte) : « recherche en cours », « 3 itinéraires trouvés », échec.
+  const srStatus = sheet === 'results'
+    ? resultsAnnouncement(search, locale, search.status === 'error' ? describePlanError(search.error, locale) : undefined)
+    : ''
 
-    if (userPosition) {
-      const fromGps = progressFromPosition(
-        navItinerary,
-        navGeometries,
-        [userPosition.lon, userPosition.lat],
-        // On ne revient pas en arrière : un trajet qui repasse au même endroit
-        // (boucle, aller-retour) ne doit pas faire reculer la progression.
-        reachedLegRef.current,
-      )
-      if (fromGps) return { ...fromGps, nav: navItinerary }
-    }
+  const showResume = Boolean(resumeOffer && nav.canResume && !navMode)
+  const [resumeBefore, resumeAfter = ''] = t('page_resumeNavTo').split('{to}')
+  const resumeRow = showResume ? (
+    <div className="flex items-center justify-between gap-3 border-b border-line bg-paper-2 px-5 py-2.5">
+      <button
+        type="button"
+        onClick={handleResumeNav}
+        className="tap min-h-[44px] min-w-0 flex-1 text-start text-body font-semibold text-brand"
+      >
+        {resumeOffer?.toName ? (
+          // Le nom est un isolat bidi : en arabe, un nom latin ne retourne
+          // pas la phrase.
+          <>{resumeBefore}<bdi>{resumeOffer.toName}</bdi>{resumeAfter}</>
+        ) : t('nav_resume')}
+      </button>
+      <button
+        type="button"
+        onClick={() => setResumeOffer(null)}
+        aria-label={t('close')}
+        className="tap flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink-600"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </button>
+    </div>
+  ) : null
 
-    const elapsed = navStartedAt !== null ? navNow - navStartedAt : 0
-    return { ...progressFromElapsed(navItinerary, elapsed), nav: navItinerary }
-  }, [navItinerary, navGeometries, userPosition, navStartedAt, navNow])
-
-  // Mémorise le tronçon le plus avancé atteint (garde-fou anti-retour).
-  useEffect(() => {
-    if (!navMode) {
-      reachedLegRef.current = 0
-      return
-    }
-    if (navProgress && navProgress.legIndex > reachedLegRef.current) {
-      reachedLegRef.current = navProgress.legIndex
-    }
-  }, [navMode, navProgress])
-  // La couche des onglets s'efface pour laisser voir la carte (onglet Carte ou
-  // navigation) ; sur les résultats elle reste, simplement reculée.
-  const contentHidden = sheet !== 'results' && (navMode || activeTab === 'map')
+  // La colonne de l'app (grand écran) n'a pas d'ombre quand elle n'est pas
+  // remplie : onglet Carte (seule la barre d'onglets), navigation (carte
+  // d'étape et feuille basse ont leur propre ombre).
+  const columnEmpty = tabLayerHidden && sheet === 'home'
 
   // `h-screen` (100vh) inclut la zone derrière la barre d'URL mobile : la barre
   // d'onglets, dernier enfant, tombait alors SOUS le repli visible. `100dvh`
@@ -413,540 +647,171 @@ export default function Home() {
   // très vieux navigateurs qui ignorent `dvh`.
   return (
     <main className="relative h-screen w-screen overflow-hidden" style={{ height: '100dvh', backgroundColor: '#F7F8FA' }}>
-      <div className="absolute inset-0">
+      <div ref={mapWrapRef} className="absolute inset-0">
         <MapLoadingFallback />
+        <MapErrorBoundary>
+          <MapView
+            itinerary={mapItinerary}
+            hideControls={navMode}
+            navigating={navMode}
+            navLegIndex={nav.view?.legIndex}
+            navLegProgress={nav.view?.legProgress}
+            navAlongMeters={nav.view?.along}
+            navGeometries={nav.geometries}
+            userPosition={userPosition}
+            positionStale={navMode ? nav.view?.source !== 'gps' : undefined}
+            // En navigation, le bandeau dit déjà « position perdue / imprécise ».
+            showPositionNotices={!navMode}
+            onRequestPosition={positionApi.start}
+            positionError={positionApi.error}
+            mapActive={mapTabShown && !navMode}
+            autoLocateSignal={locateSignal}
+            onNavigateTo={handleNavigateTo}
+            onDepartFrom={handleDepartFrom}
+            focusLine={focusLine}
+            onFocusLineChange={setFocusLine}
+            fitPadding={fitPadding}
+            fitSignal={fitSignal}
+            detailChrome={mobileDetail}
+            cameraPadding={cameraPadding}
+            extraNotices={mapNotices}
+          />
+        </MapErrorBoundary>
       </div>
-      <MapView
-        itinerary={sheet === 'results' || navMode ? displayedItinerary : null}
-        onMapClick={handleMapClick}
-        clickMode={clickMode}
-        hideControls={navMode}
-        navigating={navMode}
-        navLegIndex={navProgress?.legIndex}
-        navLegProgress={navProgress?.legProgress}
-        userPosition={userPosition}
-        onRequestPosition={requestPosition}
-        positionError={positionError}
-        mapActive={activeTab === 'map' && sheet === 'home' && !navMode}
-        autoLocateSignal={locateSignal}
-      />
 
-      {/* Couche des onglets. L'accueil EST le formulaire d'itinéraire
-          (planche 1f) ; la carte n'apparaît que sur son onglet, les résultats
-          et la navigation. Push vers les résultats : l'écran recule de 25 %
-          sous un voile 4 % (spec motion). */}
-      <motion.div
-        className="absolute inset-x-0 top-0 z-10 flex flex-col bg-white md:hidden"
-        initial={false}
-        animate={sheet === 'results' ? { x: locale === 'ar' ? '25%' : '-25%' } : { x: 0 }}
-        transition={{ duration: 0.32, ease: [0.2, 0, 0, 1] }}
-        style={{
-          bottom: 'calc(54px + env(safe-area-inset-bottom, 0px))',
-          pointerEvents: sheet === 'home' && !navMode && activeTab !== 'map' ? 'auto' : 'none',
-          opacity: contentHidden ? 0 : 1,
-          // Le fond blanc revient d'un coup : un fondu 0→1 laisserait voir la
-          // carte par transparence, et il saccade pendant que MapLibre rend
-          // ses tuiles. On ne fond que dans le sens « on va vers la carte ».
-          transition: contentHidden ? 'opacity 200ms ease' : 'none',
-          visibility: contentHidden ? 'hidden' : 'visible',
-        }}
+      {/* Colonne de l'app : plein écran sur téléphone ; au-delà de 768 px,
+          420 px côté début de lecture, la carte occupant le reste. */}
+      <div
+        className="app-column pointer-events-none absolute inset-0 overflow-hidden"
+        style={columnEmpty ? { boxShadow: 'none' } : undefined}
       >
-        {isOffline && (
-          <p className="shrink-0 bg-paper-2 px-5 py-2 text-label text-ink-600" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 8px)' }}>
-            {t('offlineBanner')}
-          </p>
-        )}
+        {/* Couche des onglets. L'accueil EST le formulaire d'itinéraire
+            (planche 1f) ; la carte n'apparaît que sur son onglet, le détail
+            et la navigation. Push vers les résultats : l'écran recule de 25 %
+            sous un voile 4 % (spec motion). */}
+        <motion.div
+          ref={tabLayerRef}
+          className="absolute inset-x-0 top-0 z-10 flex flex-col bg-white"
+          initial={false}
+          animate={sheet === 'results' ? { x: rtl ? '25%' : '-25%' } : { x: 0 }}
+          transition={{ duration: 0.32, ease: [0.2, 0, 0, 1] }}
+          style={{
+            bottom: 'calc(54px + env(safe-area-inset-bottom, 0px))',
+            pointerEvents: sheet === 'home' && !tabLayerHidden ? 'auto' : 'none',
+            opacity: tabLayerHidden ? 0 : 1,
+            // Le fond blanc revient d'un coup : un fondu 0→1 laisserait voir la
+            // carte par transparence, et il saccade pendant que MapLibre rend
+            // ses tuiles. On ne fond que dans le sens « on va vers la carte ».
+            transition: tabLayerHidden ? 'opacity 200ms ease' : 'none',
+            visibility: tabLayerHidden ? 'hidden' : 'visible',
+          }}
+        >
+          {isOffline ? (
+            <p className="shrink-0 bg-paper-2 px-5 py-2 text-label text-ink-600" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 8px)' }}>
+              {t('offlineBanner')}
+            </p>
+          ) : otpDown ? (
+            <p className="shrink-0 bg-paper-2 px-5 py-2 text-label text-ink-600" role="status" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 8px)' }}>
+              {t('page_otpDown')}
+            </p>
+          ) : null}
+          {resumeRow}
 
-        {/* Crossfade 200 ms au changement d'onglet ou de langue (spec motion) */}
-        <div ref={tabContentRef} className="min-h-0 flex-1">
-          {activeTab === 'home' && (
-            <div key={`home-${locale}`} className="state-fade h-full">
+          {/* Les deux onglets restent montés (masqués) : le départ saisi, la
+              ligne ouverte et le défilement survivent à un changement
+              d'onglet ou de langue. L'animation d'apparition (200 ms) rejoue
+              quand un panneau repasse de display:none à visible. */}
+          <div ref={tabContentRef} className="min-h-0 flex-1">
+            <div ref={homePanelRef} className={activeTab === 'home' ? 'state-fade h-full' : 'hidden'}>
               <SearchBar
                 onSearch={handleSearch}
-                loading={loading}
+                loading={search.status === 'loading'}
                 recentSearches={recentSearches}
                 externalFrom={externalFrom}
                 externalTo={externalTo}
+                submitSignal={submitSignal}
                 visible={sheet === 'home'}
                 geo={geo}
+                userPosition={formPosition}
                 headerAction={<LanguageSwitcher />}
               >
                 <SavedPlaces onSelect={handlePickDestination} />
               </SearchBar>
             </div>
-          )}
-          {activeTab === 'lines' && (
             <div
-              key={`lines-${locale}`}
-              className="state-fade h-full"
+              className={activeTab === 'lines' ? 'state-fade h-full' : 'hidden'}
               style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 14px)' }}
             >
               <LineView
                 onSelectStation={handlePickDestination}
+                onShowLineOnMap={handleShowLineOnMap}
+                active={activeTab === 'lines' && sheet === 'home' && !navMode}
+                resetSignal={linesResetSignal}
+                near={nearForLines}
+                onClearNear={clearNearPoint}
               />
             </div>
-          )}
-        </div>
+          </div>
+
+          <div
+            className="pointer-events-none absolute inset-0 bg-black transition-opacity duration-[320ms]"
+            style={{ opacity: sheet === 'results' ? 0.04 : 0 }}
+            aria-hidden="true"
+          />
+        </motion.div>
 
         <div
-          className="pointer-events-none absolute inset-0 bg-black transition-opacity duration-[320ms]"
-          style={{ opacity: sheet === 'results' ? 0.04 : 0 }}
-          aria-hidden="true"
-        />
-      </motion.div>
-
-      <div
-        className="absolute inset-x-0 bottom-0 z-20 md:hidden"
-        style={{ pointerEvents: sheet === 'home' && !navMode ? 'auto' : 'none' }}
-      >
-        <TabBar active={activeTab} onChange={handleTabChange} />
-      </div>
-
-      {/* Résultats (planche 1g) : écran plein, push 320 ms depuis le côté */}
-      <div
-        ref={resultsPanelRef}
-        className={`absolute inset-0 z-20 flex flex-col bg-white md:hidden ${
-          sheet === 'results' ? 'translate-x-0' : 'ltr:translate-x-full rtl:-translate-x-full'
-        }`}
-        style={{
-          transition: 'transform 320ms cubic-bezier(0.2, 0, 0, 1)',
-          pointerEvents: sheet === 'results' ? 'auto' : 'none',
-        }}
-        // Hors écran, cet écran doit sortir AUSSI du parcours clavier et de
-        // l'arbre d'accessibilité : `pointer-events` n'écarte que la souris.
-        // `inert` est posé par un effet, pas ici : React 18 ignore l'attribut.
-        // Pas de `visibility: hidden`, qui ferait disparaître l'écran d'un coup
-        // au lieu de le laisser glisser sur 320 ms.
-        aria-hidden={sheet !== 'results'}
-      >
-        {!detailOpen ? (
-          /* Header résultats (planche 1g) */
-          <div
-            className="flex shrink-0 items-center gap-3 border-b border-line px-5 pb-3.5"
-            style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}
-          >
-            <button
-              onClick={handleReset}
-              aria-label={t('back')}
-              className="tap relative shrink-0 pe-0.5 pt-0.5 after:absolute after:-inset-[11px] after:content-['']"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="rtl:rotate-180" aria-hidden="true">
-                <path d="M14.5 5l-7 7 7 7" stroke="#111827" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <div className="min-w-0">
-              <p className="truncate text-emph font-semibold text-ink-900">
-                {fromName} {t('routeArrow')} {toName}
-              </p>
-              <p className="tnum mt-0.5 text-label text-ink-400">
-                {/* « Départ maintenant » reste RTL en arabe ; seule l'heure est
-                    en latin dir=ltr. */}
-                {t('departNow')} {itineraries[0] ? <>· <span dir="ltr">{formatTime(itineraries[0].startTime)}</span></> : ''}
-              </p>
-            </div>
-            {demoMode && (
-              <span className="ms-auto shrink-0 rounded-full bg-paper-2 px-2 py-0.5 text-xs font-medium text-ink-600">
-                {t('demoMode')}
-              </span>
-            )}
-          </div>
-        ) : (
-          /* Header détail (planche 1h) : une seule rangée discrète */
-          <div
-            className="flex shrink-0 items-center gap-3 px-5 pb-0"
-            style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}
-          >
-            <button
-              onClick={handleCloseDetail}
-              aria-label={t('back')}
-              className="tap relative shrink-0 pe-0.5 pt-0.5 after:absolute after:-inset-[11px] after:content-['']"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="rtl:rotate-180" aria-hidden="true">
-                <path d="M14.5 5l-7 7 7 7" stroke="#111827" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <p className="min-w-0 truncate text-body text-ink-600">
-              {fromName} {t('routeArrow')} {toName}
-            </p>
-          </div>
-        )}
-
-        {/* Push liste → détail 320 ms (spec motion) : le détail glisse depuis
-            le côté, la liste recule de 25 % sous un voile 4 %. */}
-        <div className="relative min-h-0 flex-1 overflow-hidden" style={{ backgroundColor: '#ffffff' }}>
-          <div
-            className={`absolute inset-0 overflow-y-auto transition-transform duration-[320ms] ease-[cubic-bezier(0.2,0,0,1)] ${
-              detailOpen ? 'ltr:-translate-x-1/4 rtl:translate-x-1/4' : ''
-            }`}
-          >
-          {loading ? (
-            /* Chargement (handoff 1j) : squelette de 2 rangées, jamais de spinner */
-            <div className="skeleton-pulse" aria-hidden="true">
-              {[0, 1].map((row) => (
-                <div key={row} className={`flex items-center gap-3 px-5 py-[13px] ${row > 0 ? 'border-t border-line' : ''}`}>
-                  <span className="h-[26px] w-9 rounded-[8px] bg-skeleton" />
-                  <span className="flex-1">
-                    <span className="block h-3 rounded-[6px] bg-skeleton" style={{ width: row === 0 ? '60%' : '48%' }} />
-                    <span className="mt-1.5 block h-[9px] rounded-[5px] bg-paper-2" style={{ width: row === 0 ? '35%' : '30%' }} />
-                  </span>
-                  <span className="h-3.5 w-[52px] rounded-[7px] bg-skeleton" />
-                </div>
-              ))}
-            </div>
-          ) : error ? (
-            /* Aucun itinéraire (handoff 1j) : expliquer, proposer, jamais de rouge */
-            <div className="px-5 pb-[30px] pt-7 text-center">
-              <p className="text-emph font-medium text-ink-900">{t('noRoutesAvailable')}</p>
-              <p className="mt-1.5 text-body text-ink-600">{error}</p>
-              <button
-                type="button"
-                onClick={() => { setError(null); setSheet('home'); setActiveTab('lines') }}
-                className="tap relative mt-3.5 text-body font-medium text-brand after:absolute after:inset-x-0 after:-inset-y-[13px] after:content-['']"
-              >
-                {t('seeNearbyLines')}
-              </button>
-            </div>
-          ) : (
-            /* Résultats (handoff 1g) : rangées plates triées par durée, une seule
-               valeur dominante (« 52 min ») + qualificatif ; tap → écran détail.
-               Padding bas = safe-area : sinon la note finale passe sous le home
-               indicator de l'iPhone. */
-            <div style={{ paddingBottom: 'max(8px, env(safe-area-inset-bottom, 0px))' }}>
-              {(() => {
-                // Tri pondéré : à durée quasi égale, on remonte l'itinéraire
-                // qui fait moins marcher (au-delà de 15 min de marche). Le
-                // coefficient 0.3 a été mesuré — plus haut, il afficherait
-                // « 73 min » au-dessus de « 60 min », ce qui passe pour un bug.
-                const walkPenalty = (it: OtpItinerary) =>
-                  it.duration + 0.3 * Math.max(0, it.walkTime - 900)
-                const fastestDuration = Math.min(...itineraries.map((it) => it.duration))
-                const sorted = itineraries
-                  .map((it, originalIndex) => ({ it, originalIndex }))
-                  // Garde-fou : jamais remonter un trajet plus lent de +5 min.
-                  .sort((a, b) => {
-                    if (a.it.duration - b.it.duration > 300) return 1
-                    if (b.it.duration - a.it.duration > 300) return -1
-                    return walkPenalty(a.it) - walkPenalty(b.it)
-                  })
-                  .slice(0, 4)
-                // Le badge suit la VRAIE durée minimale, pas le vainqueur du
-                // tri : sinon « le plus rapide » mentirait.
-                const fastestIdx = sorted.find(({ it }) => it.duration === fastestDuration)?.originalIndex
-                // Le badge se base sur le TEMPS de marche — c'est ce que la
-                // rangée affiche. Sur walkDistance, « moins de marche » pouvait
-                // atterrir sur l'itinéraire montrant le plus de minutes à pied.
-                const lessWalkIdx = sorted.length > 1
-                  ? sorted.reduce((best, cur) =>
-                      cur.it.walkTime < best.it.walkTime ? cur : best
-                    ).originalIndex
-                  : undefined
-                const fareOf = (legs: typeof itineraries[0]['legs']) => {
-                  const f = estimateFare(legs)
-                  return f ? parseInt(f, 10) : Infinity
-                }
-                const cheapestIdx = sorted.length > 1
-                  ? sorted.reduce((best, cur) =>
-                      fareOf(cur.it.legs) < fareOf(best.it.legs) ? cur : best
-                    ).originalIndex
-                  : undefined
-                return sorted.map(({ it: itinerary, originalIndex }, index) => {
-                  const transitLegs = itinerary.legs.filter((leg) => leg.mode !== 'WALK')
-                  const first = transitLegs[0]
-                  const fare = estimateFare(itinerary.legs)
-                  const walkMin = Math.round(
-                    itinerary.legs.filter((l) => l.mode === 'WALK').reduce((s, l) => s + l.duration, 0) / 60,
-                  )
-                  const qualifier = originalIndex === fastestIdx
-                    ? { text: t('fastest'), color: '#059669' }
-                    : originalIndex === lessWalkIdx && lessWalkIdx !== fastestIdx
-                      ? { text: t('lessWalking'), color: '#9CA3AF' }
-                      : originalIndex === cheapestIdx && cheapestIdx !== fastestIdx && cheapestIdx !== lessWalkIdx
-                        ? { text: t('cheapest'), color: '#9CA3AF' }
-                        : null
-                  // Planche 1g : un bus sans correspondance est « direct » et sa
-                  // 3e info est la fréquence de la ligne, pas l'heure de départ.
-                  const isDirectBus = itinerary.transfers === 0 && transitLegs.length === 1 && first?.mode === 'BUS'
-                  const directLine = isDirectBus ? allLines.find((l) => l.shortName === first?.routeShortName) : undefined
-                  // Le pluriel est une affaire de langue, pas de concaténation :
-                  // « تحويلةs » n'existe pas.
-                  const thirdInfo = itinerary.transfers > 0
-                    ? `${itinerary.transfers} ${itinerary.transfers > 1 ? t('correspondencesWord') : t('correspondenceWord')}`
-                    : directLine
-                      ? `${t('frequencyWord')} ~${estimatedHeadwayMin(directLine)} ${t('min')}`
-                      : first
-                        ? `${t('departPrefix')} ~${formatTime(first.startTime)}`
-                        : t('walkingOnly')
-                  return (
-                    <button
-                      key={originalIndex}
-                      type="button"
-                      onClick={() => { setPreviewIndex(originalIndex); setDetailOpen(true) }}
-                      className={`tap w-full px-5 py-4 text-start active:bg-paper-2 ${index > 0 ? 'border-t border-line' : ''}`}
-                      aria-label={getItineraryAria(itinerary)}
-                    >
-                      <div className="flex items-center justify-between gap-3.5">
-                        <div className="min-w-0 flex-1">
-                          {/* Séquence planche 1g : badges + chevrons + marche agrégée */}
-                          <div className="flex flex-wrap items-center gap-2">
-                            {transitLegs.map((leg, li) => (
-                              <span key={li} className="flex items-center gap-2">
-                                {li > 0 && (
-                                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="rtl:rotate-180" aria-hidden="true">
-                                    <path d="M3 1.5L7 5 3 8.5" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                  </svg>
-                                )}
-                                <span
-                                  className="inline-flex h-6 min-w-[32px] items-center justify-center rounded-[8px] px-[7px] text-label font-semibold text-white"
-                                  style={{ backgroundColor: getLegColor(leg.mode) }}
-                                  dir="ltr"
-                                >
-                                  {leg.routeShortName}
-                                </span>
-                              </span>
-                            ))}
-                            {walkMin > 0 && (
-                              <span className="text-body text-ink-600">
-                                {isDirectBus ? `${t('direct')} ` : ''}{transitLegs.length > 0 ? '+ ' : ''}{walkMin} {t('min')} {t('walkingOnly')}
-                              </span>
-                            )}
-                          </div>
-                          {/* dir=ltr sur la SEULE plage horaire, pas sur toute
-                              la ligne : `fare` et `thirdInfo` peuvent être en
-                              arabe (« 50 دج », « التردد ~10 دقيقة ») et doivent
-                              suivre le sens RTL du document, sinon leurs mots se
-                              lisent à l'envers. */}
-                          <p className="tnum mt-1.5 truncate text-label text-ink-400">
-                            <span dir="ltr">{formatTime(itinerary.startTime)} → {formatTime(itinerary.endTime)}</span>
-                            {fare ? ` · ${fare}` : ''}
-                            {` · ${thirdInfo}`}
-                          </p>
-                        </div>
-                        <span className="shrink-0 text-end">
-                          <span className="tnum block text-title font-semibold leading-[22px] text-ink-900">
-                            {formatDuration(itinerary.duration)}
-                          </span>
-                          {qualifier && (
-                            <span className="mt-0.5 block text-label" style={{ color: qualifier.color }}>
-                              {qualifier.text}
-                            </span>
-                          )}
-                        </span>
-                      </div>
-                    </button>
-                  )
-                })
-              })()}
-              <p className="px-5 py-3.5 text-label text-ink-400">
-                {/* En mode démo le trajet est FABRIQUÉ par mockPlanTrip :
-                    prétendre qu'il vient des fréquences officielles serait le
-                    mensonge le plus grave que l'app puisse faire. */}
-                {demoMode ? t('demoNote') : t('estimatedNote')}
-              </p>
-            </div>
-          )}
-            <div
-              className="pointer-events-none absolute inset-0 bg-black transition-opacity duration-[320ms]"
-              style={{ opacity: detailOpen ? 0.04 : 0 }}
-              aria-hidden="true"
-            />
-          </div>
-
-          {/* Couche détail (planche 1h) : glisse depuis le côté au-dessus de la liste */}
-          <div
-            ref={detailPanelRef}
-            className={`absolute inset-0 flex flex-col bg-white transition-transform duration-[320ms] ease-[cubic-bezier(0.2,0,0,1)] ${
-              detailOpen ? 'translate-x-0' : 'ltr:translate-x-full rtl:-translate-x-full'
-            }`}
-            style={{ pointerEvents: detailOpen ? 'auto' : 'none' }}
-          >
-            {displayedItinerary && detailOpen && (
-              <div className="min-h-0 flex-1 overflow-y-auto">
-                <ItineraryPanel
-                  itineraries={[displayedItinerary]}
-                  selectedIndex={0}
-                  onSelect={() => {}}
-                  onClose={() => {}}
-                  hideHeader
-                />
-              </div>
-            )}
-          </div>
+          ref={tabBarRef}
+          className="absolute inset-x-0 bottom-0 z-20"
+          style={{ pointerEvents: sheet === 'home' && !navMode ? 'auto' : 'none' }}
+        >
+          <TabBar active={activeTab} onChange={handleTabChange} />
         </div>
 
-        {detailOpen && (
-          <div
-            className="shrink-0 px-5 pt-3"
-            style={{ backgroundColor: '#ffffff', paddingBottom: 'max(34px, env(safe-area-inset-bottom, 0px))' }}
-          >
-            <button
-              type="button"
-              onClick={handleGo}
-              className="tap flex h-[50px] w-full items-center justify-center rounded-control bg-brand text-emph font-semibold text-white"
-            >
-              {t('go')}
-            </button>
-          </div>
-        )}
-      </div>
-
-      {navMode && navProgress && (() => {
-        // Progression réelle (position GPS projetée sur le tracé), partagée
-        // avec la carte. `source` dit si elle vient du GPS ou de l'horloge.
-        const { nav, legIndex: currentIdx, legProgress: progress, remainingMeters, stopsLeft, source } = navProgress
-        const leg = nav.legs[currentIdx]
-        const next = nav.legs[currentIdx + 1]
-        const isWalk = leg.mode === 'WALK'
-        // Sans détection d arrivée, le bandeau tournait indéfiniment sur
-        // « ~1 min » (remainMin est planché à 1) et l heure d arrivée glissait
-        // avec l horloge. En GPS on déclare l arrivée sous 40 m du point de
-        // descente ; sans position, quand les durées prévues sont épuisées.
-        const arrived = currentIdx === nav.legs.length - 1
-          && (source === 'gps' ? remainingMeters < 40 : progress >= 1)
-        const ctx = leg.mode === 'SUBWAY'
-          ? t('ctxMetro')
-          : leg.mode === 'TRAM'
-            ? t('ctxTram')
-            : leg.mode === 'BUS'
-              ? t('ctxBus')
-              : t('ctxWalk')
-        // Temps restant sur l'étape : déduit de la distance qui reste
-        // réellement à parcourir, pas d'un décompte d'horloge.
-        const legSpeed = leg.distance > 0 ? leg.distance / Math.max(1, leg.duration) : 0
-        const remainMin = legSpeed > 0
-          ? Math.max(1, Math.ceil(remainingMeters / legSpeed / 60))
-          : Math.max(1, Math.ceil(leg.duration * (1 - progress) / 60))
-        // À pied, la distance restante parle plus que le nombre d'arrêts.
-        const stopsPart = isWalk
-          ? `${Math.max(10, Math.round(remainingMeters / 10) * 10)} m`
-          : stopsLeft !== null
-            ? `${stopsLeft} ${t('stopsLeft')}`
-            : null
-        const nextSummary = next
-          ? next.mode === 'WALK'
-            ? `${Math.round(next.distance)} m ${t('ctxWalk').toLowerCase()} ${t('towards')} ${next.to.name} · ${Math.max(1, Math.round(next.duration / 60))} ${t('min')}`
-            : `${next.routeShortName ?? ''} ${t('towards')} ${next.headsign ?? next.to.name} · ${Math.max(1, Math.round(next.duration / 60))} ${t('min')}`
-          : `${toName ?? nav.legs[nav.legs.length - 1].to.name} · ${formatTime(nav.endTime)}`
-
-        return (
-          <div className="absolute inset-0 z-30 pointer-events-none md:hidden">
-            {/* Carte du haut (planche 1i) : l'étape courante, rien d'autre */}
-            <div
-              className="card-in-top pointer-events-auto absolute inset-x-5 rounded-card bg-white px-4 pb-3 pt-3.5 shadow-soft"
-              style={{ top: 'calc(env(safe-area-inset-top, 0px) + 14px)' }}
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="truncate text-label font-semibold uppercase tracking-[0.06em] text-ink-600" dir="auto">
-                  {ctx}{!isWalk && leg.routeShortName ? ` · ${leg.routeShortName}` : ''}
-                </span>
-                {!arrived && (
-                  <span className="tnum shrink-0 text-label text-ink-600">
-                    {t('arrivalAbbr')} ~{formatTime(navNow + navProgress.remainingSeconds * 1000)}
-                  </span>
-                )}
-              </div>
-              {/* L'instruction est la seule information de l'écran et elle
-                  change en cours de trajet : sans région live, l'usager au
-                  lecteur d'écran devrait balayer l'écran en boucle pour
-                  savoir quand descendre. */}
-              {/* Jamais de `truncate` ici : c'est la seule information de l'écran,
-                  et les arrêts ETUSA vont jusqu'à 56 caractères (« École Supérieure
-                  d'Hôtellerie et de Restauration d'Alger »). La carte est en position
-                  absolue, sa hauteur est libre — deux lignes suffisent. */}
-              <p
-                className="mt-1 line-clamp-2 text-title font-semibold text-ink-900 [overflow-wrap:anywhere]"
-                role="status"
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                {arrived
-                  ? t('navArrived')
-                  : isWalk ? `${t('walkTowards')} ${leg.to.name}` : `${t('alightAt')} ${leg.to.name}`}
-              </p>
-              <p className="tnum mt-0.5 text-label text-ink-400">
-                {arrived
-                  ? (toName ?? nav.legs[nav.legs.length - 1].to.name)
-                  : [stopsPart, `~${remainMin} ${t('min')}`].filter(Boolean).join(' · ')}
-              </p>
-              <div className="mt-3 flex h-[3px] overflow-hidden rounded-[2px] bg-line">
-                <span
-                  className="rounded-[2px] bg-brand transition-[width] duration-700"
-                  style={{ width: `${Math.round(progress * 100)}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Feuille basse (planche 1i) : Ensuite + sortie discrète, jamais de rouge */}
-            <div className="sheet-in pointer-events-auto absolute inset-x-0 bottom-0 rounded-t-sheet bg-white shadow-[0_-4px_14px_rgba(16,24,40,0.07)]">
-              {/* Arrivé, « Ensuite » ne dirait que la destination — déjà lue
-                  juste au-dessus. La rangée disparaît plutôt que de se répéter. */}
-              {!arrived && (
-                <div className="flex items-center gap-3 border-b border-line px-5 py-4">
-                  <span className="shrink-0 text-label font-semibold uppercase tracking-[0.06em] text-ink-400">
-                    {t('nextLabel')}
-                  </span>
-                  <span className="min-w-0 flex-1 truncate text-body text-ink-600">{nextSummary}</span>
-                </div>
-              )}
-
-              {/* Sans position, l'avancement suit les horaires prévus : on le
-                  dit plutôt que de laisser croire à un suivi réel. */}
-              {source === 'time' && (
-                <p className="border-b border-line px-5 py-2.5 text-label text-ink-400">
-                  {positionError === 'insecure' ? t('geoInsecure') : t('progressEstimated')}
-                </p>
-              )}
-              <div
-                className="flex items-center justify-between gap-3 px-5 pt-3"
-                style={{ paddingBottom: 'max(30px, env(safe-area-inset-bottom, 0px))' }}
-              >
-                {/* Handoff : discret exprès (texte gris). L'usager l'a jugé
-                    invisible → on lui donne une frontière (pilule bordée = un
-                    seul traitement), pas de rouge : quitter reste réversible. */}
-                <button
-                  type="button"
-                  onClick={handleExitNav}
-                  className="tap relative shrink-0 whitespace-nowrap rounded-full border border-line px-4 py-2.5 text-body font-medium text-ink-900 after:absolute after:inset-x-0 after:-inset-y-[3px] after:content-['']"
-                >
-                  {t('quitNav')}
-                </button>
-                <span className="tnum min-w-0 truncate text-label text-ink-400">
-                  {fromName} {t('routeArrow')} {toName} · {formatDuration(nav.duration)}
-                </span>
-              </div>
-            </div>
-          </div>
-        )
-      })()}
-
-      <div className="absolute left-0 top-0 bottom-0 z-10 hidden w-80 flex-col border-r border-line bg-white md:flex">
-        <SearchBar
-          onSearch={handleSearch}
-          loading={loading}
-          recentSearches={recentSearches}
-          externalFrom={externalFrom}
-          externalTo={externalTo}
-          geo={geo}
+        {/* Résultats (planche 1g) et détail (planche 1h) */}
+        <ResultsScreen
+          open={sheet === 'results'}
+          state={search}
+          fromName={fromName}
+          toName={toName}
+          selectedIndex={previewIndex}
+          detailOpen={detailOpen}
+          detailSnap={detailSnap}
+          wide={wide}
+          panelRef={resultsPanelRef}
+          detailRef={detailPanelRef}
+          onBack={handleReset}
+          onOpenDetail={handleOpenDetail}
+          onCloseDetail={handleCloseDetail}
+          onSnapChange={setDetailSnap}
+          onDetailMapInset={setDetailMapInset}
+          onRefitRoute={handleRefitRoute}
+          onGo={handleGo}
+          onRetry={handleRetry}
+          onSeeNearbyLines={handleSeeNearbyLines}
+          resumeSlot={resumeRow}
         />
-        {itineraries.length > 0 ? (
-          <div className="mt-2 flex-1 overflow-hidden border-t border-gray-100">
-            <ItineraryPanel
-              itineraries={itineraries}
-              selectedIndex={previewIndex}
-              onSelect={setPreviewIndex}
-              onClose={handleReset}
-              fromName={fromName}
-              toName={toName}
-            />
-          </div>
-        ) : (
-          <>
-            <SavedPlaces onSelect={(coord) => { setExternalTo(coord) }} />
-            {geo.lat !== null && geo.lon !== null && (
-              <NearbyStations lat={geo.lat} lon={geo.lon} onSelect={(coord) => setExternalTo(coord)} />
-            )}
-          </>
-        )}
+
+        {/* Navigation pas à pas (planche 1i) : tout le contenu vient de
+            useNavigationSession. Visible à toute largeur (plus de md:hidden :
+            un téléphone tourné en paysage perdait la consigne). */}
+        <div ref={navWrapRef} className="contents">
+          <NavigationBanner session={nav} onQuit={handleExitNav} onReroute={handleReroute} />
+        </div>
       </div>
+
+      {/* Région live de l'écran Résultats : hors du panneau, jamais inerte. */}
+      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{srStatus}</p>
+
+      {/* Nouvelle version : proposée, jamais appliquée pendant une navigation
+          ni sous des résultats affichés (sw-register.js). */}
+      <UpdateNotice
+        busy={navMode || sheet === 'results'}
+        hidden={navMode}
+        bottomOffset={sheet === 'results'
+          ? 'calc(104px + env(safe-area-inset-bottom, 0px))'
+          : undefined}
+      />
     </main>
   )
 }

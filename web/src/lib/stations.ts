@@ -1,4 +1,17 @@
+// Stations et tracés du métro M1 et du tramway T1.
+//
+// Source : OpenStreetMap (© contributeurs OpenStreetMap, ODbL). Tout vient de
+// generated-rail.json, écrit par data/scripts/build_rail.py en même temps que
+// le GTFS d'OTP : mêmes identifiants, mêmes noms, mêmes coordonnées (contrôlé
+// par data/scripts/check_rail.py). Ne rien saisir ici à la main : une station
+// corrigée ici et pas dans le GTFS ferait diverger la carte et le calculateur.
+//
+// Le M1 a deux branches après Haï El Badr (El Harrach Centre, Aïn Naâdja) :
+// ce n'est PAS une liste d'arrêts unique. Pour un parcours, utiliser
+// railRoutes / railStationsBetween, jamais un découpage de metroStations.
+import type { Feature, LineString, MultiLineString } from 'geojson'
 import type { Locale } from './i18n'
+import railData from './generated-rail.json'
 
 export type TransitMode = 'metro' | 'tram'
 
@@ -9,108 +22,198 @@ export interface Station {
   lat: number
   lon: number
   type: TransitMode
-  future?: boolean
-  openingYear?: number
+  /** Nœud OpenStreetMap d'origine (traçabilité, licence ODbL). */
+  osmNode?: number
 }
 
 export const METRO_COLOR = '#1E3A8A'
 export const TRAM_COLOR = '#059669'
+// Fonds de badge sous texte blanc 12 px : contraste ≥ 4,5:1 (WCAG AA).
+// TRAM_COLOR (3,77:1 sur blanc) reste la couleur des tracés et des légendes.
+export const METRO_BADGE_COLOR = '#1E3A8A' // 10,4:1
+export const TRAM_BADGE_COLOR = '#047857' // 5,5:1
 
-export const metroStations: Station[] = [
-  { id: 'M01', name: 'Tafourah Grande Poste', nameAr: 'تافورة - البريد المركزي', lat: 36.77201, lon: 3.05807, type: 'metro' },
-  { id: 'M02', name: 'Khelifa Boukhalfa', nameAr: 'خليفة بوخالفة', lat: 36.76625, lon: 3.05367, type: 'metro' },
-  { id: 'M03', name: '1er Mai', nameAr: 'أول ماي', lat: 36.7602, lon: 3.05661, type: 'metro' },
-  { id: 'M04', name: 'Aïssat Idir', nameAr: 'عيسات إيدير', lat: 36.75686, lon: 3.06176, type: 'metro' },
-  { id: 'M05', name: 'Hamma', nameAr: 'الحامة', lat: 36.75291, lon: 3.06653, type: 'metro' },
-  { id: 'M06', name: "Jardin d'Essai", nameAr: 'حديقة التجارب', lat: 36.74668, lon: 3.07274, type: 'metro' },
-  { id: 'M07', name: 'Les Fusillés', nameAr: 'لي فوزيي', lat: 36.74232, lon: 3.08214, type: 'metro' },
-  { id: 'M08', name: 'Cité Amirouche', nameAr: 'حي عميروش', lat: 36.73796, lon: 3.09154, type: 'metro' },
-  { id: 'M09', name: 'Cité Mer et Soleil', nameAr: 'حي البحر والشمس', lat: 36.73359, lon: 3.10095, type: 'metro' },
-  { id: 'M10', name: 'Mohamed Belouizdad', nameAr: 'محمد بلوزداد', lat: 36.73087, lon: 3.10139, type: 'metro' },
-  { id: 'M11', name: 'El Magharia', nameAr: 'المقرية', lat: 36.72815, lon: 3.10183, type: 'metro' },
-  { id: 'M12', name: 'Haï El Badr', nameAr: 'حي البدر', lat: 36.72543, lon: 3.10227, type: 'metro' },
-  { id: 'M13', name: 'Bachdjarah Tennis', nameAr: 'باش جراح - التنس', lat: 36.72432, lon: 3.11209, type: 'metro' },
-  { id: 'M14', name: 'Bachdjarah', nameAr: 'باش جراح', lat: 36.72321, lon: 3.12191, type: 'metro' },
-  { id: 'M15', name: 'El Harrach Gare', nameAr: 'الحراش - المحطة', lat: 36.72209, lon: 3.13173, type: 'metro' },
-  { id: 'M16', name: 'Harrach Centre', nameAr: 'الحراش وسط', lat: 36.722, lon: 3.13716, type: 'metro' },
-]
+/** Intervalle d'un sens sur une plage horaire (heure d'Alger, fin exclue). */
+export interface RailHeadway {
+  start: string
+  end: string
+  min: number
+}
 
-export const tramStations: Station[] = [
-  { id: 'T01', name: 'Ruisseau', nameAr: 'الرويصو', lat: 36.74289, lon: 3.08349, type: 'tram' },
-  { id: 'T02', name: 'Les Fusillés (Tram)', nameAr: 'لي فوزيي (ترام)', lat: 36.74599, lon: 3.08681, type: 'tram' },
-  { id: 'T03', name: 'Tripoli - Thaâlibia', nameAr: 'طرابلس - الثعالبية', lat: 36.74522, lon: 3.09229, type: 'tram' },
-  { id: 'T04', name: 'Tripoli - Mosquée', nameAr: 'طرابلس - المسجد', lat: 36.74326, lon: 3.09741, type: 'tram' },
-  { id: 'T05', name: 'Tripoli - Hamadèche', nameAr: 'طرابلس - حمداش', lat: 36.74072, lon: 3.10409, type: 'tram' },
-  { id: 'T06', name: 'Tripoli - Makaria', nameAr: 'طرابلس - مكارية', lat: 36.73703, lon: 3.11368, type: 'tram' },
-  { id: 'T07', name: 'Caroubier', nameAr: 'الكروبييه', lat: 36.73571, lon: 3.11818, type: 'tram' },
-  { id: 'T08', name: 'La Glacière', nameAr: 'لا غلاسير', lat: 36.73282, lon: 3.12463, type: 'tram' },
-  { id: 'T09', name: 'Pont El Harrach', nameAr: 'جسر الحراش', lat: 36.73028, lon: 3.13016, type: 'tram' },
-  { id: 'T10', name: 'Bekri Bouguerra', nameAr: 'بكري بوقرة', lat: 36.72781, lon: 3.14344, type: 'tram' },
-  { id: 'T11', name: 'Cinq Maisons', nameAr: 'خمس بيوت', lat: 36.72588, lon: 3.1508, type: 'tram' },
-  { id: 'T12', name: "Foire d'Alger", nameAr: 'معرض الجزائر', lat: 36.73127, lon: 3.16137, type: 'tram' },
-  { id: 'T13', name: 'Les Pins', nameAr: 'الصنوبر', lat: 36.7322, lon: 3.16703, type: 'tram' },
-  { id: 'T14', name: 'Tamaris', nameAr: 'تماريس', lat: 36.73255, lon: 3.17329, type: 'tram' },
-  { id: 'T15', name: 'Cité 5 Juillet', nameAr: 'حي 5 جويلية', lat: 36.72153, lon: 3.18282, type: 'tram' },
-  { id: 'T16', name: 'Bordj El Kiffan - Lycée', nameAr: 'برج الكيفان - الثانوية', lat: 36.74533, lon: 3.18767, type: 'tram' },
-  { id: 'T17', name: 'Bordj El Kiffan - Polyclinique', nameAr: 'برج الكيفان - العيادة متعددة الخدمات', lat: 36.74816, lon: 3.19708, type: 'tram' },
-  { id: 'T18', name: 'Ben Mered', nameAr: 'بن مراد', lat: 36.75899, lon: 3.2294, type: 'tram' },
-  { id: 'T19', name: 'Café Chergui', nameAr: 'مقهى شرقي', lat: 36.77745, lon: 3.25016, type: 'tram' },
-  { id: 'T20', name: 'Dergana Centre', nameAr: 'درقانة وسط', lat: 36.77197, lon: 3.26031, type: 'tram' },
-]
+/**
+ * Un sens exploité, identique à un motif du GTFS. Le M1 en a quatre
+ * (aller et retour de chaque branche), le T1 deux.
+ */
+export interface RailRoute {
+  /** = shape_id du GTFS : 'M1-HAR-0', 'M1-AIN-1', 'T1-0'… */
+  id: string
+  /** = route_id du GTFS : 'L1-metro' ou 'L1-tram'. */
+  lineId: string
+  mode: TransitMode
+  /** 0 = depuis Place des Martyrs / Ruisseau, 1 = vers eux. */
+  directionId: number
+  /** = trip_headsign du GTFS = nom du terminus d'arrivée. */
+  headsign: string
+  stations: Station[]
+  /**
+   * ~ Temps depuis le terminus d'origine, en secondes, un par station.
+   * ESTIMATION (longueur de voie OSM ÷ vitesse commerciale, voir
+   * build_rail.py) : à afficher avec « ~ », jamais comme un horaire.
+   */
+  offsetsSec: number[]
+  /** Premier et dernier départ du terminus d'origine, « HH:MM » heure d'Alger. */
+  firstDeparture: string
+  lastDeparture: string
+  /** Intervalle de CE sens par plage (une branche du M1 : une rame sur deux). */
+  headways: RailHeadway[]
+  /** Voie OSM, [[lon, lat], …], du terminus d'origine au terminus d'arrivée. */
+  shape: number[][]
+}
 
-export const metroExtEastStations: Station[] = [
-  { id: 'M17', name: 'Pôle Universitaire', nameAr: 'القطب الجامعي', lat: 36.7175, lon: 3.1462, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'M18', name: 'Université H. Boumediene', nameAr: 'جامعة هواري بومدين', lat: 36.7115, lon: 3.1618, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'M19', name: 'Beaulieu', nameAr: 'بو ليو', lat: 36.708, lon: 3.174, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'M20', name: 'Oued Smar', nameAr: 'وادي السمار', lat: 36.7048, lon: 3.1852, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'M21', name: 'Hacene Badi', nameAr: 'حسان بادي', lat: 36.7018, lon: 3.1942, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'M22', name: 'Rabia Tahar', nameAr: 'ربيعة طاهر', lat: 36.6992, lon: 3.2018, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'M23', name: 'Smail Yefsah', nameAr: 'إسماعيل يفصح', lat: 36.6965, lon: 3.2082, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'M24', name: 'Business District', nameAr: 'حي الأعمال', lat: 36.6938, lon: 3.2127, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'M25', name: 'Aéroport H. Boumediene', nameAr: 'مطار هواري بومدين', lat: 36.6912, lon: 3.2154, type: 'metro', future: true, openingYear: 2027 },
-]
+/** Amplitude d'une ligne (premier / dernier départ des terminus) et intervalles du tronçon le plus desservi. */
+export interface RailLineService {
+  first: string
+  last: string
+  trunkHeadways: RailHeadway[]
+  /** Provenance de l'amplitude (OSM, SETRAM…). */
+  source?: string
+}
 
-export const metroExtSouthStations: Station[] = [
-  { id: 'B01', name: 'Mohamed Boudiaf', nameAr: 'محمد بوضياف', lat: 36.702, lon: 3.0118, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'B02', name: 'Mohamed Belarbi', nameAr: 'محمد بلعربي', lat: 36.6935, lon: 3.0102, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'B03', name: 'Aïn Naâdja Gare', nameAr: 'عين النعجة - المحطة', lat: 36.6858, lon: 3.0088, type: 'metro', future: true, openingYear: 2027 },
-  { id: 'B04', name: 'Parc Urbain', nameAr: 'الحديقة الحضرية', lat: 36.6775, lon: 3.0072, type: 'metro', future: true, openingYear: 2027 },
-]
+interface RailDataFile {
+  service: RailLineService & { headwaysSource?: string; byLine?: Record<string, RailLineService> }
+  stations: Station[]
+  lines: {
+    id: string
+    patterns: {
+      id: string
+      directionId: number
+      headsign: string
+      stopIds: string[]
+      offsetsSec: number[]
+      firstDeparture: string
+      lastDeparture: string
+      headways: RailHeadway[]
+      shape: number[][]
+    }[]
+    network: number[][][]
+  }[]
+}
+
+const data = railData as unknown as RailDataFile
+
+/**
+ * Amplitude et intervalles du MÉTRO (05:00-23:00, OSM ; ~5 min de 7 à 9 h et
+ * de 17 à 21 h, ~10 min sinon, intervalles estimés non publiés).
+ * trunkHeadways vaut pour le tronc commun ; chaque branche a le double.
+ * Le tram a sa propre amplitude : railServiceForLine('L1-tram').
+ */
+export const RAIL_SERVICE: RailLineService = data.service
+
+/**
+ * Amplitude sourcée d'une ligne ferrée : métro 05:00-23:00 (OSM), tram
+ * 05:30-22:20 (SETRAM : 22:20 depuis Ruisseau, 22:00 depuis Dergana — chaque
+ * sens porte ses propres premier et dernier départs, RailRoute). Repli sur
+ * RAIL_SERVICE pour d'anciennes données sans détail par ligne.
+ */
+export function railServiceForLine(lineId: string): RailLineService {
+  return data.service.byLine?.[lineId] ?? RAIL_SERVICE
+}
+
+const stationById = new Map<string, Station>(data.stations.map((s) => [s.id, s]))
+
+export function getStation(id: string): Station | undefined {
+  return stationById.get(id)
+}
+
+/**
+ * Les 19 stations du métro : tronc et branche El Harrach (Place des Martyrs →
+ * El Harrach Centre), puis les trois stations de la branche Aïn Naâdja.
+ * Pour la recherche et la proximité seulement — pas un ordre de parcours.
+ */
+export const metroStations: Station[] = data.stations.filter((s) => s.type === 'metro')
+
+/** Les 37 arrêts du tram, dans l'ordre de la ligne (Ruisseau → Dergana Centre). */
+export const tramStations: Station[] = data.stations.filter((s) => s.type === 'tram')
 
 export const allStations: Station[] = [...metroStations, ...tramStations]
-export const allFutureStations: Station[] = [...metroExtEastStations, ...metroExtSouthStations]
 
-function normalizeStationTerm(value: string): string {
-  return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+/** Sens exploités, dans l'ordre : M1 vers El Harrach Centre, retour, vers Aïn Naâdja, retour ; T1 aller, retour. */
+export const railRoutes: RailRoute[] = data.lines.flatMap((line) =>
+  line.patterns.map((p) => ({
+    id: p.id,
+    lineId: line.id,
+    mode: (line.id === 'L1-metro' ? 'metro' : 'tram') as TransitMode,
+    directionId: p.directionId,
+    headsign: p.headsign,
+    stations: p.stopIds.map((id) => stationById.get(id)).filter((s): s is Station => Boolean(s)),
+    offsetsSec: p.offsetsSec,
+    firstDeparture: p.firstDeparture,
+    lastDeparture: p.lastDeparture,
+    headways: p.headways,
+    shape: p.shape,
+  })),
+)
+
+export function railRoutesForLine(lineId: string): RailRoute[] {
+  return railRoutes.filter((r) => r.lineId === lineId)
 }
+
+/** Sens qui permettent de MONTER à cette station (terminus d'arrivée exclu). */
+export function railRoutesAtStation(stationId: string): RailRoute[] {
+  return railRoutes.filter((r) => {
+    const i = r.stations.findIndex((s) => s.id === stationId)
+    return i >= 0 && i < r.stations.length - 1
+  })
+}
+
+/**
+ * Parcours direct entre deux stations du même mode : le sens exploité qui
+ * dessert `fromId` puis `toId`, et les stations traversées (bornes incluses).
+ * null s'il n'existe pas de rame directe — en particulier entre les deux
+ * branches du M1 (Les Ateliers → El Harrach Gare) : il faut alors changer à
+ * Haï El Badr (RAIL_JUNCTION_ID), ce que l'appelant doit dire.
+ */
+export function railStationsBetween(
+  fromId: string,
+  toId: string,
+): { route: RailRoute; stations: Station[]; offsetSec: number } | null {
+  if (fromId === toId) return null
+  for (const route of railRoutes) {
+    const i = route.stations.findIndex((s) => s.id === fromId)
+    const j = route.stations.findIndex((s) => s.id === toId)
+    if (i >= 0 && j > i) {
+      return {
+        route,
+        stations: route.stations.slice(i, j + 1),
+        offsetSec: route.offsetsSec[j] - route.offsetsSec[i],
+      }
+    }
+  }
+  return null
+}
+
+/** Station où se séparent les branches du M1. */
+export const RAIL_JUNCTION_ID = 'M12' // Haï El Badr
 
 export function getStationName(station: Station, locale: Locale = 'fr'): string {
   return locale === 'ar' ? (station.nameAr ?? station.name) : station.name
 }
 
-export function searchStations(query: string): Station[] {
-  if (!query.trim()) return []
-  const q = normalizeStationTerm(query)
-  return allStations.filter((s) => {
-    const names = [s.name, s.nameAr].filter((name): name is string => Boolean(name)).map(normalizeStationTerm)
-    return names.some((name) => name.includes(q))
-  })
+function networkFeature(lineId: string, mode: TransitMode, color: string): Feature<LineString | MultiLineString> {
+  const parts = data.lines.find((l) => l.id === lineId)?.network ?? []
+  return {
+    type: 'Feature',
+    // Une seule portion (tram) : LineString ; tronc + branche (métro) :
+    // MultiLineString, pour ne jamais relier El Harrach Centre aux Ateliers.
+    geometry: parts.length === 1
+      ? { type: 'LineString', coordinates: parts[0] }
+      : { type: 'MultiLineString', coordinates: parts },
+    properties: { mode, color },
+  }
 }
 
-export const metroLineGeoJSON = {
-  type: 'Feature' as const,
-  geometry: {
-    type: 'LineString' as const,
-    coordinates: metroStations.map((s) => [s.lon, s.lat]),
-  },
-  properties: { mode: 'metro', color: METRO_COLOR },
-}
+/** Fond de carte du M1 : voies OSM du tronc et des deux branches. */
+export const metroLineGeoJSON = networkFeature('L1-metro', 'metro', METRO_COLOR)
 
-export const tramLineGeoJSON = {
-  type: 'Feature' as const,
-  geometry: {
-    type: 'LineString' as const,
-    coordinates: tramStations.map((s) => [s.lon, s.lat]),
-  },
-  properties: { mode: 'tram', color: TRAM_COLOR },
-}
+/** Fond de carte du T1 : voie OSM, sens aller. */
+export const tramLineGeoJSON = networkFeature('L1-tram', 'tram', TRAM_COLOR)

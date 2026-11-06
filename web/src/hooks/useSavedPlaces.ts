@@ -23,14 +23,42 @@ const DEFAULT_PLACES: Record<SavedPlaceKey, Omit<SavedPlace, 'lat' | 'lon' | 'ad
 
 const STORAGE_KEY = 'alger-transit-saved-places'
 
+type SavedPlaces = Partial<Record<SavedPlaceKey, SavedPlace>>
+
+function isPlace(value: unknown, key: SavedPlaceKey): value is SavedPlace {
+  const p = value as Record<string, unknown> | null
+  return Boolean(p) && p!.key === key
+    && typeof p!.lat === 'number' && Number.isFinite(p!.lat)
+    && typeof p!.lon === 'number' && Number.isFinite(p!.lon)
+}
+
+/**
+ * Lieux enregistrés, lus à l'instant dans le stockage. Les composants qui
+ * n'affichent pas les raccourcis (un récent « Maison » rejoué depuis le
+ * formulaire) s'en servent pour retrouver l'adresse ACTUELLE de Maison, pas
+ * celle du jour de la recherche. Toute entrée malformée est ignorée.
+ */
+export function readSavedPlaces(): SavedPlaces {
+  if (typeof window === 'undefined') return {}
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return {}
+    const parsed = JSON.parse(raw) as Record<string, unknown>
+    const out: SavedPlaces = {}
+    for (const key of ['home', 'work'] as const) {
+      if (isPlace(parsed?.[key], key)) out[key] = parsed[key] as SavedPlace
+    }
+    return out
+  } catch {
+    return {}
+  }
+}
+
 export function useSavedPlaces() {
-  const [places, setPlaces] = useState<Partial<Record<SavedPlaceKey, SavedPlace>>>({})
+  const [places, setPlaces] = useState<SavedPlaces>({})
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      if (raw) setPlaces(JSON.parse(raw))
-    } catch { /* ignore */ }
+    setPlaces(readSavedPlaces())
   }, [])
 
   const savePlace = useCallback((place: SavedPlace) => {

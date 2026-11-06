@@ -1,0 +1,85 @@
+/* Surfaces flottantes de la carte (contrôles, puces, feuilles), en clair et en
+   sombre. Le thème est porté par data-theme sur le conteneur de la carte : la
+   carte peut être sombre sans dépendre des règles globales qui forcent le
+   blanc sur toute classe « bg-white ». */
+
+.surface {
+  background-color: #ffffff;
+  color: #111827;
+}
+.root[data-theme='dark'] .surface {
+  background-color: #1b222c;
+  color: #e5e7eb;
+  /* Sur un fond de carte sombre, l'ombre seule ne détache pas la surface. */
+  box-shadow: 0 0 0 1px #2a323e, 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.muted {
+  color: #4b5563;
+}
+.root[data-theme='dark'] .muted {
+  color: #b4bdc8;
+}
+
+.faint {
+  color: #6b7280;
+}
+.root[data-theme='dark'] .faint {
+  color: #98a2ae;
+}
+
+.divider {
+  background-color: #e5e7eb;
+}
+.root[data-theme='dark'] .divider {
+  background-color: #2a323e;
+}
+
+.rowBorder {
+  border-color: #e5e7eb;
+}
+.root[data-theme='dark'] .rowBorder {
+  border-color: #2a323e;
+}
+
+.icon {
+  color: #111827;
+}
+.root[data-theme='dark'] .icon {
+  color: #e5e7eb;
+}
+
+/* Secondaire : contour, texte de marque. */
+.secondary {
+  border: 1px solid #d6e6fb;
+  color: #1558b8;
+  background-color: #eaf2fd;
+}
+.root[data-theme='dark'] .secondary {
+  border-color: #2a4a75;
+  color: #a9c8f3;
+  background-color: #162236;
+}
+
+.link {
+  color: #1558b8;
+}
+.root[data-theme='dark'] .link {
+  color: #8db8f0;
+}
+
+/* Indicateur de focus clavier visible (aucun outline n'existait). */
+.focusRing:focus-visible {
+  outline: 2px solid #1d6fe0;
+  outline-offset: 2px;
+}
+
+/* Puce de légende : la pastille fait 18 px, la zone tactile 44 px. */
+.hit {
+  position: relative;
+}
+.hit::after {
+  content: '';
+  position: absolute;
+  inset: -13px -4px;
+}

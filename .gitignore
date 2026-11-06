@@ -1,5 +1,6 @@
 # OTP — graphe généré (binaire lourd)
 data/*.obj
+data/*.obj.*
 data/report/
 
 # OSM (fichier lourd, téléchargeable séparément)
@@ -28,6 +29,7 @@ web/tsconfig.tsbuildinfo
 # Variables d'environnement
 .env
 .env.*
+!.env.example
 web/.env.local
 web/.env.*.local
 

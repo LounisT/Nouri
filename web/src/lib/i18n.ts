@@ -1,6 +1,14 @@
 // Système i18n minimaliste — 3 langues : FR (défaut), AR, EN
 // Pas de librairie externe — simple objet de traductions + Context React
 
+import { navStrings } from './strings/nav'
+import { itinStrings } from './strings/itin'
+import { mapStrings } from './strings/map'
+import { catStrings } from './strings/cat'
+import { dataStrings } from './strings/data'
+import { uxStrings } from './strings/ux'
+import { pageStrings } from './strings/page'
+
 export type Locale = 'fr' | 'ar' | 'en'
 
 export const LOCALES: { code: Locale; label: string; dir: 'ltr' | 'rtl'; flag: string }[] = [
@@ -12,97 +20,50 @@ export const LOCALES: { code: Locale; label: string; dir: 'ltr' | 'rtl'; flag: s
 // ────────────────────────────────────────────────────────────────────────────
 // Dictionnaire de traductions
 // ────────────────────────────────────────────────────────────────────────────
-export const translations = {
+const baseTranslations = {
   fr: {
     // Navigation principale
     appName:          'Nouri',
-    appSubtitle:      'Métro & Tramway',
-    searchPlaceholder:'On va où ?',
-    searchSub:        'Station, adresse...',
     from:             'Départ',
     to:               'Destination',
     fromPlaceholder:  'Départ',
     toPlaceholder:    'Destination',
     searchBtn:        'Trouver un itinéraire',
     searching:        'Recherche...',
-    noResults:        'Aucun lieu trouvé pour cette recherche.',
     searchingAddress: 'Recherche d’adresses...',
-    searchRecent:     'Recherches récentes',
     searchAddressPlaceholder: 'Rechercher une adresse ou station...',
     go:               'Commencer',
     back:             'Retour',
     copied:           'Copié !',
-    dragHint:         'Glisser',
-    adjustPanelHeight:'Ajuster la hauteur du panneau',
 
     // Résultats & navigation
     itineraries:      'itinéraire',
-    itinerariesPlural:'itinéraires',
     routesFound:      'trouvé',
-    routesFoundPlural:'trouvés',
     destination:      'Destination',
-    arriving:         'Arrivée',
-    departing:        'Départ à',
     arriveBefore:     'Arriver avant',
     estimatedFare:    'Tarif estimé',
-    transfersShort:   'corresp.',
-    waiting:          'attente',
     directionShort:   'dir.',
     stop:             'arrêt',
     stops:            'arrêts',
-    walkingOnly:      'à pied',
     close:            'Fermer',
 
     // Statut service
-    nextDeparture:    'Prochain passage',
-    metroTram:        'Métro & Tramway',
-    everyN:           'toutes les',
     min:              'min',
     outOfService:     'Fin de service',
-    resumes:          'Reprend à 05h00',
-    atPlatform:       'À quai',
     now:              'maintenant',
     remaining:        'restantes',
 
     // Stations proches
-    nearbyStations:   'Stations proches',
     walkMin:          'min à pied',
 
     // Carte
     network:          'Réseau',
-    metroL1:          'Métro L1',
-    tramL1:           'Tramway L1',
-    extensions2027:   'Extensions 2027',
-    planned:          'Prévu',
-    plannedAround:    'Prévu ~',
-    clickFrom:        'Cliquez sur la carte pour définir le départ',
-    clickTo:          'Cliquez sur la carte pour définir la destination',
     zoomIn:           'Zoom avant',
     zoomOut:          'Zoom arrière',
     myLocation:       'Ma position',
-    activeLayers:     'Couches actives',
-    visibleStations:  'Stations visibles',
-    viewNetwork:      'Voir le réseau',
-    focusJourney:     'Voir le trajet',
-    selectedStation:  'Station sélectionnée',
-    walkZone:         'Zone de marche',
-    aroundFiveMin:    'Environ 5 min autour de la station',
-    nearbyConnections:'Correspondances proches',
     loading:          'Chargement de la carte...',
-    hideExtensions:   'Masquer les extensions',
-    showExtensions:   'Afficher les extensions',
-    showAll:          'Tout afficher',
-    plannedOpenAround:'Ouverture prévue ~2027',
-
-    // Tarifs
-    farePerTrip:      '50 DZD / trajet',
-
-    // Mode démo
-    demoMode:         'démo',
-    demoHint:         'Mode hors-ligne',
 
     // Récents / favoris
-    recent:           'Récents',
     from2:            'depuis',
     saved:            'Raccourcis',
     add:              'Ajouter',
@@ -111,13 +72,12 @@ export const translations = {
     editPlace:        'Modifier',
     removePlaceAction:'Supprimer ce lieu',
     removedToast:     'Supprimé',
-    removeFavorite:   'Supprimer ce favori',
     homePlace:        'Maison',
     workPlace:        'Travail',
 
     // Erreurs
     tooClose:         'Points trop proches.',
-    noRoute:          'Aucun itinéraire disponible — les transports sont hors service actuellement.',
+    noRoute:          'Aucun itinéraire trouvé pour ce trajet.',
     impossible:       'Itinéraire impossible',
     error:            'erreur',
 
@@ -129,33 +89,14 @@ export const translations = {
     stations:         'stations',
     terminus:         'Terminus',
     lines:            'Lignes',
-    journey:          'Trajet',
     onFoot:           'À pied',
     routeArrow:       '→',
     noRoutesAvailable:'Aucun itinéraire trouvé',
-    serviceOfflineNow:'les transports sont hors service actuellement.',
-    tapToSeeAll:      'Touchez pour tout voir',
-    currentStep:      'Étape en cours',
-    platformNow:      'À quai',
-    inMinutes:        'Dans {count} min',
-    everyFiveMin:     'Toutes les 5 min',
-    everyTenMin:      'Toutes les 10 min',
-    metroLine1:       'Métro Ligne 1',
-    tramLine1:        'Tramway Ligne 1',
-    metroExtension:   'Métro L1 — Extension',
-
-    // Horaires
-    scheduleDisclaimer: 'Horaires théoriques — temps réel non disponible',
 
     // Handoff design — Accueil groupé + états
-    allLinesLink:     'Toutes les lignes',
     allFilter:        'Toutes',
     cheapest:         'le moins cher',
-    correspondenceWord: 'correspondance',
-    correspondencesWord: 'correspondances',
     walkVerb:         'Marchez',
-    departNow:        'Départ maintenant',
-    zoomForBusStops:  'Zoomez pour voir les arrêts de bus',
     metroStation:     'Station de métro',
     tramStop:         'Station de tramway',
     busStopWord:      'Arrêt de bus',
@@ -163,43 +104,32 @@ export const translations = {
     progressEstimated:'Sans position, l’avancement suit les horaires prévus.',
     geoDenied:        'Localisation refusée. Autorisez-la dans les réglages du navigateur.',
     geoUnavailable:   'Position introuvable pour l’instant — signal GPS trop faible.',
-    minShort:         'min',
-    stationsUnit:     'stations',
     recents:          'Récents',
     direct:           'direct',
-    frequencyWord:    'fréquence',
-    tildeNote:        'Heures « ~ » estimées d’après la fréquence de la ligne.',
-    noRouteExplain:   'Le réseau couvre mal ce trajet à cette heure.',
+    tildeNote:        'Heures « ~ » estimées : passages d’après la fréquence de la ligne, durée à bord d’après la distance entre arrêts — aucun horaire détaillé n’est publié.',
     seeNearbyLines:   'Voir les lignes proches du départ',
-    enableLocationSuffix: 'pour voir ce qui part près de vous.',
     ctxMetro:         'Dans le métro',
     ctxTram:          'Dans le tram',
     ctxBus:           'Dans le bus',
     ctxWalk:          'À pied',
-    alightAt:         'Descendez à',
-    walkTowards:      'Marchez vers',
     stopsLeft:        'arrêts restants',
     nextLabel:        'Ensuite',
     quitNav:          'Quitter la navigation',
-    arrivalAbbr:      'arrivée',
     opensAt:          'ouvre',
-    sortedAZ:         'Lignes triées par nom.',
-    estimatedNote:    'Horaires estimés d’après les fréquences officielles — pas de temps réel à Alger.',
-    routeNotMapped:   'Le tracé exact de ce bus n’est pas relevé : la carte relie ses arrêts.',
+    estimatedNote:    'Horaires « ~ » estimés à partir de fréquences approximatives — aucun horaire de passage publié, pas de temps réel à Alger.',
+    routeNotMapped:   'Le tracé exact de ce tronçon n’est pas relevé : la carte relie ses arrêts.',
     routeEstimated:   'Tracé estimé par la voirie — le parcours exact de cette ligne n’est pas relevé.',
     noNearbyLinesExplain: 'Aucun arrêt relevé à moins de 1,5 km de votre position. Le réseau est cartographié depuis OpenStreetMap : des lignes peuvent manquer.',
     locating:         'Recherche de votre position…',
     navArrived:       'Vous êtes arrivé',
-    demoNote:         'Trajet simulé : le calculateur d’itinéraires est injoignable. Lignes et horaires ne sont pas vérifiés — contrôlez sur place.',
-    fastest:          'le plus rapide',
+    demoNote:         'Trajet simulé (mode démonstration) : ce n’est pas un itinéraire calculé. Lignes et horaires ne sont pas vérifiés.',
     lessWalking:      'moins de marche',
     departPrefix:     'départ',
-    offlineBanner:    'Hors ligne — données du réseau en cache',
+    offlineBanner:    'Hors ligne : lignes et arrêts restent consultables, le calcul d’itinéraire et la recherche d’adresses non.',
     feedbackTitle:    'Nous écrire',
     feedbackHint:     'Un bug ou une suggestion ? Votre message part à l’équipe Nouri.',
     feedbackPlaceholder: 'Votre message…',
     feedbackSend:     'Envoyer par e-mail',
-    feedbackSubject:  '[Nouri] Retour d’usage',
     lastDeparture:    'dernier départ',
     open:             'Ouvert',
     closed:           'Fermé',
@@ -207,113 +137,55 @@ export const translations = {
     chooseDirection:  'Choisir la direction',
 
     // Architecture RATP — onglets
-    tabHome:          'Accueil',
     tabMap:           'Carte',
-    tabTraffic:       'Trafic',
-    linesHere:        'Lignes à cet arrêt',
-    aroundMe:         'Autour de moi',
-    networkStatus:    'État du réseau',
     inService:        'En service',
-    serviceEnded:     'Fin de service',
-    resumesAtTime:    'Reprise à',
-    trafficDisclaimer:'État calculé depuis les horaires officiels — pas de temps réel.',
 
     // Refonte 3 onglets
-    tabNearby:        'À proximité',
     tabLines:         'Lignes',
     tabRoute:         'Itinéraire',
     busMode:          'Bus',
-    wholeNetwork:     'Tout le réseau',
-    fareLabel:        'Tarif',
-    hoursLabel:       'Horaires',
-    lineCountUnit:    'lignes',
     towards:          'vers',
-    estimatedNextPass:'Prochain passage estimé',
     noNearbyLines:    'Aucune ligne à proximité',
-    enableLocation:   'Activer la localisation',
   },
 
   ar: {
     appName:          'نوري',
-    appSubtitle:      'مترو وترامواي',
-    searchPlaceholder:'إلى أين؟',
-    searchSub:        'محطة، عنوان...',
-    from:             'المغادرة',
+    from:             'الانطلاق',
     to:               'الوجهة',
     fromPlaceholder:  'الانطلاق',
     toPlaceholder:    'الوجهة',
     searchBtn:        'البحث عن مسار',
     searching:        'جارٍ البحث...',
-    noResults:        'لم يُعثر على أي مكان بهذا البحث.',
     searchingAddress: 'جارٍ البحث عن العناوين...',
-    searchRecent:     'عمليات البحث الأخيرة',
     searchAddressPlaceholder: 'ابحث عن عنوان أو محطة...',
     go:               'ابدأ',
     back:             'رجوع',
     copied:           'تم النسخ!',
-    dragHint:         'اسحب',
-    adjustPanelHeight:'تعديل ارتفاع اللوحة',
 
     itineraries:      'مسار',
-    itinerariesPlural:'مسارات',
-    routesFound:      'تم العثور عليه',
-    routesFoundPlural:'تم العثور عليها',
+    routesFound:      'عُثر عليه',
     destination:      'الوجهة',
-    arriving:         'الوصول',
-    departing:        'المغادرة',
     arriveBefore:     'الوصول قبل',
     estimatedFare:    'السعر التقديري',
-    transfersShort:   'تحويلات',
-    waiting:          'انتظار',
     directionShort:   'اتجاه',
     stop:             'محطة',
     stops:            'محطات',
-    walkingOnly:      'مشياً',
     close:            'إغلاق',
 
-    nextDeparture:    'المرور القادم',
-    metroTram:        'مترو وترامواي',
-    everyN:           'كل',
-    min:              'دقيقة',
+    min:              'د',
     outOfService:     'نهاية الخدمة',
-    resumes:          'تستأنف عند 05:00',
-    atPlatform:       'في المحطة',
     now:              'الآن',
     remaining:        'متبقية',
 
-    nearbyStations:   'المحطات القريبة',
-    walkMin:          'د مشيا',
+    walkMin:          'د مشياً',
 
     network:          'الشبكة',
-    metroL1:          'مترو الخط 1',
-    tramL1:           'ترامواي الخط 1',
-    extensions2027:   'امتدادات 2027',
-    planned:          'مخطط',
-    plannedAround:    'متوقع حوالي',
-    clickFrom:        'انقر على الخريطة لتحديد نقطة الانطلاق',
-    clickTo:          'انقر على الخريطة لتحديد الوجهة',
     zoomIn:           'تكبير',
     zoomOut:          'تصغير',
     myLocation:       'موقعي',
-    activeLayers:     'الطبقات النشطة',
-    visibleStations:  'المحطات الظاهرة',
-    viewNetwork:      'عرض الشبكة',
-    focusJourney:     'عرض المسار',
-    selectedStation:  'المحطة المحددة',
-    walkZone:         'منطقة المشي',
-    aroundFiveMin:    'حوالي 5 دقائق حول المحطة',
-    nearbyConnections:'الربط القريب',
     loading:          'جاري تحميل الخريطة...',
-    hideExtensions:   'إخفاء الامتدادات',
-    showExtensions:   'إظهار الامتدادات',
-    showAll:          'إظهار الكل',
-    plannedOpenAround:'افتتاح متوقع حوالي 2027',
 
-    farePerTrip:      '50 دج / رحلة',
-    demoMode:         'تجريبي',
-    demoHint:         'وضع غير متصل',
 
-    recent:           'الأخيرة',
     from2:            'من',
     saved:            'اختصارات',
     add:              'إضافة',
@@ -322,12 +194,11 @@ export const translations = {
     editPlace:        'تعديل',
     removePlaceAction:'حذف هذا المكان',
     removedToast:     'تم الحذف',
-    removeFavorite:   'حذف هذا المفضل',
     homePlace:        'المنزل',
     workPlace:        'العمل',
 
     tooClose:         'النقطتان قريبتان جداً.',
-    noRoute:          'لا يوجد مسار — الخدمة متوقفة حالياً.',
+    noRoute:          'لم يُعثر على أي مسار لهذه الرحلة.',
     impossible:       'مسار غير ممكن',
     error:            'خطأ',
 
@@ -338,31 +209,14 @@ export const translations = {
     stations:         'محطات',
     terminus:         'المحطة النهائية',
     lines:            'الخطوط',
-    journey:          'المسار',
     onFoot:           'مشياً',
     routeArrow:       '←',
     noRoutesAvailable:'لم يُعثر على مسار',
-    serviceOfflineNow:'النقل متوقف حالياً.',
-    tapToSeeAll:      'اضغط لعرض الكل',
-    currentStep:      'المرحلة الحالية',
-    platformNow:      'في المحطة',
-    inMinutes:        'خلال {count} دقيقة',
-    everyFiveMin:     'كل 5 دقائق',
-    everyTenMin:      'كل 10 دقائق',
-    metroLine1:       'مترو الخط 1',
-    tramLine1:        'ترامواي الخط 1',
-    metroExtension:   'مترو الخط 1 — امتداد',
 
-    scheduleDisclaimer: 'مواقيت نظرية — التوقيت الفعلي غير متاح',
 
-    allLinesLink:     'كل الخطوط',
     allFilter:        'الكل',
     cheapest:         'الأرخص',
-    correspondenceWord: 'تحويلة',
-    correspondencesWord: 'تحويلات',
     walkVerb:         'امشِ',
-    departNow:        'الانطلاق الآن',
-    zoomForBusStops:  'كبّر لرؤية محطات الحافلات',
     metroStation:     'محطة مترو',
     tramStop:         'محطة ترامواي',
     busStopWord:      'محطة حافلات',
@@ -370,155 +224,86 @@ export const translations = {
     progressEstimated:'بدون تحديد الموقع، يعتمد التقدّم على الأوقات المقرّرة.',
     geoDenied:        'تم رفض تحديد الموقع. اسمح به في إعدادات المتصفح.',
     geoUnavailable:   'تعذّر تحديد الموقع حالياً — إشارة GPS ضعيفة.',
-    minShort:         'د',
-    stationsUnit:     'محطات',
     recents:          'الأخيرة',
     direct:           'مباشر',
-    frequencyWord:    'التردد',
-    tildeNote:        'الأوقات «~» مقدّرة حسب تردد الخط.',
-    noRouteExplain:   'الشبكة لا تغطي هذا المسار جيداً في هذا الوقت.',
+    tildeNote:        'الأوقات «~» تقديرية: المرور حسب تردد الخط، ومدة الرحلة حسب المسافة بين المحطات — لا توجد مواعيد مفصّلة منشورة.',
     seeNearbyLines:   'عرض الخطوط القريبة من نقطة الانطلاق',
-    enableLocationSuffix: 'لرؤية ما ينطلق بالقرب منك.',
     ctxMetro:         'في المترو',
     ctxTram:          'في الترامواي',
     ctxBus:           'في الحافلة',
     ctxWalk:          'مشياً',
-    alightAt:         'انزل في',
-    walkTowards:      'امشِ نحو',
     stopsLeft:        'محطات متبقية',
     nextLabel:        'بعد ذلك',
     quitNav:          'إنهاء التوجيه',
-    arrivalAbbr:      'الوصول',
     opensAt:          'يفتح',
-    sortedAZ:         'الخطوط مرتبة حسب الاسم.',
-    estimatedNote:    'مواعيد تقديرية حسب الترددات الرسمية — لا يوجد وقت فعلي في الجزائر.',
-    routeNotMapped:   'المسار الدقيق لهذه الحافلة غير مسجّل: الخريطة تصل بين محطاتها فقط.',
+    estimatedNote:    'مواعيد «~» تقديرية مبنية على ترددات تقريبية — لا توجد مواعيد مرور منشورة، ولا توقيت فعلي في الجزائر.',
+    routeNotMapped:   'المسار الدقيق لهذا المقطع غير مسجّل: الخريطة تصل بين محطاته فقط.',
     routeEstimated:   'المسار مُقدَّر عبر شبكة الطرق — المسار الدقيق لهذا الخط غير مسجَّل.',
     noNearbyLinesExplain: 'لا توجد محطة مسجّلة على بعد أقل من 1,5 كلم من موقعك. الشبكة مرسومة من OpenStreetMap: قد تنقص بعض الخطوط.',
     locating:         'جارٍ تحديد موقعك…',
     navArrived:       'لقد وصلت',
-    demoNote:         'مسار محاكى: خادم حساب المسارات غير متاح. الخطوط والمواقيت غير مؤكدة — تحقّق منها على عين المكان.',
-    fastest:          'الأسرع',
+    demoNote:         'مسار محاكى (وضع العرض التجريبي): ليس مساراً محسوباً. الخطوط والمواعيد غير مؤكدة.',
     lessWalking:      'مشي أقل',
     departPrefix:     'انطلاق',
-    offlineBanner:    'غير متصل — بيانات الشبكة من الذاكرة المؤقتة',
+    offlineBanner:    'غير متصل: يمكن تصفّح الخطوط والمحطات، أما حساب المسارات والبحث عن العناوين فغير متاحين.',
     feedbackTitle:    'راسلنا',
     feedbackHint:     'خلل أو اقتراح؟ رسالتك تصل إلى فريق نوري.',
     feedbackPlaceholder: 'رسالتك…',
     feedbackSend:     'الإرسال بالبريد',
-    feedbackSubject:  '[Nouri] ملاحظة',
     lastDeparture:    'آخر انطلاق',
     open:             'مفتوح',
     closed:           'مغلق',
     filterMode:       'تصفية حسب وسيلة النقل',
     chooseDirection:  'اختيار الاتجاه',
 
-    tabHome:          'الرئيسية',
     tabMap:           'الخريطة',
-    tabTraffic:       'الحركة',
-    linesHere:        'الخطوط في هذه المحطة',
-    aroundMe:         'من حولي',
-    networkStatus:    'حالة الشبكة',
     inService:        'في الخدمة',
-    serviceEnded:     'نهاية الخدمة',
-    resumesAtTime:    'تستأنف عند',
-    trafficDisclaimer:'الحالة محسوبة من المواقيت الرسمية — لا يوجد وقت فعلي.',
 
-    tabNearby:        'القريبة',
     tabLines:         'الخطوط',
     tabRoute:         'المسار',
     busMode:          'حافلة',
-    wholeNetwork:     'كامل الشبكة',
-    fareLabel:        'السعر',
-    hoursLabel:       'المواقيت',
-    lineCountUnit:    'خطا',
     towards:          'نحو',
-    estimatedNextPass:'المرور القادم التقديري',
     noNearbyLines:    'لا توجد خطوط قريبة',
-    enableLocation:   'تفعيل تحديد الموقع',
   },
 
   en: {
     appName:          'Nouri',
-    appSubtitle:      'Metro & Tram',
-    searchPlaceholder:'Where to?',
-    searchSub:        'Station, address...',
     from:             'From',
     to:               'To',
     fromPlaceholder:  'From',
     toPlaceholder:    'Destination',
     searchBtn:        'Find a route',
     searching:        'Searching...',
-    noResults:        'No place found for this search.',
     searchingAddress: 'Searching addresses...',
-    searchRecent:     'Recent searches',
     searchAddressPlaceholder: 'Search for an address or station...',
     go:               'Start',
     back:             'Back',
     copied:           'Copied!',
-    dragHint:         'Drag',
-    adjustPanelHeight:'Adjust panel height',
 
     itineraries:      'route',
-    itinerariesPlural:'routes',
     routesFound:      'found',
-    routesFoundPlural:'found',
     destination:      'Destination',
-    arriving:         'Arriving',
-    departing:        'Departing',
     arriveBefore:     'Arrive before',
     estimatedFare:    'Estimated fare',
-    transfersShort:   'transfers',
-    waiting:          'waiting',
     directionShort:   'dir.',
     stop:             'stop',
     stops:            'stops',
-    walkingOnly:      'walk',
     close:            'Close',
 
-    nextDeparture:    'Next departure',
-    metroTram:        'Metro & Tram',
-    everyN:           'every',
     min:              'min',
     outOfService:     'End of service',
-    resumes:          'Resumes at 05:00',
-    atPlatform:       'On platform',
     now:              'now',
     remaining:        'remaining',
 
-    nearbyStations:   'Nearby stations',
     walkMin:          'min walk',
 
     network:          'Network',
-    metroL1:          'Metro L1',
-    tramL1:           'Tramway L1',
-    extensions2027:   'Extensions 2027',
-    planned:          'Planned',
-    plannedAround:    'Planned ~',
-    clickFrom:        'Click on the map to set departure',
-    clickTo:          'Click on the map to set destination',
     zoomIn:           'Zoom in',
     zoomOut:          'Zoom out',
     myLocation:       'My location',
-    activeLayers:     'Active layers',
-    visibleStations:  'Visible stations',
-    viewNetwork:      'View network',
-    focusJourney:     'View journey',
-    selectedStation:  'Selected station',
-    walkZone:         'Walking zone',
-    aroundFiveMin:    'About 5 minutes around the station',
-    nearbyConnections:'Nearby connections',
     loading:          'Loading map...',
-    hideExtensions:   'Hide extensions',
-    showExtensions:   'Show extensions',
-    showAll:          'Show all',
-    plannedOpenAround:'Planned opening ~2027',
 
-    farePerTrip:      '50 DZD / trip',
-    demoMode:         'demo',
-    demoHint:         'Offline mode',
 
-    recent:           'Recent',
     from2:            'From',
     saved:            'Shortcuts',
     add:              'Add',
@@ -527,12 +312,11 @@ export const translations = {
     editPlace:        'Edit',
     removePlaceAction:'Remove this place',
     removedToast:     'Removed',
-    removeFavorite:   'Remove this favorite',
     homePlace:        'Home',
     workPlace:        'Work',
 
     tooClose:         'Points too close.',
-    noRoute:          'No routes available — service is currently offline.',
+    noRoute:          'No route found for this trip.',
     impossible:       'Route not possible',
     error:            'error',
 
@@ -543,31 +327,14 @@ export const translations = {
     stations:         'stations',
     terminus:         'Terminus',
     lines:            'Lines',
-    journey:          'Journey',
     onFoot:           'Walk',
     routeArrow:       '→',
     noRoutesAvailable:'No route found',
-    serviceOfflineNow:'public transport is currently offline.',
-    tapToSeeAll:      'Tap to see all',
-    currentStep:      'Current step',
-    platformNow:      'On platform',
-    inMinutes:        'In {count} min',
-    everyFiveMin:     'Every 5 min',
-    everyTenMin:      'Every 10 min',
-    metroLine1:       'Metro Line 1',
-    tramLine1:        'Tramway Line 1',
-    metroExtension:   'Metro L1 — Extension',
 
-    scheduleDisclaimer: 'Estimated times — real-time data unavailable',
 
-    allLinesLink:     'All lines',
     allFilter:        'All',
     cheapest:         'cheapest',
-    correspondenceWord: 'transfer',
-    correspondencesWord: 'transfers',
     walkVerb:         'Walk',
-    departNow:        'Departing now',
-    zoomForBusStops:  'Zoom in to see bus stops',
     metroStation:     'Metro station',
     tramStop:         'Tram stop',
     busStopWord:      'Bus stop',
@@ -575,73 +342,123 @@ export const translations = {
     progressEstimated:'Without a position, progress follows the scheduled times.',
     geoDenied:        'Location denied. Allow it in your browser settings.',
     geoUnavailable:   'Can’t find your position right now — weak GPS signal.',
-    minShort:         'min',
-    stationsUnit:     'stations',
     recents:          'Recent',
     direct:           'direct',
-    frequencyWord:    'frequency',
-    tildeNote:        '“~” times are estimated from the line’s frequency.',
-    noRouteExplain:   'The network poorly covers this trip at this time.',
+    tildeNote:        '“~” times are estimates: departures from the line’s frequency, on-board time from the distance between stops — no detailed timetable is published.',
     seeNearbyLines:   'See lines near the start',
-    enableLocationSuffix: 'to see what departs near you.',
     ctxMetro:         'On the metro',
     ctxTram:          'On the tram',
     ctxBus:           'On the bus',
     ctxWalk:          'Walking',
-    alightAt:         'Get off at',
-    walkTowards:      'Walk towards',
     stopsLeft:        'stops left',
     nextLabel:        'Next',
     quitNav:          'Exit navigation',
-    arrivalAbbr:      'arrival',
     opensAt:          'opens',
-    sortedAZ:         'Lines sorted by name.',
-    estimatedNote:    'Times estimated from official frequencies — no real-time data in Algiers.',
-    routeNotMapped:   'This bus route is not mapped: the map only links its stops.',
+    estimatedNote:    '“~” times are estimated from approximate frequencies — no published timetable, no real-time data in Algiers.',
+    routeNotMapped:   'The exact path of this leg is not mapped: the map only links its stops.',
     routeEstimated:   'Route estimated from the road network — the exact path of this line is not surveyed.',
     noNearbyLinesExplain: 'No stop recorded within 1.5 km of your position. The network is mapped from OpenStreetMap: some lines may be missing.',
     locating:         'Finding your position…',
     navArrived:       'You have arrived',
-    demoNote:         'Simulated route: the trip planner is unreachable. Lines and times are unverified — check on site.',
-    fastest:          'fastest',
+    demoNote:         'Simulated trip (demo mode): this is not a computed route. Lines and times are unverified.',
     lessWalking:      'less walking',
     departPrefix:     'departs',
-    offlineBanner:    'Offline — cached network data',
+    offlineBanner:    'Offline: lines and stops remain available, route planning and address search do not.',
     feedbackTitle:    'Contact us',
     feedbackHint:     'A bug or a suggestion? Your message goes to the Nouri team.',
     feedbackPlaceholder: 'Your message…',
     feedbackSend:     'Send by email',
-    feedbackSubject:  '[Nouri] Feedback',
     lastDeparture:    'last departure',
     open:             'Open',
     closed:           'Closed',
     filterMode:       'Filter by mode',
     chooseDirection:  'Choose direction',
 
-    tabHome:          'Home',
     tabMap:           'Map',
-    tabTraffic:       'Status',
-    linesHere:        'Lines at this stop',
-    aroundMe:         'Around me',
-    networkStatus:    'Network status',
     inService:        'In service',
-    serviceEnded:     'Service ended',
-    resumesAtTime:    'Resumes at',
-    trafficDisclaimer:'Status computed from official hours — no real-time data.',
 
-    tabNearby:        'Nearby',
     tabLines:         'Lines',
     tabRoute:         'Route',
     busMode:          'Bus',
-    wholeNetwork:     'Whole network',
-    fareLabel:        'Fare',
-    hoursLabel:       'Hours',
-    lineCountUnit:    'lines',
     towards:          'towards',
-    estimatedNextPass:'Estimated next departure',
     noNearbyLines:    'No lines nearby',
-    enableLocation:   'Enable location',
   },
 } satisfies Record<Locale, Record<string, string>>
 
+export const translations = {
+  fr: { ...baseTranslations.fr, ...navStrings.fr, ...itinStrings.fr, ...mapStrings.fr, ...catStrings.fr, ...dataStrings.fr, ...uxStrings.fr, ...pageStrings.fr },
+  ar: { ...baseTranslations.ar, ...navStrings.ar, ...itinStrings.ar, ...mapStrings.ar, ...catStrings.ar, ...dataStrings.ar, ...uxStrings.ar, ...pageStrings.ar },
+  en: { ...baseTranslations.en, ...navStrings.en, ...itinStrings.en, ...mapStrings.en, ...catStrings.en, ...dataStrings.en, ...uxStrings.en, ...pageStrings.en },
+}
+
 export type TranslationKey = keyof (typeof translations)['fr']
+
+/** Familles plurielles : « base » tel que « base_other » existe (ux_stops, ux_stopsLeft…). */
+export type PluralBase = {
+  [K in TranslationKey]: K extends `${infer B}_other` ? B : never
+}[TranslationKey]
+
+export type TranslationVars = Record<string, string | number>
+
+export const LOCALE_STORAGE_KEY = 'locale'
+
+export function isLocale(value: unknown): value is Locale {
+  return value === 'fr' || value === 'ar' || value === 'en'
+}
+
+/**
+ * Langue du téléphone : la première des langues préférées que l'app parle.
+ * « ar-DZ, fr » → ar ; « kab, fr » → fr ; « de » → fr (langue par défaut).
+ * Même règle que le script inline de layout.tsx, qui l'applique avant
+ * l'hydratation : les deux doivent rester d'accord.
+ */
+export function detectLocale(languages: readonly string[] | undefined): Locale {
+  for (const raw of languages ?? []) {
+    const code = String(raw || '').toLowerCase()
+    if (code.startsWith('ar')) return 'ar'
+    if (code.startsWith('fr')) return 'fr'
+    if (code.startsWith('en')) return 'en'
+  }
+  return 'fr'
+}
+
+/** Remplacement simple des variables « {nom} ». */
+export function formatVars(text: string, vars?: TranslationVars): string {
+  if (!vars) return text
+  let out = text
+  for (const name of Object.keys(vars)) out = out.split(`{${name}}`).join(String(vars[name]))
+  return out
+}
+
+/** Traduction hors React (modules lib/), avec repli sur le français. */
+export function translate(locale: Locale, key: TranslationKey, vars?: TranslationVars): string {
+  const text = translations[locale]?.[key] ?? translations.fr[key] ?? key
+  return formatVars(text, vars)
+}
+
+const pluralRules = new Map<Locale, Intl.PluralRules | null>()
+
+function pluralCategory(locale: Locale, n: number): string {
+  if (!pluralRules.has(locale)) {
+    let rules: Intl.PluralRules | null = null
+    try { rules = new Intl.PluralRules(locale) } catch { rules = null }
+    pluralRules.set(locale, rules)
+  }
+  const rules = pluralRules.get(locale)
+  // Vieux moteur sans PluralRules : un / plusieurs, juste en français et en
+  // anglais, et lisible en arabe grâce aux formes « one » et « other ».
+  return rules ? rules.select(n) : n === 1 ? 'one' : 'other'
+}
+
+/**
+ * Nombre + nom accordé : pluralize('ar', 'ux_stopsLeft', 2) → « محطتان متبقيتان ».
+ * La forme vient d'Intl.PluralRules (zero/one/two/few/many/other) ; une forme
+ * absente retombe sur « _other ». « {n} » reçoit le nombre en chiffres latins.
+ */
+export function pluralize(locale: Locale, base: PluralBase, n: number, vars?: TranslationVars): string {
+  const dict = (translations[locale] ?? translations.fr) as Record<string, string>
+  const fallback = translations.fr as Record<string, string>
+  const cat = pluralCategory(locale, n)
+  const text = dict[`${base}_${cat}`] ?? dict[`${base}_other`] ?? fallback[`${base}_other`] ?? base
+  return formatVars(text, { n, ...vars })
+}

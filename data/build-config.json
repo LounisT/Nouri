@@ -1,7 +1,7 @@
 {
   "transitServiceStart": "-P1Y",
   "transitServiceEnd": "P3Y",
-  "_comment_snap": "400 m, aligné sur MAX_STOP_TO_SHAPE_M de build_etusa_gtfs.py. À 150 m (défaut OTP), un seul arrêt trop éloigné faisait rejeter TOUTE la shape du pattern : la ligne 113 retombait sur 8 points en droites et traversait la baie d'Alger. Nos arrêts viennent d'OSM et sont parfois posés à 300 m de la voie ; le script garantit déjà qu'aucun ne dépasse 400 m.",
+  "_comment_snap": "400 m : marge de sécurité. À 150 m (défaut OTP), un seul arrêt trop éloigné fait rejeter TOUTE la shape du pattern (l'ancienne ligne 113 retombait sur 8 points en droites et traversait la baie d'Alger). Depuis build_bus.py / build_rail.py, validate_gtfs.py refuse tout arrêt à plus de 150 m de son tracé (max mesuré : 103 m) ; la recette du 05/11/2026 (otp_e2e_trips.py) n'a relevé aucun ShapeGeometryTooFar. OTP signale ce champ comme « Unexpected config parameter » : sans effet.",
   "maxStopToShapeSnapDistance": 400,
   "dataImportReport": false,
   "osmDefaults": {

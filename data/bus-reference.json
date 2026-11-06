@@ -1,0 +1,5447 @@
+{
+ "_source": "GTFS bus ETUSA d'origine, tel que livré par le générateur build_etusa_gtfs.py (perdu), figé le 05/11/2026. Ne pas éditer : les corrections sont dans data/scripts/build_bus.py (table CORRECTIONS), appliquées à chaque génération.",
+ "stops": {
+  "B1057645071": {
+   "name": "Cité Maya",
+   "lat": 36.730176,
+   "lon": 3.102991
+  },
+  "B1166443206": {
+   "name": "Scala",
+   "lat": 36.774441,
+   "lon": 3.042398
+  },
+  "B1166446505": {
+   "name": "Saint Raphaël",
+   "lat": 36.770269,
+   "lon": 3.037223
+  },
+  "B1166446803": {
+   "name": "Saint Raphaël",
+   "lat": 36.770153,
+   "lon": 3.036656
+  },
+  "B1166448041": {
+   "name": "Châteauneuf",
+   "lat": 36.768872,
+   "lon": 3.021582
+  },
+  "B1166448212": {
+   "name": "Chateauneuf",
+   "lat": 36.76867,
+   "lon": 3.021581
+  },
+  "B1166448693": {
+   "name": "Centre",
+   "lat": 36.769362,
+   "lon": 3.026829
+  },
+  "B1166453231": {
+   "name": "Chevalley",
+   "lat": 36.768952,
+   "lon": 3.007494
+  },
+  "B1166459382": {
+   "name": "El Biar Stade",
+   "lat": 36.764463,
+   "lon": 3.022887
+  },
+  "B1166465446": {
+   "name": "Fort l'Empreur",
+   "lat": 36.77402,
+   "lon": 3.044885
+  },
+  "B1166465625": {
+   "name": "El Aourassi",
+   "lat": 36.776565,
+   "lon": 3.04858
+  },
+  "B1166466032": {
+   "name": "Tunnel des Facultés",
+   "lat": 36.7717,
+   "lon": 3.055657
+  },
+  "B1185935485": {
+   "name": "Gare Routière",
+   "lat": 36.743051,
+   "lon": 3.109239
+  },
+  "B1337246343": {
+   "name": "Place Al Smaa",
+   "lat": 36.74326,
+   "lon": 3.042093
+  },
+  "B1468889925": {
+   "name": "Aïn Allah",
+   "lat": 36.75071,
+   "lon": 2.991694
+  },
+  "B1468889926": {
+   "name": "Haï El Bina",
+   "lat": 36.760239,
+   "lon": 2.987245
+  },
+  "B1468889927": {
+   "name": "Bois des Cars",
+   "lat": 36.754223,
+   "lon": 2.981747
+  },
+  "B1468889928": {
+   "name": "Fédération",
+   "lat": 36.762276,
+   "lon": 2.99313
+  },
+  "B1468889929": {
+   "name": "La Faculté",
+   "lat": 36.758028,
+   "lon": 2.981344
+  },
+  "B1468889931": {
+   "name": "Rue Ahmed Ouaked",
+   "lat": 36.765616,
+   "lon": 2.992958
+  },
+  "B1468894839": {
+   "name": "Station de Bus Chevalley",
+   "lat": 36.769486,
+   "lon": 3.006971
+  },
+  "B1469251516": {
+   "name": "Bois des Cars",
+   "lat": 36.753816,
+   "lon": 2.981777
+  },
+  "B1469251524": {
+   "name": "Université Dely Brahim",
+   "lat": 36.758245,
+   "lon": 2.982055
+  },
+  "B1469251527": {
+   "name": "Aïn Allah",
+   "lat": 36.75203,
+   "lon": 2.990576
+  },
+  "B1474259121": {
+   "name": "Baba Ali",
+   "lat": 36.672252,
+   "lon": 3.049311
+  },
+  "B1492357913": {
+   "name": "Les Pins El Biar",
+   "lat": 36.767391,
+   "lon": 3.03088
+  },
+  "B1626615591": {
+   "name": "Inforba",
+   "lat": 36.735298,
+   "lon": 3.272838
+  },
+  "B1669297522": {
+   "name": "Itfc",
+   "lat": 36.751373,
+   "lon": 3.013823
+  },
+  "B1669627886": {
+   "name": "Mokrani 1",
+   "lat": 36.755707,
+   "lon": 3.008155
+  },
+  "B1677008107": {
+   "name": "Chevalley",
+   "lat": 36.768971,
+   "lon": 3.009814
+  },
+  "B1677008115": {
+   "name": "Chevalley",
+   "lat": 36.768959,
+   "lon": 3.010012
+  },
+  "B2232554758": {
+   "name": "La Côte",
+   "lat": 36.730694,
+   "lon": 3.048169
+  },
+  "B2252620046": {
+   "name": "El Kettar",
+   "lat": 36.785718,
+   "lon": 3.047452
+  },
+  "B2252620047": {
+   "name": "Barreaux Rouges",
+   "lat": 36.781251,
+   "lon": 3.047133
+  },
+  "B2268849635": {
+   "name": "Raïs Hamidou 2",
+   "lat": 36.81717,
+   "lon": 3.009605
+  },
+  "B2268895854": {
+   "name": "Vieux Kouba",
+   "lat": 36.729619,
+   "lon": 3.075052
+  },
+  "B2274503073": {
+   "name": "Gare Routière Bachdjerrah 2 -ETUSA",
+   "lat": 36.721433,
+   "lon": 3.115703
+  },
+  "B2355935987": {
+   "name": "Cité 5 Juillet",
+   "lat": 36.721424,
+   "lon": 3.1832
+  },
+  "B2398209884": {
+   "name": "Residece",
+   "lat": 36.739453,
+   "lon": 3.091747
+  },
+  "B2398209908": {
+   "name": "Emiliano Zapata",
+   "lat": 36.742721,
+   "lon": 3.086239
+  },
+  "B2398209928": {
+   "name": "ETUSA El Harrach",
+   "lat": 36.721573,
+   "lon": 3.13595
+  },
+  "B2398223848": {
+   "name": "Caroubier - Centre Equestre",
+   "lat": 36.73649,
+   "lon": 3.11707
+  },
+  "B2488750879": {
+   "name": "Djenan Mabrouk",
+   "lat": 36.723348,
+   "lon": 3.125971
+  },
+  "B2488750882": {
+   "name": "Djenan Mabrouk",
+   "lat": 36.723194,
+   "lon": 3.125817
+  },
+  "B2488787634": {
+   "name": "Bachdjarah la Poste",
+   "lat": 36.722053,
+   "lon": 3.119641
+  },
+  "B2523134689": {
+   "name": "Inforba",
+   "lat": 36.735368,
+   "lon": 3.275331
+  },
+  "B2657682536": {
+   "name": "Carnot",
+   "lat": 36.772963,
+   "lon": 3.022135
+  },
+  "B2664858540": {
+   "name": "Les Sources",
+   "lat": 36.774437,
+   "lon": 3.035764
+  },
+  "B2664872866": {
+   "name": "Frais Vallon",
+   "lat": 36.778398,
+   "lon": 3.038634
+  },
+  "B2664872867": {
+   "name": "Les Pompiers",
+   "lat": 36.781597,
+   "lon": 3.040723
+  },
+  "B2670166900": {
+   "name": "Robert",
+   "lat": 36.775005,
+   "lon": 3.025577
+  },
+  "B2670171781": {
+   "name": "Pont Carnot",
+   "lat": 36.772195,
+   "lon": 3.02449
+  },
+  "B2670235861": {
+   "name": "Louni Arezki",
+   "lat": 36.789208,
+   "lon": 3.056984
+  },
+  "B2671205625": {
+   "name": "Quatre Saisons",
+   "lat": 36.780167,
+   "lon": 3.016333
+  },
+  "B2671205630": {
+   "name": "Quatre Saisons",
+   "lat": 36.78008,
+   "lon": 3.016311
+  },
+  "B2671205650": {
+   "name": "Baranas Bouzareah",
+   "lat": 36.77722,
+   "lon": 3.016172
+  },
+  "B2671205654": {
+   "name": "Baranes Triouli",
+   "lat": 36.776726,
+   "lon": 3.016492
+  },
+  "B2671205659": {
+   "name": "La Bruyère",
+   "lat": 36.775335,
+   "lon": 3.021017
+  },
+  "B2671205663": {
+   "name": "La Bruyère",
+   "lat": 36.775296,
+   "lon": 3.021243
+  },
+  "B2671228617": {
+   "name": "Petit Bois",
+   "lat": 36.784109,
+   "lon": 3.016122
+  },
+  "B2671228618": {
+   "name": "Petit Bois",
+   "lat": 36.783567,
+   "lon": 3.015936
+  },
+  "B2671245901": {
+   "name": "Bouzaréah - Départ ETUSA",
+   "lat": 36.789981,
+   "lon": 3.017387
+  },
+  "B2671280381": {
+   "name": "El Alia",
+   "lat": 36.787557,
+   "lon": 3.016816
+  },
+  "B2671280383": {
+   "name": "El Alia",
+   "lat": 36.787468,
+   "lon": 3.016932
+  },
+  "B2691906122": {
+   "name": "Gare Routière de Ain Allah - Oued El Romane",
+   "lat": 36.747593,
+   "lon": 2.99438
+  },
+  "B2692608110": {
+   "name": "Ahmed Ghermoul",
+   "lat": 36.761531,
+   "lon": 3.046747
+  },
+  "B2709436847": {
+   "name": "Place des Martyrs",
+   "lat": 36.785688,
+   "lon": 3.063067
+  },
+  "B2712536510": {
+   "name": "Arrêt de Bus \"la Côte\"",
+   "lat": 36.727394,
+   "lon": 3.044542
+  },
+  "B2725110264": {
+   "name": "El Idrissi",
+   "lat": 36.773507,
+   "lon": 3.02959
+  },
+  "B2752195921": {
+   "name": "Bir Mourad Raïs",
+   "lat": 36.740164,
+   "lon": 3.049588
+  },
+  "B2752195923": {
+   "name": "Bir Mourad Rais",
+   "lat": 36.737239,
+   "lon": 3.048485
+  },
+  "B2752195925": {
+   "name": "Stade Mohamed Iguer",
+   "lat": 36.734843,
+   "lon": 3.048749
+  },
+  "B2752195926": {
+   "name": "Stade Mohamed Iguer",
+   "lat": 36.734842,
+   "lon": 3.04892
+  },
+  "B2754535591": {
+   "name": "Boulevard Bougara",
+   "lat": 36.766571,
+   "lon": 3.035949
+  },
+  "B2755765540": {
+   "name": "École Mohamed Baaziz",
+   "lat": 36.789184,
+   "lon": 3.015817
+  },
+  "B2767339846": {
+   "name": "Les Sources",
+   "lat": 36.732365,
+   "lon": 3.054303
+  },
+  "B2793290211": {
+   "name": "Horizons Bleus",
+   "lat": 36.815755,
+   "lon": 3.001904
+  },
+  "B2793290360": {
+   "name": "Bains Romains",
+   "lat": 36.813357,
+   "lon": 2.99103
+  },
+  "B2804815538": {
+   "name": "Oued Kniss",
+   "lat": 36.741274,
+   "lon": 3.081048
+  },
+  "B2804815547": {
+   "name": "El Annasser 1",
+   "lat": 36.740741,
+   "lon": 3.084725
+  },
+  "B2804815548": {
+   "name": "Oued Kniss",
+   "lat": 36.741138,
+   "lon": 3.084386
+  },
+  "B2839477950": {
+   "name": "Ahmed Ghermoul",
+   "lat": 36.761286,
+   "lon": 3.046651
+  },
+  "B2860029703": {
+   "name": "APC Kouba",
+   "lat": 36.734006,
+   "lon": 3.086697
+  },
+  "B2860034767": {
+   "name": "Calvaire",
+   "lat": 36.737166,
+   "lon": 3.091534
+  },
+  "B2860034768": {
+   "name": "Calvaire",
+   "lat": 36.737094,
+   "lon": 3.091424
+  },
+  "B2860034770": {
+   "name": "Oasis",
+   "lat": 36.739108,
+   "lon": 3.088544
+  },
+  "B2860034771": {
+   "name": "Oasis",
+   "lat": 36.739064,
+   "lon": 3.088214
+  },
+  "B2867724831": {
+   "name": "El Mouradia",
+   "lat": 36.747648,
+   "lon": 3.050815
+  },
+  "B287186997": {
+   "name": "Descartes",
+   "lat": 36.749174,
+   "lon": 3.050773
+  },
+  "B287469933": {
+   "name": "1er Mai",
+   "lat": 36.760088,
+   "lon": 3.056706
+  },
+  "B287870239": {
+   "name": "Bouzareah",
+   "lat": 36.790191,
+   "lon": 3.017199
+  },
+  "B2958893269": {
+   "name": "Scala",
+   "lat": 36.774543,
+   "lon": 3.042283
+  },
+  "B2964284740": {
+   "name": "Place 11 Décembre",
+   "lat": 36.752146,
+   "lon": 3.062467
+  },
+  "B2969174890": {
+   "name": "Frères Hameche",
+   "lat": 36.768979,
+   "lon": 3.024665
+  },
+  "B2989748981": {
+   "name": "Louni Arezki",
+   "lat": 36.789637,
+   "lon": 3.057673
+  },
+  "B3004199997": {
+   "name": "Cité Maya",
+   "lat": 36.731234,
+   "lon": 3.103925
+  },
+  "B3009229269": {
+   "name": "Les Ateliers",
+   "lat": 36.756503,
+   "lon": 3.066333
+  },
+  "B3009232528": {
+   "name": "Bel Air - la Glacière",
+   "lat": 36.73351,
+   "lon": 3.124167
+  },
+  "B3009232531": {
+   "name": "Caroubier Gare Routière",
+   "lat": 36.742633,
+   "lon": 3.105948
+  },
+  "B3010708034": {
+   "name": "Pont des Fusillés",
+   "lat": 36.746731,
+   "lon": 3.091581
+  },
+  "B3017253554": {
+   "name": "El Hamiz Commissariat de Police",
+   "lat": 36.729809,
+   "lon": 3.229213
+  },
+  "B3033268912": {
+   "name": "Sntp",
+   "lat": 36.728119,
+   "lon": 3.217721
+  },
+  "B3036044495": {
+   "name": "Hotel le Beau Fayet",
+   "lat": 36.732406,
+   "lon": 2.923638
+  },
+  "B3042180460": {
+   "name": "Cnr",
+   "lat": 36.758499,
+   "lon": 3.042544
+  },
+  "B3042181554": {
+   "name": "Jardin Tunis",
+   "lat": 36.765135,
+   "lon": 3.039439
+  },
+  "B3050668048": {
+   "name": "El Merdja",
+   "lat": 36.725785,
+   "lon": 3.200016
+  },
+  "B3053777848": {
+   "name": "Hamma",
+   "lat": 36.748508,
+   "lon": 3.069102
+  },
+  "B3065000064": {
+   "name": "El Hamiz",
+   "lat": 36.731033,
+   "lon": 3.240739
+  },
+  "B3065003730": {
+   "name": "El Hamiz Cité en-Nasr",
+   "lat": 36.731823,
+   "lon": 3.247198
+  },
+  "B3068220343": {
+   "name": "El Annasser",
+   "lat": 36.743971,
+   "lon": 3.088734
+  },
+  "B3082467957": {
+   "name": "Robert",
+   "lat": 36.774892,
+   "lon": 3.025136
+  },
+  "B3082556554": {
+   "name": "El-Idrissi",
+   "lat": 36.77355,
+   "lon": 3.029526
+  },
+  "B3082556555": {
+   "name": "Chevalley",
+   "lat": 36.768841,
+   "lon": 3.00867
+  },
+  "B3082556557": {
+   "name": "Re Maison",
+   "lat": 36.78809,
+   "lon": 3.050963
+  },
+  "B3082556558": {
+   "name": "Oukba",
+   "lat": 36.789074,
+   "lon": 3.056024
+  },
+  "B3082556559": {
+   "name": "Lycée Okba",
+   "lat": 36.78964,
+   "lon": 3.058716
+  },
+  "B3082556560": {
+   "name": "Bab El Oued",
+   "lat": 36.789877,
+   "lon": 3.054431
+  },
+  "B3082556561": {
+   "name": "Re Maison",
+   "lat": 36.789151,
+   "lon": 3.05116
+  },
+  "B3082572543": {
+   "name": "Maillot",
+   "lat": 36.792999,
+   "lon": 3.049708
+  },
+  "B3085944787": {
+   "name": "Carnot",
+   "lat": 36.77347,
+   "lon": 3.02477
+  },
+  "B3093958960": {
+   "name": "Beaux Arts",
+   "lat": 36.761973,
+   "lon": 3.045114
+  },
+  "B3093959442": {
+   "name": "Sntp",
+   "lat": 36.728294,
+   "lon": 3.217602
+  },
+  "B3095540842": {
+   "name": "Arrêt les Quatre Chemins",
+   "lat": 36.714021,
+   "lon": 3.094866
+  },
+  "B3095545365": {
+   "name": "Quatre Chemins",
+   "lat": 36.715207,
+   "lon": 3.092672
+  },
+  "B3095545367": {
+   "name": "Faculté",
+   "lat": 36.763999,
+   "lon": 3.01416
+  },
+  "B3102188280": {
+   "name": "Jardin d'Essai",
+   "lat": 36.750875,
+   "lon": 3.076337
+  },
+  "B3102188618": {
+   "name": "Les Halles",
+   "lat": 36.755109,
+   "lon": 3.066424
+  },
+  "B3102188967": {
+   "name": "Parc Tifarti",
+   "lat": 36.764374,
+   "lon": 3.044157
+  },
+  "B3102189266": {
+   "name": "Les Ateliers",
+   "lat": 36.752147,
+   "lon": 3.070608
+  },
+  "B3103526388": {
+   "name": "Hôpital Militaire",
+   "lat": 36.72309,
+   "lon": 3.064714
+  },
+  "B3103832337": {
+   "name": "Les Vergers 2",
+   "lat": 36.727098,
+   "lon": 3.050044
+  },
+  "B3111110259": {
+   "name": "El Biar",
+   "lat": 36.768103,
+   "lon": 3.032583
+  },
+  "B3111110407": {
+   "name": "Cnr",
+   "lat": 36.758586,
+   "lon": 3.042653
+  },
+  "B3122540287": {
+   "name": "1er Mai",
+   "lat": 36.760649,
+   "lon": 3.057341
+  },
+  "B3122551359": {
+   "name": "École Mohamed Baaziz",
+   "lat": 36.784608,
+   "lon": 3.013163
+  },
+  "B3122555050": {
+   "name": "Pascale",
+   "lat": 36.777037,
+   "lon": 3.010829
+  },
+  "B3122559292": {
+   "name": "Air de France",
+   "lat": 36.78017,
+   "lon": 3.010421
+  },
+  "B3123720608": {
+   "name": "La Vigie",
+   "lat": 36.813122,
+   "lon": 3.021156
+  },
+  "B3123720671": {
+   "name": "Remilla B.e.o",
+   "lat": 36.79499,
+   "lon": 3.053405
+  },
+  "B3123720674": {
+   "name": "APC Bologhine",
+   "lat": 36.805489,
+   "lon": 3.043779
+  },
+  "B3123720947": {
+   "name": "La Vigie",
+   "lat": 36.81242,
+   "lon": 3.02163
+  },
+  "B3123721010": {
+   "name": "Stade de Bologhine",
+   "lat": 36.801794,
+   "lon": 3.048341
+  },
+  "B3125562005": {
+   "name": "La Perine",
+   "lat": 36.758085,
+   "lon": 3.05127
+  },
+  "B3130910490": {
+   "name": "Varrefour Souidani Boudjemaa",
+   "lat": 36.752499,
+   "lon": 3.04876
+  },
+  "B3138282793": {
+   "name": "Atlas",
+   "lat": 36.79077,
+   "lon": 3.059965
+  },
+  "B3138306727": {
+   "name": "Place Maurice Audin",
+   "lat": 36.768734,
+   "lon": 3.054635
+  },
+  "B3152308097": {
+   "name": "Aïn Benian - Gare Routière",
+   "lat": 36.801834,
+   "lon": 2.910272
+  },
+  "B3156575567": {
+   "name": "Colonne Voirole",
+   "lat": 36.753844,
+   "lon": 3.043344
+  },
+  "B3156575568": {
+   "name": "Bd Abdrrahmane Taleb",
+   "lat": 36.790883,
+   "lon": 3.057603
+  },
+  "B3195853156": {
+   "name": "Cercle National de l'Armée - 2",
+   "lat": 36.770118,
+   "lon": 2.993534
+  },
+  "B319619368": {
+   "name": "El Madania",
+   "lat": 36.742206,
+   "lon": 3.065257
+  },
+  "B3212364187": {
+   "name": "Gare de l'Agha",
+   "lat": 36.767921,
+   "lon": 3.056259
+  },
+  "B3213973328": {
+   "name": "El Hamiz Commissariat de Police",
+   "lat": 36.729615,
+   "lon": 3.229268
+  },
+  "B3228177317": {
+   "name": "Cercle National de l'Armee - 2",
+   "lat": 36.76908,
+   "lon": 2.984104
+  },
+  "B3228184540": {
+   "name": "Rue Ahmed Ouaked",
+   "lat": 36.765716,
+   "lon": 2.993064
+  },
+  "B3228186997": {
+   "name": "Dar Diaf",
+   "lat": 36.772056,
+   "lon": 2.965073
+  },
+  "B3240830221": {
+   "name": "El Hamiz - Cité en-Naser",
+   "lat": 36.732066,
+   "lon": 3.246972
+  },
+  "B3240830222": {
+   "name": "El Hamiz",
+   "lat": 36.731087,
+   "lon": 3.239696
+  },
+  "B3266800497": {
+   "name": "Aïn Taya",
+   "lat": 36.792881,
+   "lon": 3.292923
+  },
+  "B3300695711": {
+   "name": "Varrefour Souidani Boudjemaa",
+   "lat": 36.752555,
+   "lon": 3.048466
+  },
+  "B3321711393": {
+   "name": "Dg Protection Civile",
+   "lat": 36.722803,
+   "lon": 3.198597
+  },
+  "B3370017395": {
+   "name": "05 Juillet",
+   "lat": 36.720258,
+   "lon": 3.201621
+  },
+  "B3375302518": {
+   "name": "Secoutto",
+   "lat": 36.785466,
+   "lon": 3.04387
+  },
+  "B3398375770": {
+   "name": "Rochelle",
+   "lat": 36.760638,
+   "lon": 3.042542
+  },
+  "B3424194717": {
+   "name": "Cité la Radieuse",
+   "lat": 36.723957,
+   "lon": 3.153641
+  },
+  "B3424195063": {
+   "name": "Cité la Radieuse",
+   "lat": 36.723996,
+   "lon": 3.15417
+  },
+  "B3429799436": {
+   "name": "Hôtel Es-Safir",
+   "lat": 36.777499,
+   "lon": 3.060293
+  },
+  "B3452502395": {
+   "name": "Port Saïd",
+   "lat": 36.781028,
+   "lon": 3.061716
+  },
+  "B3551013431": {
+   "name": "Soummam",
+   "lat": 36.72596,
+   "lon": 3.190387
+  },
+  "B3551013432": {
+   "name": "Soumam",
+   "lat": 36.726121,
+   "lon": 3.190245
+  },
+  "B3636381580": {
+   "name": "Freres Madani",
+   "lat": 36.738605,
+   "lon": 3.070639
+  },
+  "B3636381721": {
+   "name": "El Anasser Station Multimodale",
+   "lat": 36.743029,
+   "lon": 3.08345
+  },
+  "B3668592456": {
+   "name": "Belvédère",
+   "lat": 36.812638,
+   "lon": 2.983571
+  },
+  "B3668592885": {
+   "name": "Cimetière d'Aïn Benian",
+   "lat": 36.806624,
+   "lon": 2.937497
+  },
+  "B3668592887": {
+   "name": "Le Phare",
+   "lat": 36.81099,
+   "lon": 2.955003
+  },
+  "B3668593322": {
+   "name": "Copemad",
+   "lat": 36.790444,
+   "lon": 2.903459
+  },
+  "B3668593491": {
+   "name": "Le Phare",
+   "lat": 36.811028,
+   "lon": 2.954105
+  },
+  "B3668594089": {
+   "name": "Aïn Benian Cimetière",
+   "lat": 36.806654,
+   "lon": 2.937117
+  },
+  "B3668594091": {
+   "name": "Baïnem",
+   "lat": 36.813268,
+   "lon": 2.979892
+  },
+  "B3668594170": {
+   "name": "Baïnem Falaise",
+   "lat": 36.813619,
+   "lon": 2.97234
+  },
+  "B3668594173": {
+   "name": "Bains Romains",
+   "lat": 36.813531,
+   "lon": 2.991083
+  },
+  "B3670326211": {
+   "name": "Baro Roudj",
+   "lat": 36.784366,
+   "lon": 3.044826
+  },
+  "B3670326212": {
+   "name": "Barreaux Rouges",
+   "lat": 36.781582,
+   "lon": 3.04663
+  },
+  "B3670326216": {
+   "name": "Tariq Ibn Ziyad",
+   "lat": 36.778601,
+   "lon": 3.04617
+  },
+  "B3670328313": {
+   "name": "Station Souidania",
+   "lat": 36.708854,
+   "lon": 2.910691
+  },
+  "B3749282014": {
+   "name": "4 Saison",
+   "lat": 36.796842,
+   "lon": 3.002248
+  },
+  "B3749282248": {
+   "name": "La City Blanche",
+   "lat": 36.796888,
+   "lon": 3.004059
+  },
+  "B3749326578": {
+   "name": "Les Jasmins",
+   "lat": 36.73995,
+   "lon": 3.058642
+  },
+  "B3766186850": {
+   "name": "Garidi 2",
+   "lat": 36.733434,
+   "lon": 3.062613
+  },
+  "B3778056946": {
+   "name": "Drid Hocine",
+   "lat": 36.739349,
+   "lon": 3.085817
+  },
+  "B3780772966": {
+   "name": "Grande Poste",
+   "lat": 36.773732,
+   "lon": 3.059807
+  },
+  "B3784295291": {
+   "name": "El Annasser 1",
+   "lat": 36.743728,
+   "lon": 3.079165
+  },
+  "B3784295292": {
+   "name": "Les Vergers 1",
+   "lat": 36.723268,
+   "lon": 3.051382
+  },
+  "B3784295293": {
+   "name": "Carrefour Djnane Sfari",
+   "lat": 36.711097,
+   "lon": 3.045056
+  },
+  "B3784295295": {
+   "name": "Musset",
+   "lat": 36.754942,
+   "lon": 3.060024
+  },
+  "B3784295298": {
+   "name": "Jardin d'Essais",
+   "lat": 36.746122,
+   "lon": 3.073548
+  },
+  "B3784295301": {
+   "name": "Les Sources",
+   "lat": 36.738316,
+   "lon": 3.064214
+  },
+  "B3784295302": {
+   "name": "Bir Mourad Rais - Cnas",
+   "lat": 36.739683,
+   "lon": 3.052192
+  },
+  "B3784295303": {
+   "name": "Sidi m'Hamed",
+   "lat": 36.749621,
+   "lon": 3.066778
+  },
+  "B3784295304": {
+   "name": "Bir Mourad Rais - Cnas",
+   "lat": 36.739507,
+   "lon": 3.051361
+  },
+  "B3791449212": {
+   "name": "Harcha",
+   "lat": 36.75767,
+   "lon": 3.054704
+  },
+  "B3791449217": {
+   "name": "Palais du Peuple",
+   "lat": 36.758665,
+   "lon": 3.044842
+  },
+  "B3791449218": {
+   "name": "Aerohabitat",
+   "lat": 36.765723,
+   "lon": 3.045141
+  },
+  "B3791449221": {
+   "name": "Parc de Beyrouth",
+   "lat": 36.767389,
+   "lon": 3.048097
+  },
+  "B3791449222": {
+   "name": "Lycée Zeineb Oum El Massakine",
+   "lat": 36.769501,
+   "lon": 3.050538
+  },
+  "B3791449225": {
+   "name": "Sonalgaz",
+   "lat": 36.773837,
+   "lon": 3.053016
+  },
+  "B3791449228": {
+   "name": "Krim Belkacem",
+   "lat": 36.772049,
+   "lon": 3.051556
+  },
+  "B3791449232": {
+   "name": "Aerohabitat",
+   "lat": 36.765616,
+   "lon": 3.045474
+  },
+  "B3791449240": {
+   "name": "Place Geay",
+   "lat": 36.770628,
+   "lon": 3.049998
+  },
+  "B3791449242": {
+   "name": "Ghermoul 1",
+   "lat": 36.758787,
+   "lon": 3.051488
+  },
+  "B3791500957": {
+   "name": "Hamoud Boualem",
+   "lat": 36.747976,
+   "lon": 3.083929
+  },
+  "B3791500958": {
+   "name": "Le Moulin",
+   "lat": 36.765092,
+   "lon": 3.055919
+  },
+  "B3791500960": {
+   "name": "1er Mai",
+   "lat": 36.760356,
+   "lon": 3.056141
+  },
+  "B3791500961": {
+   "name": "Place des Martyrs",
+   "lat": 36.786402,
+   "lon": 3.063184
+  },
+  "B3791906485": {
+   "name": "El Kettani",
+   "lat": 36.791727,
+   "lon": 3.058246
+  },
+  "B3791915188": {
+   "name": "Escalier Mécanique",
+   "lat": 36.76616,
+   "lon": 3.048214
+  },
+  "B3791964307": {
+   "name": "Freres El Selami",
+   "lat": 36.729469,
+   "lon": 3.079401
+  },
+  "B3791964308": {
+   "name": "La Croix",
+   "lat": 36.729991,
+   "lon": 3.08402
+  },
+  "B3836214463": {
+   "name": "Cité Jeunes Filles",
+   "lat": 36.759954,
+   "lon": 3.014243
+  },
+  "B3860942614": {
+   "name": "Dergana",
+   "lat": 36.772252,
+   "lon": 3.260088
+  },
+  "B3944144294": {
+   "name": "Bab El Ouad",
+   "lat": 36.79235,
+   "lon": 3.056335
+  },
+  "B4231869090": {
+   "name": "Arrêt Djenane El Kares",
+   "lat": 36.71222,
+   "lon": 3.085565
+  },
+  "B4231869289": {
+   "name": "Arrêt Djenane El Kares",
+   "lat": 36.712836,
+   "lon": 3.086762
+  },
+  "B4235229293": {
+   "name": "Baïnem",
+   "lat": 36.813508,
+   "lon": 2.97931
+  },
+  "B4237361609": {
+   "name": "Raïs Hamidou 2",
+   "lat": 36.816867,
+   "lon": 3.014315
+  },
+  "B4247339988": {
+   "name": "Intersection Entrée Aïn Benian",
+   "lat": 36.80005,
+   "lon": 2.918429
+  },
+  "B4279358001": {
+   "name": "Grand Rocher",
+   "lat": 36.807231,
+   "lon": 2.944124
+  },
+  "B4312147830": {
+   "name": "La Concorde",
+   "lat": 36.733356,
+   "lon": 3.044804
+  },
+  "B4314129592": {
+   "name": "Marcher Ain Naadja",
+   "lat": 36.698134,
+   "lon": 3.073956
+  },
+  "B4334867237": {
+   "name": "Diar Djemaa",
+   "lat": 36.728488,
+   "lon": 3.128296
+  },
+  "B4448533508": {
+   "name": "Bab Ezzouar",
+   "lat": 36.725957,
+   "lon": 3.184363
+  },
+  "B450300770": {
+   "name": "Copemad",
+   "lat": 36.795534,
+   "lon": 2.904929
+  },
+  "B4516824889": {
+   "name": "Arret de Bus Onab",
+   "lat": 36.70938,
+   "lon": 3.094371
+  },
+  "B4527029581": {
+   "name": "Birtouta",
+   "lat": 36.64103,
+   "lon": 3.000862
+  },
+  "B4534861291": {
+   "name": "Birkhadem",
+   "lat": 36.715151,
+   "lon": 3.049289
+  },
+  "B4577311789": {
+   "name": "Ouled Larbi",
+   "lat": 36.757518,
+   "lon": 3.31544
+  },
+  "B4577894391": {
+   "name": "Rue Kaci Ameur",
+   "lat": 36.750607,
+   "lon": 2.886802
+  },
+  "B4581805717": {
+   "name": "La Glacière",
+   "lat": 36.731676,
+   "lon": 3.125363
+  },
+  "B4624301291": {
+   "name": "Dérafour",
+   "lat": 36.732857,
+   "lon": 3.104559
+  },
+  "B4734308833": {
+   "name": "Frères El Sellami",
+   "lat": 36.729288,
+   "lon": 3.079793
+  },
+  "B4876709921": {
+   "name": "Les Hotels",
+   "lat": 36.715184,
+   "lon": 3.198006
+  },
+  "B4880009222": {
+   "name": "Lotissement Michel",
+   "lat": 36.721122,
+   "lon": 3.101565
+  },
+  "B4937988329": {
+   "name": "Place Ferhani",
+   "lat": 36.793553,
+   "lon": 3.053652
+  },
+  "B5045336761": {
+   "name": "Hôtel Dar Diaf",
+   "lat": 36.771711,
+   "lon": 2.965575
+  },
+  "B5130875391": {
+   "name": "Aéroport Terminal International",
+   "lat": 36.698919,
+   "lon": 3.206833
+  },
+  "B5176251303": {
+   "name": "Domaine Hadjeri Ahmed",
+   "lat": 36.740105,
+   "lon": 2.866591
+  },
+  "B5206802522": {
+   "name": "Brise Marine",
+   "lat": 36.783428,
+   "lon": 3.249288
+  },
+  "B5232903522": {
+   "name": "École Supérieure d'Hôtellerie et de Restauration d'Alger",
+   "lat": 36.787042,
+   "lon": 2.902214
+  },
+  "B5294612035": {
+   "name": "Tvc ( Isff)",
+   "lat": 36.733932,
+   "lon": 3.261508
+  },
+  "B5339182621": {
+   "name": "Triolet",
+   "lat": 36.788023,
+   "lon": 3.044475
+  },
+  "B5358485986": {
+   "name": "Sidi Abderahmane",
+   "lat": 36.788295,
+   "lon": 3.058842
+  },
+  "B5358485987": {
+   "name": "Ben Aknoun Station",
+   "lat": 36.752715,
+   "lon": 3.005665
+  },
+  "B5363534926": {
+   "name": "Grand Rocher",
+   "lat": 36.807434,
+   "lon": 2.944607
+  },
+  "B5363640069": {
+   "name": "Les Sources",
+   "lat": 36.738441,
+   "lon": 3.064145
+  },
+  "B5363647869": {
+   "name": "Station Bir Morade Rais",
+   "lat": 36.739821,
+   "lon": 3.049098
+  },
+  "B5363723126": {
+   "name": "Les Jasmins",
+   "lat": 36.739854,
+   "lon": 3.058536
+  },
+  "B5363723127": {
+   "name": "Frères Madani",
+   "lat": 36.738446,
+   "lon": 3.070668
+  },
+  "B5363723128": {
+   "name": "Oued Kniss",
+   "lat": 36.741139,
+   "lon": 3.081059
+  },
+  "B5363953272": {
+   "name": "Station Sidi Youcef",
+   "lat": 36.78405,
+   "lon": 2.96412
+  },
+  "B5363981440": {
+   "name": "École Supérieur de Banque",
+   "lat": 36.796661,
+   "lon": 2.988855
+  },
+  "B5363981441": {
+   "name": "École Supérieur de Banque",
+   "lat": 36.79694,
+   "lon": 2.988925
+  },
+  "B5363981442": {
+   "name": "Stade",
+   "lat": 36.796708,
+   "lon": 2.998484
+  },
+  "B5363981443": {
+   "name": "Stade",
+   "lat": 36.79682,
+   "lon": 2.998077
+  },
+  "B5363981444": {
+   "name": "Bouskour",
+   "lat": 36.794977,
+   "lon": 3.010393
+  },
+  "B5363981445": {
+   "name": "Lamara",
+   "lat": 36.794754,
+   "lon": 3.010667
+  },
+  "B5363981446": {
+   "name": "Dayra",
+   "lat": 36.792185,
+   "lon": 3.013033
+  },
+  "B5363981447": {
+   "name": "Dayra",
+   "lat": 36.79203,
+   "lon": 3.012899
+  },
+  "B5363981448": {
+   "name": "Bouskour",
+   "lat": 36.796977,
+   "lon": 3.007907
+  },
+  "B5364197628": {
+   "name": "Aéroport d'Alger",
+   "lat": 36.702576,
+   "lon": 3.208677
+  },
+  "B5364327701": {
+   "name": "El Alia",
+   "lat": 36.723756,
+   "lon": 3.162255
+  },
+  "B5364327703": {
+   "name": "El Mohammadia",
+   "lat": 36.728097,
+   "lon": 3.142868
+  },
+  "B5364327704": {
+   "name": "5 Maisons",
+   "lat": 36.726838,
+   "lon": 3.146451
+  },
+  "B5364327705": {
+   "name": "La Glaciere",
+   "lat": 36.732686,
+   "lon": 3.12489
+  },
+  "B5364327706": {
+   "name": "Hussein Dey",
+   "lat": 36.743519,
+   "lon": 3.103192
+  },
+  "B5365648460": {
+   "name": "Place des Martyrs",
+   "lat": 36.78641,
+   "lon": 3.063254
+  },
+  "B5367697859": {
+   "name": "Carrefour Souidani",
+   "lat": 36.752633,
+   "lon": 3.047828
+  },
+  "B5367765906": {
+   "name": "Colonne Voirole",
+   "lat": 36.752464,
+   "lon": 3.041145
+  },
+  "B5370078857": {
+   "name": "Tagara",
+   "lat": 36.766868,
+   "lon": 3.035445
+  },
+  "B5375889198": {
+   "name": "Staouali",
+   "lat": 36.757567,
+   "lon": 2.89082
+  },
+  "B5379379956": {
+   "name": "Larmaf",
+   "lat": 36.788273,
+   "lon": 3.05634
+  },
+  "B5387202969": {
+   "name": "1er Mai",
+   "lat": 36.759909,
+   "lon": 3.057354
+  },
+  "B5387202971": {
+   "name": "Bourouba (Cimetière)",
+   "lat": 36.715586,
+   "lon": 3.108915
+  },
+  "B5387202986": {
+   "name": "Station Aissat Idir",
+   "lat": 36.757016,
+   "lon": 3.061602
+  },
+  "B5387202988": {
+   "name": "Residence",
+   "lat": 36.739708,
+   "lon": 3.091632
+  },
+  "B5387204312": {
+   "name": "Cité Mer et Soleil",
+   "lat": 36.733665,
+   "lon": 3.101067
+  },
+  "B5387204314": {
+   "name": "Parnet",
+   "lat": 36.733,
+   "lon": 3.104786
+  },
+  "B5387204318": {
+   "name": "Station Hai El Badr",
+   "lat": 36.724634,
+   "lon": 3.101457
+  },
+  "B5387204521": {
+   "name": "Lotissement Michel",
+   "lat": 36.721164,
+   "lon": 3.101881
+  },
+  "B5387257357": {
+   "name": "Station Hai El Badr",
+   "lat": 36.715538,
+   "lon": 3.109166
+  },
+  "B5387257359": {
+   "name": "Station Hai El Badr",
+   "lat": 36.724864,
+   "lon": 3.101232
+  },
+  "B5387257361": {
+   "name": "Cité Mer Soleil",
+   "lat": 36.733576,
+   "lon": 3.100883
+  },
+  "B5387257363": {
+   "name": "La Regite",
+   "lat": 36.747595,
+   "lon": 3.080823
+  },
+  "B5387397600": {
+   "name": "Carroubier Gare Routière",
+   "lat": 36.740993,
+   "lon": 3.108975
+  },
+  "B5387397603": {
+   "name": "Lafarge",
+   "lat": 36.756258,
+   "lon": 3.066045
+  },
+  "B5387397605": {
+   "name": "Station 1 Mai",
+   "lat": 36.764321,
+   "lon": 3.057785
+  },
+  "B5387397608": {
+   "name": "Hôtel Es-Safir",
+   "lat": 36.777677,
+   "lon": 3.060185
+  },
+  "B5387463206": {
+   "name": "Port Saïd",
+   "lat": 36.780905,
+   "lon": 3.061868
+  },
+  "B5387463207": {
+   "name": "Hôtel Es-Safir",
+   "lat": 36.777676,
+   "lon": 3.0604
+  },
+  "B5387463209": {
+   "name": "Grande Poste",
+   "lat": 36.772712,
+   "lon": 3.060789
+  },
+  "B5387463211": {
+   "name": "Station 2 Mai",
+   "lat": 36.764237,
+   "lon": 3.058803
+  },
+  "B5387463216": {
+   "name": "Caroubier - Centre Equestre",
+   "lat": 36.7358,
+   "lon": 3.119448
+  },
+  "B5387463220": {
+   "name": "Gare Routière Bachdjerrah 2 -ETUSA",
+   "lat": 36.722782,
+   "lon": 3.123765
+  },
+  "B5387463923": {
+   "name": "Diar Djemâa",
+   "lat": 36.729621,
+   "lon": 3.128592
+  },
+  "B5387523806": {
+   "name": "Château d'Eau",
+   "lat": 36.701812,
+   "lon": 3.072328
+  },
+  "B5387523808": {
+   "name": "Cité 720 Logements 2",
+   "lat": 36.707085,
+   "lon": 3.079063
+  },
+  "B5387523814": {
+   "name": "Aotu.a",
+   "lat": 36.714039,
+   "lon": 3.099373
+  },
+  "B5387523816": {
+   "name": "Ain Naadja",
+   "lat": 36.695631,
+   "lon": 3.076825
+  },
+  "B5388889189": {
+   "name": "Arrêt les Quatre Chemins",
+   "lat": 36.713929,
+   "lon": 3.099014
+  },
+  "B5388889191": {
+   "name": "Arrêt les Quatre Chemins",
+   "lat": 36.713886,
+   "lon": 3.095293
+  },
+  "B5388889195": {
+   "name": "Cité 720 Logements 2",
+   "lat": 36.706829,
+   "lon": 3.07898
+  },
+  "B5388889197": {
+   "name": "Château d'Eau",
+   "lat": 36.701907,
+   "lon": 3.072541
+  },
+  "B5388889199": {
+   "name": "Marcher Ain Naadja",
+   "lat": 36.698225,
+   "lon": 3.074133
+  },
+  "B5389073469": {
+   "name": "Biotic",
+   "lat": 36.691386,
+   "lon": 3.090736
+  },
+  "B5389073471": {
+   "name": "Foyer",
+   "lat": 36.684217,
+   "lon": 3.091316
+  },
+  "B5389073472": {
+   "name": "Gué de Constantine Station de Bus",
+   "lat": 36.697111,
+   "lon": 3.091434
+  },
+  "B5389073474": {
+   "name": "Gué de Constantine",
+   "lat": 36.698835,
+   "lon": 3.095161
+  },
+  "B5389073476": {
+   "name": "Cité Taher El Ayeb",
+   "lat": 36.702632,
+   "lon": 3.092946
+  },
+  "B5389229544": {
+   "name": "Bouskour",
+   "lat": 36.797166,
+   "lon": 3.008065
+  },
+  "B5389293355": {
+   "name": "La Cité Blanche",
+   "lat": 36.796102,
+   "lon": 3.005997
+  },
+  "B5389293356": {
+   "name": "La City Blanche",
+   "lat": 36.796743,
+   "lon": 3.004087
+  },
+  "B5389293357": {
+   "name": "4 Saison",
+   "lat": 36.796981,
+   "lon": 3.002266
+  },
+  "B5389293358": {
+   "name": "Bousmaha",
+   "lat": 36.79647,
+   "lon": 2.994756
+  },
+  "B5389454499": {
+   "name": "USTHB",
+   "lat": 36.715286,
+   "lon": 3.187889
+  },
+  "B5390507839": {
+   "name": "Cercle National de l'Armée 2",
+   "lat": 36.769321,
+   "lon": 2.986157
+  },
+  "B5390507841": {
+   "name": "Cercle National de l'Armée",
+   "lat": 36.77011,
+   "lon": 2.992383
+  },
+  "B5390507842": {
+   "name": "Souk El Fellah",
+   "lat": 36.765984,
+   "lon": 2.942448
+  },
+  "B5390507847": {
+   "name": "El Karia ( les Dunes)",
+   "lat": 36.758472,
+   "lon": 2.934408
+  },
+  "B5390507848": {
+   "name": "El Kerma",
+   "lat": 36.75527,
+   "lon": 2.931129
+  },
+  "B5390507849": {
+   "name": "Bouchaoui Cnr",
+   "lat": 36.745671,
+   "lon": 2.916788
+  },
+  "B5390507852": {
+   "name": "Bouchaoui École Mouloud Feraoun",
+   "lat": 36.743834,
+   "lon": 2.914346
+  },
+  "B5390507853": {
+   "name": "Sortie Bouchaoui",
+   "lat": 36.73747,
+   "lon": 2.914697
+  },
+  "B5390507856": {
+   "name": "Hotel le Beau Fayet",
+   "lat": 36.733083,
+   "lon": 2.923474
+  },
+  "B5390507858": {
+   "name": "La Cote Blanche",
+   "lat": 36.714439,
+   "lon": 2.907748
+  },
+  "B5390542105": {
+   "name": "Chéraga-Gare Routière",
+   "lat": 36.767305,
+   "lon": 2.951468
+  },
+  "B5390579063": {
+   "name": "Chéraga-Gare Routière",
+   "lat": 36.767146,
+   "lon": 2.953761
+  },
+  "B5390579064": {
+   "name": "Souk El Fellah",
+   "lat": 36.765876,
+   "lon": 2.942598
+  },
+  "B5390579065": {
+   "name": "El Karia ( les Dunes)",
+   "lat": 36.758399,
+   "lon": 2.93464
+  },
+  "B5390579066": {
+   "name": "El Kerma",
+   "lat": 36.755136,
+   "lon": 2.931451
+  },
+  "B5390579067": {
+   "name": "Bouchaoui Cnr",
+   "lat": 36.745541,
+   "lon": 2.916878
+  },
+  "B5390579068": {
+   "name": "Bouchaoui École Mouloud Feraoun",
+   "lat": 36.743857,
+   "lon": 2.914441
+  },
+  "B5390579069": {
+   "name": "Sortie Bouchaoui",
+   "lat": 36.737556,
+   "lon": 2.914888
+  },
+  "B5390579070": {
+   "name": "Cité Souidani Boudjemaa",
+   "lat": 36.721489,
+   "lon": 2.915618
+  },
+  "B5390579071": {
+   "name": "La Cote Blanche",
+   "lat": 36.714406,
+   "lon": 2.907907
+  },
+  "B5393691266": {
+   "name": "Sonalgaz",
+   "lat": 36.773742,
+   "lon": 3.05311
+  },
+  "B5393691272": {
+   "name": "Parc de Beyrouth",
+   "lat": 36.767305,
+   "lon": 3.048188
+  },
+  "B5393691275": {
+   "name": "Parc Tifarti",
+   "lat": 36.764238,
+   "lon": 3.044329
+  },
+  "B5393691277": {
+   "name": "École des Beaux Arts",
+   "lat": 36.76194,
+   "lon": 3.045347
+  },
+  "B5393691280": {
+   "name": "Palais du Peuple",
+   "lat": 36.758662,
+   "lon": 3.045064
+  },
+  "B5393728123": {
+   "name": "Lycée Zeineb Oum El Massakine",
+   "lat": 36.769453,
+   "lon": 3.050341
+  },
+  "B5393884865": {
+   "name": "Ghermoul Polyclinique",
+   "lat": 36.760175,
+   "lon": 3.050424
+  },
+  "B5393884871": {
+   "name": "Place El Quods",
+   "lat": 36.74738,
+   "lon": 3.040064
+  },
+  "B5394047204": {
+   "name": "La Côte",
+   "lat": 36.730748,
+   "lon": 3.047818
+  },
+  "B5394047211": {
+   "name": "Maquam e'Chahid",
+   "lat": 36.739727,
+   "lon": 3.075402
+  },
+  "B5394112445": {
+   "name": "Maquam e'Chahid",
+   "lat": 36.73961,
+   "lon": 3.075476
+  },
+  "B5394112446": {
+   "name": "Bir Mourad Raïs",
+   "lat": 36.737085,
+   "lon": 3.048628
+  },
+  "B5394260852": {
+   "name": "Le Moulin",
+   "lat": 36.765096,
+   "lon": 3.056004
+  },
+  "B5394260857": {
+   "name": "La Croix",
+   "lat": 36.729914,
+   "lon": 3.084125
+  },
+  "B5394260865": {
+   "name": "Oued Knis",
+   "lat": 36.741685,
+   "lon": 3.083181
+  },
+  "B5394260869": {
+   "name": "Mauretania",
+   "lat": 36.767989,
+   "lon": 3.056181
+  },
+  "B5394373719": {
+   "name": "Les Tamaris",
+   "lat": 36.812935,
+   "lon": 2.964125
+  },
+  "B5394373720": {
+   "name": "Les Tamaris",
+   "lat": 36.813124,
+   "lon": 2.963932
+  },
+  "B5394374621": {
+   "name": "Baïnem Falaise",
+   "lat": 36.813725,
+   "lon": 2.972348
+  },
+  "B5394374623": {
+   "name": "Belvédère",
+   "lat": 36.812828,
+   "lon": 2.983512
+  },
+  "B5394374625": {
+   "name": "Miramar",
+   "lat": 36.81461,
+   "lon": 2.996253
+  },
+  "B5394374626": {
+   "name": "Miramar",
+   "lat": 36.814786,
+   "lon": 2.996387
+  },
+  "B5394374628": {
+   "name": "Horizons Bleus",
+   "lat": 36.815873,
+   "lon": 3.001958
+  },
+  "B5394374630": {
+   "name": "Raïs Hamidou 2",
+   "lat": 36.817264,
+   "lon": 3.009594
+  },
+  "B5394374633": {
+   "name": "Cité Boukikaz Amar",
+   "lat": 36.80892,
+   "lon": 2.948547
+  },
+  "B5394374634": {
+   "name": "Cité Ammar Boukikaz",
+   "lat": 36.808827,
+   "lon": 2.948668
+  },
+  "B5394374636": {
+   "name": "Marché d'Aïn Benian",
+   "lat": 36.801788,
+   "lon": 2.914893
+  },
+  "B5394374638": {
+   "name": "Cité 138 Logements",
+   "lat": 36.802616,
+   "lon": 2.924131
+  },
+  "B5394374640": {
+   "name": "Cem Abdelhamid Ben Badis",
+   "lat": 36.802305,
+   "lon": 2.919174
+  },
+  "B5396439165": {
+   "name": "École Mohamed Baaziz",
+   "lat": 36.789022,
+   "lon": 3.015795
+  },
+  "B5396439170": {
+   "name": "Bibiothéque",
+   "lat": 36.771923,
+   "lon": 3.011091
+  },
+  "B5396439173": {
+   "name": "Cité Gai Soleil",
+   "lat": 36.768807,
+   "lon": 3.013304
+  },
+  "B5396467516": {
+   "name": "Rochelle",
+   "lat": 36.760654,
+   "lon": 3.042413
+  },
+  "B5396467517": {
+   "name": "El Biar",
+   "lat": 36.768017,
+   "lon": 3.032575
+  },
+  "B5396467519": {
+   "name": "Cité Gai Soleil",
+   "lat": 36.768602,
+   "lon": 3.013329
+  },
+  "B5396467520": {
+   "name": "Bibliothèque",
+   "lat": 36.771974,
+   "lon": 3.010865
+  },
+  "B5396471021": {
+   "name": "Pascale",
+   "lat": 36.776999,
+   "lon": 3.010664
+  },
+  "B5396471022": {
+   "name": "Air de France",
+   "lat": 36.780259,
+   "lon": 3.010361
+  },
+  "B5396471023": {
+   "name": "École Mohamed Baaziz",
+   "lat": 36.784649,
+   "lon": 3.013017
+  },
+  "B5397813380": {
+   "name": "Nouvelle Cité 11 Décembre 1960",
+   "lat": 36.697348,
+   "lon": 2.867273
+  },
+  "B5397813381": {
+   "name": "Place 11 Decembre 1960",
+   "lat": 36.683783,
+   "lon": 2.878708
+  },
+  "B5397813382": {
+   "name": "Cité Universitaire",
+   "lat": 36.690395,
+   "lon": 2.87079
+  },
+  "B5397813384": {
+   "name": "Centre Cynégétique de Zéralda",
+   "lat": 36.700967,
+   "lon": 2.858141
+  },
+  "B5397813386": {
+   "name": "Mahelma",
+   "lat": 36.682043,
+   "lon": 2.877939
+  },
+  "B5397813388": {
+   "name": "Mosquée Okba Ibn Nafaa",
+   "lat": 36.677849,
+   "lon": 2.880658
+  },
+  "B5397813390": {
+   "name": "Cité Aadl Sidi Abd Allah",
+   "lat": 36.675063,
+   "lon": 2.885409
+  },
+  "B5397854228": {
+   "name": "Cité Aadl Sidi Abd Allah",
+   "lat": 36.67474,
+   "lon": 2.885632
+  },
+  "B5397854229": {
+   "name": "Mosquée Okba Ibn Nafaa",
+   "lat": 36.677663,
+   "lon": 2.880489
+  },
+  "B5397854230": {
+   "name": "Mahelma",
+   "lat": 36.681959,
+   "lon": 2.877643
+  },
+  "B5397854231": {
+   "name": "Place 11 Decembre 1960",
+   "lat": 36.683933,
+   "lon": 2.878472
+  },
+  "B5397854232": {
+   "name": "Cité Universitaire",
+   "lat": 36.690248,
+   "lon": 2.870508
+  },
+  "B5397854233": {
+   "name": "Nouvelle Cité 11 Décembre 1960",
+   "lat": 36.696438,
+   "lon": 2.868059
+  },
+  "B5397854235": {
+   "name": "Haï El Bina",
+   "lat": 36.760348,
+   "lon": 2.987192
+  },
+  "B5398740336": {
+   "name": "Rue Kaci Ameur",
+   "lat": 36.752923,
+   "lon": 2.889656
+  },
+  "B5398740337": {
+   "name": "Bouchaoui Polyclinique",
+   "lat": 36.744782,
+   "lon": 2.915148
+  },
+  "B5398740338": {
+   "name": "Bouchaoui Mosquée en-Nasr",
+   "lat": 36.742908,
+   "lon": 2.909679
+  },
+  "B5398740339": {
+   "name": "Cité Mauriace - Staoueli",
+   "lat": 36.750209,
+   "lon": 2.89357
+  },
+  "B5398740340": {
+   "name": "Cem les Freres Boudouara",
+   "lat": 36.751517,
+   "lon": 2.891073
+  },
+  "B5398740342": {
+   "name": "Cité Fellag Mohamed ( Mimosa)",
+   "lat": 36.745526,
+   "lon": 2.882777
+  },
+  "B5398740343": {
+   "name": "Residence El Baraka",
+   "lat": 36.740831,
+   "lon": 2.876489
+  },
+  "B5398740344": {
+   "name": "La Bridja",
+   "lat": 36.742082,
+   "lon": 2.871042
+  },
+  "B5398740345": {
+   "name": "Palm Beach",
+   "lat": 36.741966,
+   "lon": 2.868228
+  },
+  "B5398740346": {
+   "name": "Complexe Touristique",
+   "lat": 36.71886,
+   "lon": 2.841041
+  },
+  "B5398740347": {
+   "name": "Zéralda - Protection Civile",
+   "lat": 36.719544,
+   "lon": 2.850086
+  },
+  "B5398805089": {
+   "name": "Complexe Touristique",
+   "lat": 36.719427,
+   "lon": 2.841521
+  },
+  "B5398805090": {
+   "name": "Zéralda Protection Civile",
+   "lat": 36.719412,
+   "lon": 2.849673
+  },
+  "B5398805091": {
+   "name": "Azure Plage",
+   "lat": 36.727163,
+   "lon": 2.854133
+  },
+  "B5398805092": {
+   "name": "Domaine Hadjeri Ahmed",
+   "lat": 36.740367,
+   "lon": 2.866402
+  },
+  "B5398805093": {
+   "name": "Palm Beach",
+   "lat": 36.741567,
+   "lon": 2.867645
+  },
+  "B5398805094": {
+   "name": "La Bridja",
+   "lat": 36.741913,
+   "lon": 2.871726
+  },
+  "B5398805095": {
+   "name": "Polyclinique Phtisiologie",
+   "lat": 36.75294,
+   "lon": 2.88983
+  },
+  "B5398805096": {
+   "name": "Cem les Freres Boudouara",
+   "lat": 36.751601,
+   "lon": 2.891282
+  },
+  "B5398805097": {
+   "name": "Bouchaoui Mosquée en-Nasr",
+   "lat": 36.743008,
+   "lon": 2.909668
+  },
+  "B5398805098": {
+   "name": "Cité Mauriace - Staoueli",
+   "lat": 36.750264,
+   "lon": 2.893744
+  },
+  "B5398805099": {
+   "name": "Résidence El Baraka",
+   "lat": 36.741053,
+   "lon": 2.876371
+  },
+  "B5398805100": {
+   "name": "Cité Fellag Mohamed ( Mimosa)",
+   "lat": 36.74562,
+   "lon": 2.882651
+  },
+  "B5398805102": {
+   "name": "Bouchaoui Polyclinique",
+   "lat": 36.744871,
+   "lon": 2.915093
+  },
+  "B5399987377": {
+   "name": "Lycée Diplomatique Dergana",
+   "lat": 36.777713,
+   "lon": 3.262929
+  },
+  "B5399987378": {
+   "name": "Café Chergui",
+   "lat": 36.778061,
+   "lon": 3.25029
+  },
+  "B5399987379": {
+   "name": "Bordj El Bahri",
+   "lat": 36.789491,
+   "lon": 3.249941
+  },
+  "B5399987380": {
+   "name": "Mosquée El Bachir El Ibrahimi",
+   "lat": 36.793035,
+   "lon": 3.250298
+  },
+  "B5399987381": {
+   "name": "Les Castors",
+   "lat": 36.803506,
+   "lon": 3.258142
+  },
+  "B5399987382": {
+   "name": "Zerzouria",
+   "lat": 36.802451,
+   "lon": 3.263047
+  },
+  "B5399987383": {
+   "name": "Boussekloul",
+   "lat": 36.800306,
+   "lon": 3.266501
+  },
+  "B5399987384": {
+   "name": "Carrefour El Marsa",
+   "lat": 36.803954,
+   "lon": 3.251607
+  },
+  "B5399987385": {
+   "name": "École Ben Badis",
+   "lat": 36.793065,
+   "lon": 3.287117
+  },
+  "B5399987388": {
+   "name": "Lycée Tarik Ibn Ziad",
+   "lat": 36.796261,
+   "lon": 3.282222
+  },
+  "B5400070055": {
+   "name": "Lycée Bouamama",
+   "lat": 36.750163,
+   "lon": 3.049552
+  },
+  "B5400072357": {
+   "name": "Sup",
+   "lat": 36.760864,
+   "lon": 3.048963
+  },
+  "B5400974164": {
+   "name": "El Kettar",
+   "lat": 36.785686,
+   "lon": 3.047449
+  },
+  "B5400974165": {
+   "name": "Secouto",
+   "lat": 36.785429,
+   "lon": 3.042624
+  },
+  "B5400974166": {
+   "name": "Secouto",
+   "lat": 36.785431,
+   "lon": 3.0429
+  },
+  "B5400974167": {
+   "name": "Les Pompiers",
+   "lat": 36.781378,
+   "lon": 3.040917
+  },
+  "B5401287972": {
+   "name": "El Kettar",
+   "lat": 36.785904,
+   "lon": 3.048053
+  },
+  "B5401287974": {
+   "name": "Lycée Okba",
+   "lat": 36.789663,
+   "lon": 3.058647
+  },
+  "B5401296403": {
+   "name": "Bazita",
+   "lat": 36.790138,
+   "lon": 3.047585
+  },
+  "B5401296404": {
+   "name": "Hôpital Maillot",
+   "lat": 36.793225,
+   "lon": 3.050279
+  },
+  "B5401302839": {
+   "name": "Place Ferhani",
+   "lat": 36.793466,
+   "lon": 3.05347
+  },
+  "B5401672626": {
+   "name": "El Mouradia",
+   "lat": 36.74766,
+   "lon": 3.050675
+  },
+  "B5437109960": {
+   "name": "Fital",
+   "lat": 36.724593,
+   "lon": 3.169213
+  },
+  "B5437110039": {
+   "name": "Fital",
+   "lat": 36.724437,
+   "lon": 3.169375
+  },
+  "B5442397048": {
+   "name": "El Mohammadia",
+   "lat": 36.728249,
+   "lon": 3.142932
+  },
+  "B5442397049": {
+   "name": "El Alia",
+   "lat": 36.723971,
+   "lon": 3.162995
+  },
+  "B5442397050": {
+   "name": "Cité Rabia Tahar",
+   "lat": 36.725824,
+   "lon": 3.181217
+  },
+  "B5445150271": {
+   "name": "Aïn Benian - Gare Routière",
+   "lat": 36.801857,
+   "lon": 2.910237
+  },
+  "B544525403": {
+   "name": "Garidi 1",
+   "lat": 36.72891,
+   "lon": 3.06952
+  },
+  "B5448089871": {
+   "name": "Station 1 Mai",
+   "lat": 36.764879,
+   "lon": 3.05839
+  },
+  "B5448308167": {
+   "name": "Cité Ennadjah",
+   "lat": 36.732728,
+   "lon": 3.372358
+  },
+  "B5448308168": {
+   "name": "Cimetière des Martyrs",
+   "lat": 36.737156,
+   "lon": 3.358896
+  },
+  "B5448308169": {
+   "name": "Braidia",
+   "lat": 36.759009,
+   "lon": 3.333551
+  },
+  "B5448308174": {
+   "name": "Lycée Diplomatique Dergana",
+   "lat": 36.777532,
+   "lon": 3.262856
+  },
+  "B5448308175": {
+   "name": "Cité Boualem El Aloui",
+   "lat": 36.774795,
+   "lon": 3.277547
+  },
+  "B5448308176": {
+   "name": "Domaine Si Boualem",
+   "lat": 36.770638,
+   "lon": 3.286436
+  },
+  "B5448308177": {
+   "name": "Cité Chabou",
+   "lat": 36.777014,
+   "lon": 3.269825
+  },
+  "B5448308178": {
+   "name": "معمرية",
+   "lat": 36.764834,
+   "lon": 3.298897
+  },
+  "B5448314647": {
+   "name": "Seaal Heuraoua",
+   "lat": 36.755323,
+   "lon": 3.338843
+  },
+  "B5448314674": {
+   "name": "Cité Dnc",
+   "lat": 36.743613,
+   "lon": 3.342623
+  },
+  "B5448314675": {
+   "name": "Cité Faouci",
+   "lat": 36.734746,
+   "lon": 3.350296
+  },
+  "B5448314677": {
+   "name": "Gare Routière Reghaïa",
+   "lat": 36.734011,
+   "lon": 3.344051
+  },
+  "B5448314699": {
+   "name": "Le Marché",
+   "lat": 36.736829,
+   "lon": 3.342525
+  },
+  "B5448314700": {
+   "name": "Place des Martyrs Reghaia",
+   "lat": 36.739326,
+   "lon": 3.342789
+  },
+  "B5448314880": {
+   "name": "El Kerrouche",
+   "lat": 36.729897,
+   "lon": 3.380951
+  },
+  "B5448423936": {
+   "name": "Château Boumediene",
+   "lat": 36.800576,
+   "lon": 2.929418
+  },
+  "B5448423937": {
+   "name": "Plateau, Bologhine",
+   "lat": 36.791622,
+   "lon": 2.939918
+  },
+  "B5448423939": {
+   "name": "Rond-Point Chéraga",
+   "lat": 36.771216,
+   "lon": 2.953541
+  },
+  "B5454944362": {
+   "name": "CHU Ait Ali Idir",
+   "lat": 36.784922,
+   "lon": 3.051978
+  },
+  "B5454944363": {
+   "name": "Plateau, Bologhine",
+   "lat": 36.80928,
+   "lon": 3.03923
+  },
+  "B5454944364": {
+   "name": "Deux Moulins",
+   "lat": 36.81157,
+   "lon": 3.028804
+  },
+  "B5454944365": {
+   "name": "Raïs Hamidou 1",
+   "lat": 36.816774,
+   "lon": 3.014246
+  },
+  "B5454944366": {
+   "name": "École Supérieure d'Hôtellerie et de Restauration d'Alger",
+   "lat": 36.787184,
+   "lon": 2.901866
+  },
+  "B5457517260": {
+   "name": "Bab El Oued (Ali Basta)",
+   "lat": 36.791881,
+   "lon": 3.052609
+  },
+  "B5459784852": {
+   "name": "Rouiba Castor",
+   "lat": 36.736687,
+   "lon": 3.285756
+  },
+  "B5459784853": {
+   "name": "Cité Rabia Tahar",
+   "lat": 36.725692,
+   "lon": 3.181355
+  },
+  "B5459784854": {
+   "name": "Tvc ( Isff)",
+   "lat": 36.733697,
+   "lon": 3.261655
+  },
+  "B5459904221": {
+   "name": "El Merdja",
+   "lat": 36.72605,
+   "lon": 3.200067
+  },
+  "B5460097707": {
+   "name": "Station de Taxi Inter-Wilaya",
+   "lat": 36.745105,
+   "lon": 3.100793
+  },
+  "B5460208516": {
+   "name": "Cité El Bahia",
+   "lat": 36.727758,
+   "lon": 3.09322
+  },
+  "B5460208518": {
+   "name": "Vieux Kouba",
+   "lat": 36.729763,
+   "lon": 3.075174
+  },
+  "B5460285373": {
+   "name": "Blue Note",
+   "lat": 36.765278,
+   "lon": 3.050153
+  },
+  "B5460285374": {
+   "name": "Didouche Mourad ( Messonier )",
+   "lat": 36.766459,
+   "lon": 3.052525
+  },
+  "B5460285375": {
+   "name": "Sacre Cœur",
+   "lat": 36.763459,
+   "lon": 3.047335
+  },
+  "B5465122825": {
+   "name": "Bir Khadem Marché",
+   "lat": 36.714318,
+   "lon": 3.044586
+  },
+  "B5465122826": {
+   "name": "Bir Khadem Stade",
+   "lat": 36.719623,
+   "lon": 3.044865
+  },
+  "B5531758797": {
+   "name": "Cité Youcef Boubaya (SOBIMAF)",
+   "lat": 36.676416,
+   "lon": 3.092038
+  },
+  "B5531759906": {
+   "name": "Mosquée Benghazi",
+   "lat": 36.683593,
+   "lon": 3.101081
+  },
+  "B5533825878": {
+   "name": "Boumati",
+   "lat": 36.714775,
+   "lon": 3.137544
+  },
+  "B5533825879": {
+   "name": "Boumati",
+   "lat": 36.714989,
+   "lon": 3.136776
+  },
+  "B5533825880": {
+   "name": "Cité Youcef Boubaya (SOBIMAF)",
+   "lat": 36.676336,
+   "lon": 3.092222
+  },
+  "B5533825881": {
+   "name": "Centre Mokhtar Belkacem",
+   "lat": 36.711734,
+   "lon": 3.133059
+  },
+  "B5533825882": {
+   "name": "Centre Mokhtar Belkacem",
+   "lat": 36.711816,
+   "lon": 3.132935
+  },
+  "B5533825883": {
+   "name": "Ecoteh *",
+   "lat": 36.70898,
+   "lon": 3.13043
+  },
+  "B5533825884": {
+   "name": "Ecoteh *",
+   "lat": 36.709134,
+   "lon": 3.130181
+  },
+  "B5533825885": {
+   "name": "Mosquée Benghazi",
+   "lat": 36.683472,
+   "lon": 3.101187
+  },
+  "B5533825886": {
+   "name": "Sidi Rezine",
+   "lat": 36.689986,
+   "lon": 3.109337
+  },
+  "B5533825887": {
+   "name": "Sidi Rezine",
+   "lat": 36.690098,
+   "lon": 3.109144
+  },
+  "B5533825889": {
+   "name": "Hôpital z'Mirli",
+   "lat": 36.704365,
+   "lon": 3.125567
+  },
+  "B5533825890": {
+   "name": "Hôpital z'Mirli",
+   "lat": 36.70427,
+   "lon": 3.125777
+  },
+  "B5598411353": {
+   "name": "Place des Martyrs",
+   "lat": 36.785793,
+   "lon": 3.062828
+  },
+  "B691098526": {
+   "name": "Cité 5 Juillet",
+   "lat": 36.720439,
+   "lon": 3.201858
+  },
+  "B692711716": {
+   "name": "Bologhine",
+   "lat": 36.805132,
+   "lon": 3.044904
+  },
+  "B692711717": {
+   "name": "Plateau, Bologhine",
+   "lat": 36.809494,
+   "lon": 3.03907
+  },
+  "B692711718": {
+   "name": "Deux Moulins",
+   "lat": 36.811645,
+   "lon": 3.028961
+  },
+  "B692711729": {
+   "name": "Stade de Bologhine",
+   "lat": 36.80188,
+   "lon": 3.048556
+  },
+  "B707130778": {
+   "name": "Bab Ezzouar vers El-Harrach et Alger",
+   "lat": 36.726135,
+   "lon": 3.184152
+  },
+  "B707130792": {
+   "name": "5 Maisons",
+   "lat": 36.726881,
+   "lon": 3.146803
+  },
+  "B7679353488": {
+   "name": "Triolet",
+   "lat": 36.78788,
+   "lon": 3.043541
+  },
+  "B958556420": {
+   "name": "Gare Routière de Saïd Hamdine",
+   "lat": 36.733626,
+   "lon": 3.038468
+  },
+  "B958556423": {
+   "name": "Gare Routière de Saïd Hamdine",
+   "lat": 36.733983,
+   "lon": 3.035933
+  },
+  "B960842059": {
+   "name": "Chevalley",
+   "lat": 36.769509,
+   "lon": 3.006913
+  },
+  "B960842117": {
+   "name": "Frais Vallon",
+   "lat": 36.778442,
+   "lon": 3.038199
+  },
+  "B960842119": {
+   "name": "Les Sources",
+   "lat": 36.774958,
+   "lon": 3.035919
+  },
+  "B961009284": {
+   "name": "Garidi 2",
+   "lat": 36.733255,
+   "lon": 3.063565
+  },
+  "B967403938": {
+   "name": "APC Kouba",
+   "lat": 36.733921,
+   "lon": 3.086912
+  },
+  "B991957515": {
+   "name": "Place El Qos",
+   "lat": 36.747578,
+   "lon": 3.040257
+  }
+ },
+ "lines": [
+  {
+   "route_id": "ETUSA-3",
+   "short_name": "3",
+   "long_name": "Bus 3 Chevalley ↔ Souidania/Bouchaoui",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 06:00–19:20 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "06:00",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:20",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-3-dir0",
+     "direction_id": 0,
+     "headsign": "Souidania",
+     "osm_relation": 7986853,
+     "stops": [
+      "B960842059",
+      "B5390507841",
+      "B5390507839",
+      "B3228186997",
+      "B5390542105",
+      "B5390507842",
+      "B5390507847",
+      "B5390507848",
+      "B5390507849",
+      "B5390507852",
+      "B5390507853",
+      "B5390507856",
+      "B5390507858",
+      "B3670328313"
+     ],
+     "legacy_shape_id": "ETUSA-3-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    },
+    {
+     "trip_id": "ETUSA-3-dir1",
+     "direction_id": 1,
+     "headsign": "Chevalley",
+     "osm_relation": 7986887,
+     "stops": [
+      "B3670328313",
+      "B5390579071",
+      "B5390579070",
+      "B3036044495",
+      "B5390579069",
+      "B5390579068",
+      "B5390579067",
+      "B5390579066",
+      "B5390579065",
+      "B5390579064",
+      "B5390579063",
+      "B3228177317",
+      "B3195853156",
+      "B1166453231"
+     ],
+     "legacy_shape_id": "ETUSA-3-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-6",
+   "short_name": "6",
+   "long_name": "Bus 6 Place des Martyrs ↔ Station kouba/Place 1er Mai",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:40–23:50 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:40",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "23:50",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-6-dir0",
+     "direction_id": 0,
+     "headsign": "Place des Martyrs",
+     "osm_relation": 7996451,
+     "stops": [
+      "B2268895854",
+      "B4734308833",
+      "B5394260857",
+      "B967403938",
+      "B2860034767",
+      "B2860034770",
+      "B2804815548",
+      "B3636381721",
+      "B3791500957",
+      "B3102188280",
+      "B3102189266",
+      "B3102188618",
+      "B3122540287",
+      "B5394260852",
+      "B3212364187",
+      "B5387463209",
+      "B5387463207",
+      "B5387463206"
+     ],
+     "legacy_shape_id": "ETUSA-6-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-6-dir1",
+     "direction_id": 1,
+     "headsign": "Vieux Kouba",
+     "osm_relation": 7996457,
+     "stops": [
+      "B2709436847",
+      "B3452502395",
+      "B5387397608",
+      "B3780772966",
+      "B5394260869",
+      "B3791500958",
+      "B3791500960",
+      "B3784295295",
+      "B2964284740",
+      "B3784295303",
+      "B3053777848",
+      "B3784295298",
+      "B3784295291",
+      "B5394260865",
+      "B2860034771",
+      "B2860034768",
+      "B2860029703",
+      "B3791964308",
+      "B3791964307",
+      "B2268895854"
+     ],
+     "legacy_shape_id": "ETUSA-6-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-10",
+   "short_name": "10",
+   "long_name": "Bus 10 Place 1er mai ↔ Bouzareah Chevalley",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:35–19:20 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:35",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:20",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-10-dir0",
+     "direction_id": 0,
+     "headsign": "Bouzareah",
+     "osm_relation": 7998869,
+     "stops": [
+      "B287469933",
+      "B3111110407",
+      "B3398375770",
+      "B3042181554",
+      "B5370078857",
+      "B3111110259",
+      "B1166448693",
+      "B2969174890",
+      "B1166448041",
+      "B5396439173",
+      "B1677008115",
+      "B5396439170",
+      "B3122555050",
+      "B3122559292",
+      "B3122551359",
+      "B5396439165",
+      "B287870239"
+     ],
+     "legacy_shape_id": "ETUSA-10-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-10-dir1",
+     "direction_id": 1,
+     "headsign": "1er Mai => Bouzareah",
+     "osm_relation": 7999026,
+     "stops": [
+      "B287870239",
+      "B2755765540",
+      "B5396471023",
+      "B5396471022",
+      "B5396471021",
+      "B5396467520",
+      "B1677008107",
+      "B5396467519",
+      "B1166448212",
+      "B1492357913",
+      "B5396467517",
+      "B2754535591",
+      "B5396467516",
+      "B3042180460",
+      "B3125562005",
+      "B5387202969"
+     ],
+     "legacy_shape_id": "ETUSA-10-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-12",
+   "short_name": "12",
+   "long_name": "Bus 12 Place des Martyrs ↔ Staouali",
+   "color": "D97706",
+   "desc": "ETUSA — 40 DA, 06:15–23:30 (source 2024)",
+   "fare_id": "F40",
+   "windows": [
+    [
+     "06:15",
+     "06:30",
+     600
+    ],
+    [
+     "06:30",
+     "09:30",
+     600
+    ],
+    [
+     "09:30",
+     "16:00",
+     600
+    ],
+    [
+     "16:00",
+     "19:00",
+     600
+    ],
+    [
+     "19:00",
+     "23:30",
+     600
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-12-dir0",
+     "direction_id": 0,
+     "headsign": "سطاوالي",
+     "osm_relation": 2881745,
+     "stops": [
+      "B2709436847",
+      "B3791906485",
+      "B3123720671",
+      "B692711729",
+      "B692711716",
+      "B692711717",
+      "B692711718",
+      "B3123720608",
+      "B4237361609",
+      "B5394374630",
+      "B5394374628",
+      "B5394374626",
+      "B3668594173",
+      "B5394374623",
+      "B4235229293",
+      "B5394374621",
+      "B5394373720",
+      "B3668593491",
+      "B5394374633",
+      "B5363534926",
+      "B3668594089",
+      "B4247339988",
+      "B5454944366"
+     ],
+     "legacy_shape_id": "ETUSA-12-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    },
+    {
+     "trip_id": "ETUSA-12-dir1",
+     "direction_id": 1,
+     "headsign": "ساحة الشهداء",
+     "osm_relation": 7936377,
+     "stops": [
+      "B5375889198",
+      "B5232903522",
+      "B3668593322",
+      "B450300770",
+      "B4247339988",
+      "B3668592885",
+      "B4279358001",
+      "B5394374634",
+      "B3668592887",
+      "B5394373719",
+      "B3668594170",
+      "B3668594091",
+      "B3668592456",
+      "B2793290360",
+      "B5394374625",
+      "B2793290211",
+      "B2268849635",
+      "B5454944365",
+      "B3123720947",
+      "B5454944364",
+      "B5454944363",
+      "B3123720674",
+      "B3123721010",
+      "B5401302839",
+      "B3944144294",
+      "B3138282793",
+      "B3791500961"
+     ],
+     "legacy_shape_id": "ETUSA-12-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-14",
+   "short_name": "14",
+   "long_name": "Bus 14 Place 1er mai ↔ Station kouba/Bir mourad Rais",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:40–19:00 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:40",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-14-dir0",
+     "direction_id": 0,
+     "headsign": "Bir Mourad Rais",
+     "osm_relation": 3101476,
+     "stops": [
+      "B287469933",
+      "B3784295295",
+      "B2964284740",
+      "B3784295303",
+      "B3053777848",
+      "B3784295298",
+      "B3784295291",
+      "B2804815538",
+      "B3636381580",
+      "B5363640069",
+      "B3749326578",
+      "B3784295302",
+      "B2752195921"
+     ],
+     "legacy_shape_id": "ETUSA-14-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    },
+    {
+     "trip_id": "ETUSA-14-dir1",
+     "direction_id": 1,
+     "headsign": "1er Mai",
+     "osm_relation": 7936576,
+     "stops": [
+      "B5363647869",
+      "B3784295304",
+      "B5363723126",
+      "B3784295301",
+      "B5363723128",
+      "B3636381721",
+      "B3791500957",
+      "B3102188280",
+      "B3102189266",
+      "B3102188618",
+      "B287469933"
+     ],
+     "legacy_shape_id": "ETUSA-14-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-15",
+   "short_name": "15",
+   "long_name": "Bus 15 place 1er mai ↔ Grande Poste",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:40–19:40 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:40",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:40",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-15-dir0",
+     "direction_id": 0,
+     "headsign": "Grande Poste",
+     "osm_relation": 2865635,
+     "stops": [
+      "B287469933",
+      "B3791449212",
+      "B3791449242",
+      "B5393691280",
+      "B5393691277",
+      "B5393691275",
+      "B3791449232",
+      "B5393691272",
+      "B3791449222",
+      "B3791449228",
+      "B5393691266",
+      "B1166466032"
+     ],
+     "legacy_shape_id": "ETUSA-15-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-15-dir1",
+     "direction_id": 1,
+     "headsign": "1er Mai",
+     "osm_relation": 7937507,
+     "stops": [
+      "B3791449225",
+      "B3791449240",
+      "B5393728123",
+      "B3791449221",
+      "B3791449218",
+      "B3102188967",
+      "B3093958960",
+      "B3125562005",
+      "B287469933"
+     ],
+     "legacy_shape_id": "ETUSA-15-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-16",
+   "short_name": "16",
+   "long_name": "Bus 16 Place 1er mai ↔ EL Madania",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:50–19:30 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:30",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-16-dir0",
+     "direction_id": 0,
+     "headsign": "1er Mai",
+     "osm_relation": 8006784,
+     "stops": [
+      "B319619368",
+      "B3125562005",
+      "B287469933"
+     ],
+     "legacy_shape_id": "ETUSA-16-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-16-dir1",
+     "direction_id": 1,
+     "headsign": "El Madania",
+     "osm_relation": 8006787,
+     "stops": [
+      "B287469933",
+      "B3791449212",
+      "B3791449242",
+      "B5393884865",
+      "B5400072357",
+      "B2692608110",
+      "B3791449217",
+      "B3300695711",
+      "B5400070055",
+      "B287186997",
+      "B5401672626",
+      "B319619368"
+     ],
+     "legacy_shape_id": "ETUSA-16-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-18",
+   "short_name": "18",
+   "long_name": "Bus 18 Bachdjarah ↔ Hopital Militaire/ H.Badr",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:50–00:20 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "24:20",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-18-dir0",
+     "direction_id": 0,
+     "headsign": "Hôpital Militaire",
+     "osm_relation": 8086697,
+     "stops": [
+      "B5387204318",
+      "B5460208516",
+      "B3791964308",
+      "B3791964307",
+      "B5460208518",
+      "B544525403",
+      "B3103526388"
+     ],
+     "legacy_shape_id": "ETUSA-18-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-19",
+   "short_name": "19",
+   "long_name": "Bus 19 Place Aissat idir ↔ Bab Zzouar",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:50–18:25 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "18:25",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-19-dir0",
+     "direction_id": 0,
+     "headsign": "Bab Ezzouar",
+     "osm_relation": 7937923,
+     "stops": [
+      "B5387202986",
+      "B5364327706",
+      "B5387397600",
+      "B2398223848",
+      "B5364327705",
+      "B5364327703",
+      "B5364327704",
+      "B3424194717",
+      "B5364327701",
+      "B4448533508",
+      "B2355935987",
+      "B5389454499",
+      "B4876709921"
+     ],
+     "legacy_shape_id": "ETUSA-19-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    },
+    {
+     "trip_id": "ETUSA-19-dir1",
+     "direction_id": 1,
+     "headsign": "Place Aissat Idir",
+     "osm_relation": 8061132,
+     "stops": [
+      "B4876709921",
+      "B691098526",
+      "B3321711393",
+      "B3551013432",
+      "B707130778",
+      "B5442397050",
+      "B5437109960",
+      "B5442397049",
+      "B3424195063",
+      "B707130792",
+      "B5442397048",
+      "B3009232528",
+      "B5387463216",
+      "B3009232531",
+      "B3009229269",
+      "B5387463211",
+      "B5387202969",
+      "B5387202986"
+     ],
+     "legacy_shape_id": "ETUSA-19-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-21",
+   "short_name": "21",
+   "long_name": "Bus 21 Bouzareh ↔ Sidi Youcef",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 06:30–18:20 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "18:20",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-21-dir0",
+     "direction_id": 0,
+     "headsign": "Sidi Youcef",
+     "osm_relation": 3105911,
+     "stops": [
+      "B287870239",
+      "B5363981446",
+      "B5363981445",
+      "B5389229544",
+      "B3749282248",
+      "B5389293357",
+      "B5363981443",
+      "B5363981441",
+      "B5363953272"
+     ],
+     "legacy_shape_id": "ETUSA-21-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-21-dir1",
+     "direction_id": 1,
+     "headsign": "Bouzareah",
+     "osm_relation": 7937708,
+     "stops": [
+      "B5363953272",
+      "B5363981440",
+      "B5389293358",
+      "B5363981442",
+      "B3749282014",
+      "B5389293356",
+      "B5389293355",
+      "B5363981448",
+      "B5363981444",
+      "B5363981447",
+      "B287870239"
+     ],
+     "legacy_shape_id": "ETUSA-21-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-27",
+   "short_name": "27",
+   "long_name": "Bus 27 Place 1er mai ↔ Station Kouba/el Afia et Garidi",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:50–19:10 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:10",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-27-dir0",
+     "direction_id": 0,
+     "headsign": "Palais de la Culture (Diar El Afia)",
+     "osm_relation": 7968277,
+     "stops": [
+      "B287469933",
+      "B3784295295",
+      "B2964284740",
+      "B3784295303",
+      "B3053777848",
+      "B3784295298",
+      "B3784295291",
+      "B2804815547",
+      "B3778056946",
+      "B961009284"
+     ],
+     "legacy_shape_id": "ETUSA-27-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-27-dir1",
+     "direction_id": 1,
+     "headsign": "1e Mai",
+     "osm_relation": 7968313,
+     "stops": [
+      "B961009284",
+      "B2398209908",
+      "B3791500957",
+      "B3102188280",
+      "B3102189266",
+      "B3102188618",
+      "B287469933"
+     ],
+     "legacy_shape_id": "ETUSA-27-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-31",
+   "short_name": "31",
+   "long_name": "Bus 31 Place Audin ↔ Hydra",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:50–00:00 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "24:00",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-31-dir0",
+     "direction_id": 0,
+     "headsign": "Place Audin",
+     "osm_relation": 8086826,
+     "stops": [
+      "B1337246343",
+      "B991957515",
+      "B3156575567",
+      "B3130910490",
+      "B5393691280",
+      "B2839477950",
+      "B5460285375",
+      "B5460285373",
+      "B5460285374",
+      "B3138306727"
+     ],
+     "legacy_shape_id": "ETUSA-31-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-31-dir1",
+     "direction_id": 1,
+     "headsign": "Hydra",
+     "osm_relation": 8086827,
+     "stops": [
+      "B3138306727",
+      "B3791915188",
+      "B3102188967",
+      "B3093958960",
+      "B5367697859",
+      "B5367765906",
+      "B5393884871",
+      "B1337246343"
+     ],
+     "legacy_shape_id": "ETUSA-31-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-34",
+   "short_name": "34",
+   "long_name": "Bus 34 Place 1er mai ↔ Bir Khadem",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 06:00–19:10 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "06:00",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:10",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-34-dir0",
+     "direction_id": 0,
+     "headsign": "Birkhadem",
+     "osm_relation": 7996214,
+     "stops": [
+      "B287469933",
+      "B3784295295",
+      "B2964284740",
+      "B3053777848",
+      "B3784295298",
+      "B3784295291",
+      "B2804815538",
+      "B5394047211",
+      "B3636381580",
+      "B5363640069",
+      "B3749326578",
+      "B3784295302",
+      "B2752195923",
+      "B2752195925",
+      "B5394047204",
+      "B3784295293",
+      "B4534861291"
+     ],
+     "legacy_shape_id": "ETUSA-34-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    },
+    {
+     "trip_id": "ETUSA-34-dir1",
+     "direction_id": 1,
+     "headsign": "1e Mai",
+     "osm_relation": 7996275,
+     "stops": [
+      "B4534861291",
+      "B3784295292",
+      "B3103832337",
+      "B2232554758",
+      "B2752195926",
+      "B5394112446",
+      "B3784295301",
+      "B5363723127",
+      "B5394112445",
+      "B5363723128",
+      "B3636381721",
+      "B3791500957",
+      "B3102188280",
+      "B3102189266",
+      "B3102188618",
+      "B287469933"
+     ],
+     "legacy_shape_id": "ETUSA-34-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-37",
+   "short_name": "37",
+   "long_name": "Bus 37 Grande Poste ↔ Oued Koriche",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 06:00–18:40 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "06:00",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "18:40",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-37-dir0",
+     "direction_id": 0,
+     "headsign": "وادي قريش",
+     "osm_relation": 2847141,
+     "stops": [
+      "B3670326216",
+      "B3670326212",
+      "B2252620047",
+      "B3670326211",
+      "B3375302518",
+      "B2252620046",
+      "B1166466032",
+      "B2252620046"
+     ],
+     "legacy_shape_id": "",
+     "legacy_shape_source": "absent"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-45",
+   "short_name": "45",
+   "long_name": "Bus 45 Place des Martyrs ↔ Bouzaréah",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:50–00:00 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "24:00",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-45-dir0",
+     "direction_id": 0,
+     "headsign": "ساحة الشهداء",
+     "osm_relation": 7941445,
+     "stops": [
+      "B2671245901",
+      "B2671280381",
+      "B2671228618",
+      "B2671205630",
+      "B2671205654",
+      "B2671205663",
+      "B3082467957",
+      "B3082556554",
+      "B3085944787",
+      "B2670171781",
+      "B2664858540",
+      "B2664872866",
+      "B5400974167",
+      "B5400974166",
+      "B7679353488",
+      "B5400974164",
+      "B3082556557",
+      "B3082556558",
+      "B3082556559",
+      "B5365648460"
+     ],
+     "legacy_shape_id": "ETUSA-45-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-45-dir1",
+     "direction_id": 1,
+     "headsign": "بوزريعة",
+     "osm_relation": 8005583,
+     "stops": [
+      "B5598411353",
+      "B5401287974",
+      "B2989748981",
+      "B3082556560",
+      "B3082556561",
+      "B5401287972",
+      "B5339182621",
+      "B5400974165",
+      "B2664872867",
+      "B960842117",
+      "B960842119",
+      "B2725110264",
+      "B2670166900",
+      "B2671205659",
+      "B2671205650",
+      "B2671205625",
+      "B2671228617",
+      "B2671280383",
+      "B287870239"
+     ],
+     "legacy_shape_id": "ETUSA-45-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-50",
+   "short_name": "50",
+   "long_name": "Bus 50 Ben aknoun ↔ Place des Martyrs",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:50–18:30 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "18:30",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-50-dir0",
+     "direction_id": 0,
+     "headsign": "Ben Aknoun",
+     "osm_relation": 7966489,
+     "stops": [
+      "B5598411353",
+      "B5401287974",
+      "B2670235861",
+      "B5379379956",
+      "B2958893269",
+      "B1166446803",
+      "B1166448693",
+      "B2969174890",
+      "B1166448041",
+      "B3095545367",
+      "B5358485987"
+     ],
+     "legacy_shape_id": "ETUSA-50-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-50-dir1",
+     "direction_id": 1,
+     "headsign": "Place des Martyrs",
+     "osm_relation": 7966499,
+     "stops": [
+      "B5358485987",
+      "B1669627886",
+      "B3836214463",
+      "B1166459382",
+      "B1492357913",
+      "B1166446505",
+      "B1166443206",
+      "B1166465446",
+      "B1166465625",
+      "B5454944362",
+      "B5358485986",
+      "B3082556559",
+      "B3791500961"
+     ],
+     "legacy_shape_id": "ETUSA-50-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-54",
+   "short_name": "54",
+   "long_name": "Bus 54 Place Audin ↔ El Mouradia",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:45–19:25 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:45",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:25",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-54-dir0",
+     "direction_id": 0,
+     "headsign": "Place Audin",
+     "osm_relation": 3112924,
+     "stops": [
+      "B2867724831",
+      "B3130910490",
+      "B2839477950",
+      "B3138306727"
+     ],
+     "legacy_shape_id": "ETUSA-54-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-54-dir1",
+     "direction_id": 1,
+     "headsign": "El Mouradia",
+     "osm_relation": 7935973,
+     "stops": [
+      "B3138306727",
+      "B3791915188",
+      "B3791449218",
+      "B3102188967",
+      "B3093958960",
+      "B3300695711",
+      "B287186997",
+      "B2867724831"
+     ],
+     "legacy_shape_id": "ETUSA-54-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-58",
+   "short_name": "58",
+   "long_name": "Bus 58 Place des Martyrs ↔ Chevalley",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:50–20:00 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "20:00",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-58-dir0",
+     "direction_id": 0,
+     "headsign": "شوفالي",
+     "osm_relation": 7953670,
+     "stops": [
+      "B5598411353",
+      "B3791906485",
+      "B4937988329",
+      "B3123720671",
+      "B5401296404",
+      "B5401296403",
+      "B5339182621",
+      "B5400974165",
+      "B2664872867",
+      "B960842117",
+      "B960842119",
+      "B2657682536",
+      "B3082556555"
+     ],
+     "legacy_shape_id": "ETUSA-58-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-58-dir1",
+     "direction_id": 1,
+     "headsign": "ساحة الشهداء",
+     "osm_relation": 7953809,
+     "stops": [
+      "B1166453231",
+      "B2670171781",
+      "B2664858540",
+      "B2664872866",
+      "B5400974167",
+      "B5400974166",
+      "B7679353488",
+      "B3082572543",
+      "B5401302839",
+      "B3944144294",
+      "B3138282793",
+      "B3791500961"
+     ],
+     "legacy_shape_id": "ETUSA-58-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-66",
+   "short_name": "66",
+   "long_name": "Bus 66 Bachdjarah ↔ Place Aissat Idir",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:45–19:15 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:45",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:15",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-66-dir0",
+     "direction_id": 0,
+     "headsign": "Aissat Idir",
+     "osm_relation": 7980541,
+     "stops": [
+      "B2274503073",
+      "B5387202971",
+      "B5387204521",
+      "B5387204318",
+      "B3004199997",
+      "B5387204314",
+      "B5387204312",
+      "B5387202988",
+      "B2398209908",
+      "B3791500957",
+      "B3102188618",
+      "B5387202969",
+      "B5387202986"
+     ],
+     "legacy_shape_id": "ETUSA-66-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-66-dir1",
+     "direction_id": 1,
+     "headsign": "Bachdjerrah",
+     "osm_relation": 7980628,
+     "stops": [
+      "B5387202986",
+      "B5387257363",
+      "B2398209884",
+      "B5387257361",
+      "B4624301291",
+      "B1057645071",
+      "B5387257359",
+      "B5387257357",
+      "B2274503073",
+      "B4880009222"
+     ],
+     "legacy_shape_id": "ETUSA-66-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-72",
+   "short_name": "72",
+   "long_name": "Bus 72 Rouiba ↔ Place des martyrs",
+   "color": "D97706",
+   "desc": "ETUSA — 40 DA, 06:00–23:50 (source 2024)",
+   "fare_id": "F40",
+   "windows": [
+    [
+     "06:00",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "23:50",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-72-dir0",
+     "direction_id": 0,
+     "headsign": "Rouiba",
+     "osm_relation": 8086283,
+     "stops": [
+      "B2709436847",
+      "B3452502395",
+      "B5387397608",
+      "B3780772966",
+      "B5387397605",
+      "B5387397603",
+      "B5364327706",
+      "B5387397600",
+      "B2398223848",
+      "B5364327705",
+      "B5364327703",
+      "B5364327704",
+      "B3424194717",
+      "B5364327701",
+      "B5437110039",
+      "B5459784853",
+      "B4448533508",
+      "B3050668048",
+      "B3033268912",
+      "B3213973328",
+      "B3065000064",
+      "B3065003730",
+      "B5459784854",
+      "B2523134689",
+      "B5459784852"
+     ],
+     "legacy_shape_id": "",
+     "legacy_shape_source": "absent"
+    },
+    {
+     "trip_id": "ETUSA-72-dir1",
+     "direction_id": 1,
+     "headsign": "Place des Martyrs",
+     "osm_relation": 8086416,
+     "stops": [
+      "B5459784852",
+      "B1626615591",
+      "B5294612035",
+      "B3240830221",
+      "B3240830222",
+      "B3017253554",
+      "B3093959442",
+      "B5459904221",
+      "B3551013432",
+      "B707130778",
+      "B5442397050",
+      "B5437109960",
+      "B5442397049",
+      "B3424195063",
+      "B707130792",
+      "B5442397048",
+      "B3009232528",
+      "B5387463216",
+      "B3009232531",
+      "B3009229269",
+      "B5387463211",
+      "B5387463209",
+      "B5387463207",
+      "B5387463206"
+     ],
+     "legacy_shape_id": "ETUSA-72-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-74",
+   "short_name": "74",
+   "long_name": "Bus 74 Bachdjarah ↔ Place des Martyrs",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:45–18:00 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:45",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "18:00",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-74-dir0",
+     "direction_id": 0,
+     "headsign": "Bach Djarah",
+     "osm_relation": 7980785,
+     "stops": [
+      "B3791500961",
+      "B3452502395",
+      "B5387397608",
+      "B3780772966",
+      "B5387397605",
+      "B5387397603",
+      "B5364327706",
+      "B5387397600",
+      "B2398223848",
+      "B4581805717",
+      "B4334867237",
+      "B2488750879",
+      "B2274503073"
+     ],
+     "legacy_shape_id": "ETUSA-74-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    },
+    {
+     "trip_id": "ETUSA-74-dir1",
+     "direction_id": 1,
+     "headsign": "Place des Martyrs",
+     "osm_relation": 7980872,
+     "stops": [
+      "B2274503073",
+      "B2488787634",
+      "B5387463220",
+      "B2488750882",
+      "B5387463923",
+      "B3009232528",
+      "B5387463216",
+      "B3009232531",
+      "B3009229269",
+      "B5387463211",
+      "B5387463209",
+      "B5387463207",
+      "B5387463206"
+     ],
+     "legacy_shape_id": "ETUSA-74-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-82",
+   "short_name": "82",
+   "long_name": "Bus 82 El Harrach ↔ Station Kouba/Ain Naadja",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 06:00–18:30 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "06:00",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "18:30",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-82-dir0",
+     "direction_id": 0,
+     "headsign": "Station Ain Naâdja",
+     "osm_relation": 7980943,
+     "stops": [
+      "B2274503073",
+      "B5387202971",
+      "B5387523814",
+      "B3095540842",
+      "B4231869090",
+      "B5387523808",
+      "B5387523806",
+      "B4314129592",
+      "B5387523816"
+     ],
+     "legacy_shape_id": "ETUSA-82-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-82-dir1",
+     "direction_id": 1,
+     "headsign": "Bach Djarah",
+     "osm_relation": 7982428,
+     "stops": [
+      "B5387523816",
+      "B5388889199",
+      "B5388889197",
+      "B5388889195",
+      "B4231869289",
+      "B3095545365",
+      "B5388889191",
+      "B5388889189",
+      "B5387257357",
+      "B2274503073"
+     ],
+     "legacy_shape_id": "ETUSA-82-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-88",
+   "short_name": "88",
+   "long_name": "Bus 88 Place 1er mai ↔ Hydra",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:50–19:30 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:30",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-88-dir0",
+     "direction_id": 0,
+     "headsign": "1er Mai",
+     "osm_relation": 7996003,
+     "stops": [
+      "B1337246343",
+      "B991957515",
+      "B3156575567",
+      "B3130910490",
+      "B3125562005",
+      "B287469933"
+     ],
+     "legacy_shape_id": "ETUSA-88-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-88-dir1",
+     "direction_id": 1,
+     "headsign": "Hydra",
+     "osm_relation": 7996006,
+     "stops": [
+      "B287469933",
+      "B3791449212",
+      "B3791449242",
+      "B5393884865",
+      "B2692608110",
+      "B3791449217",
+      "B5367697859",
+      "B5367765906",
+      "B5393884871",
+      "B1337246343"
+     ],
+     "legacy_shape_id": "ETUSA-88-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-90",
+   "short_name": "90",
+   "long_name": "Bus 90 Place 1er mai ↔ Basta Ali",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:50–20:00 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "20:00",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-90-dir0",
+     "direction_id": 0,
+     "headsign": "Bab El Oued (Ali Basta)",
+     "osm_relation": 8082020,
+     "stops": [
+      "B3122540287",
+      "B5394260852",
+      "B3212364187",
+      "B5387463209",
+      "B5387463207",
+      "B5387463206",
+      "B5457517260"
+     ],
+     "legacy_shape_id": "ETUSA-90-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-90-dir1",
+     "direction_id": 1,
+     "headsign": "1e Mai",
+     "osm_relation": 8082021,
+     "stops": [
+      "B5457517260",
+      "B3156575568",
+      "B2709436847",
+      "B3452502395",
+      "B5387397608",
+      "B3780772966",
+      "B5394260869",
+      "B3791500958",
+      "B3122540287"
+     ],
+     "legacy_shape_id": "ETUSA-90-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-98",
+   "short_name": "98",
+   "long_name": "Bus 98 Bab Ezzouar ↔ Place Ferhani",
+   "color": "D97706",
+   "desc": "ETUSA — 40 DA, 06:10–18:15 (source 2024)",
+   "fare_id": "F40",
+   "windows": [
+    [
+     "06:10",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "18:15",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-98-dir0",
+     "direction_id": 0,
+     "headsign": "Place Ferhani",
+     "osm_relation": 8086495,
+     "stops": [
+      "B691098526",
+      "B3321711393",
+      "B3551013432",
+      "B707130778",
+      "B5442397050",
+      "B5437109960",
+      "B5442397049",
+      "B3424195063",
+      "B707130792",
+      "B5442397048",
+      "B3009232528",
+      "B5387463216",
+      "B3009232531",
+      "B3009229269",
+      "B5387463211",
+      "B5387463209",
+      "B5387463207",
+      "B5387463206",
+      "B4937988329"
+     ],
+     "legacy_shape_id": "ETUSA-98-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-98-dir1",
+     "direction_id": 1,
+     "headsign": "Cité 5 Juillet",
+     "osm_relation": 8086496,
+     "stops": [
+      "B5401302839",
+      "B3944144294",
+      "B2709436847",
+      "B3452502395",
+      "B5387397608",
+      "B3780772966",
+      "B5387397605",
+      "B3010708034",
+      "B5364327706",
+      "B5387397600",
+      "B2398223848",
+      "B5364327705",
+      "B5364327703",
+      "B5364327704",
+      "B3424194717",
+      "B5364327701",
+      "B5437110039",
+      "B5459784853",
+      "B4448533508",
+      "B3551013431",
+      "B3370017395"
+     ],
+     "legacy_shape_id": "",
+     "legacy_shape_source": "absent"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-99",
+   "short_name": "99",
+   "long_name": "Bus 99 Place 1er mai ↔ Ain Benian",
+   "color": "D97706",
+   "desc": "ETUSA — 40 DA, 06:00–18:40 (source 2024)",
+   "fare_id": "F40",
+   "windows": [
+    [
+     "06:00",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "18:40",
+     1200
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-99-dir0",
+     "direction_id": 0,
+     "headsign": "عين البنيان",
+     "osm_relation": 7996705,
+     "stops": [
+      "B3122540287",
+      "B5394260852",
+      "B3212364187",
+      "B5387463209",
+      "B5387463207",
+      "B5387463206",
+      "B3791906485",
+      "B4937988329",
+      "B692711729",
+      "B692711716",
+      "B692711717",
+      "B692711718",
+      "B3123720608",
+      "B4237361609",
+      "B5394374630",
+      "B5394374628",
+      "B5394374626",
+      "B3668594173",
+      "B5394374623",
+      "B4235229293",
+      "B5394374621",
+      "B5394373720",
+      "B3668593491",
+      "B5394374633",
+      "B5363534926",
+      "B3668594089",
+      "B5394374638",
+      "B5394374640",
+      "B5394374636",
+      "B3152308097"
+     ],
+     "legacy_shape_id": "ETUSA-99-dir0-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-100",
+   "short_name": "100",
+   "long_name": "Bus 100 Place des martyrs ↔ Aéroport d'Alger",
+   "color": "D97706",
+   "desc": "ETUSA — 50 DA, 05:45–00:00 (source 2024)",
+   "fare_id": "F50",
+   "windows": [
+    [
+     "05:45",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     3600
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "19:00",
+     3600
+    ],
+    [
+     "19:00",
+     "24:00",
+     3600
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-100-dir0",
+     "direction_id": 0,
+     "headsign": "المطار",
+     "osm_relation": 7608188,
+     "stops": [
+      "B5130875391",
+      "B3429799436"
+     ],
+     "legacy_shape_id": "ETUSA-100-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-100-dir1",
+     "direction_id": 1,
+     "headsign": "ساحة الشهداء",
+     "osm_relation": 11273930,
+     "stops": [
+      "B5130875391",
+      "B3429799436"
+     ],
+     "legacy_shape_id": "ETUSA-100-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-101",
+   "short_name": "101",
+   "long_name": "Bus 101 Place Des Martyrs ↔ Birtouta",
+   "color": "D97706",
+   "desc": "ETUSA — 40 DA, 06:10–23:30 (source 2024)",
+   "fare_id": "F40",
+   "windows": [
+    [
+     "06:10",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "23:30",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-101-dir0",
+     "direction_id": 0,
+     "headsign": "Birtouta",
+     "osm_relation": 8093276,
+     "stops": [
+      "B2709436847",
+      "B3452502395",
+      "B5387397608",
+      "B3780772966",
+      "B5387397605",
+      "B3068220343",
+      "B3778056946",
+      "B3766186850",
+      "B2767339846",
+      "B5394047204",
+      "B2712536510",
+      "B5465122826",
+      "B5465122825",
+      "B1474259121",
+      "B4527029581"
+     ],
+     "legacy_shape_id": "ETUSA-101-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-105",
+   "short_name": "105",
+   "long_name": "Bus 105 Bachdjarah ↔ Baraki",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:25–19:20 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:25",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "19:20",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-105-dir0",
+     "direction_id": 0,
+     "headsign": "Gare Routière de Baraki",
+     "osm_relation": 7982528,
+     "stops": [
+      "B2274503073",
+      "B5387202971",
+      "B5387523814",
+      "B3095540842",
+      "B4516824889",
+      "B5389073476",
+      "B5389073474",
+      "B5389073472",
+      "B5389073469",
+      "B5389073471"
+     ],
+     "legacy_shape_id": "ETUSA-105-dir0-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-113",
+   "short_name": "113",
+   "long_name": "Bus 113 Gare routiére ↔ Place des Martyrs",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 04:45–00:10 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "04:45",
+     "06:30",
+     2400
+    ],
+    [
+     "06:30",
+     "09:30",
+     1200
+    ],
+    [
+     "09:30",
+     "16:00",
+     2400
+    ],
+    [
+     "16:00",
+     "19:00",
+     1200
+    ],
+    [
+     "19:00",
+     "24:10",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-113-dir0",
+     "direction_id": 0,
+     "headsign": "Place des Martyrs",
+     "osm_relation": 8086568,
+     "stops": [
+      "B3009232531",
+      "B3009229269",
+      "B5387463211",
+      "B5387463209",
+      "B5387463207",
+      "B5387463206"
+     ],
+     "legacy_shape_id": "ETUSA-113-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-113-dir1",
+     "direction_id": 1,
+     "headsign": "Gare Routière",
+     "osm_relation": 8086569,
+     "stops": [
+      "B2709436847",
+      "B3452502395",
+      "B5387397608",
+      "B3780772966",
+      "B5387397605",
+      "B3010708034",
+      "B5460097707",
+      "B1185935485"
+     ],
+     "legacy_shape_id": "ETUSA-113-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-178",
+   "short_name": "178",
+   "long_name": "Bus 178 Gare Routiére ↔ Aéroport D'alger",
+   "color": "D97706",
+   "desc": "ETUSA — 50 DA, 05:45–00:10 (source 2024)",
+   "fare_id": "F50",
+   "windows": [
+    [
+     "05:45",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     3600
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "19:00",
+     3600
+    ],
+    [
+     "19:00",
+     "24:10",
+     3600
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-178-dir0",
+     "direction_id": 0,
+     "headsign": "Aéroport d'Alger H.b",
+     "osm_relation": 7937889,
+     "stops": [
+      "B1185935485",
+      "B3370017395",
+      "B5364197628"
+     ],
+     "legacy_shape_id": "ETUSA-178-dir0-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-604",
+   "short_name": "604",
+   "long_name": "Bus 604 Dergana ↔ El Kerrouche /Reghaia",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 05:50–19:40 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     2400
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "19:00",
+     2400
+    ],
+    [
+     "19:00",
+     "19:40",
+     3600
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-604-dir0",
+     "direction_id": 0,
+     "headsign": "El Kerrouche Reghaia",
+     "osm_relation": 8066402,
+     "stops": [
+      "B3860942614",
+      "B5448308174",
+      "B5448308177",
+      "B5448308175",
+      "B5448308176",
+      "B5448308178",
+      "B4577311789",
+      "B5448308169",
+      "B5448314647",
+      "B5448314674",
+      "B5448314700",
+      "B5448314699",
+      "B5448314677",
+      "B5448314675",
+      "B5448308168",
+      "B5448308167",
+      "B5448314880"
+     ],
+     "legacy_shape_id": "ETUSA-604-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-606",
+   "short_name": "606",
+   "long_name": "Bus 606 Dergana ↔ Ain Taya/Borj el bahri",
+   "color": "D97706",
+   "desc": "ETUSA — 20 DA, 05:50–19:00 (source 2024)",
+   "fare_id": "F20",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     2400
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "19:00",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-606-dir0",
+     "direction_id": 0,
+     "headsign": "Aïn Taya",
+     "osm_relation": 8003403,
+     "stops": [
+      "B3860942614",
+      "B5399987377",
+      "B5399987378",
+      "B5206802522",
+      "B5399987379",
+      "B5399987380",
+      "B5399987384",
+      "B5399987381",
+      "B5399987382",
+      "B5399987383",
+      "B5399987388",
+      "B5399987385",
+      "B3266800497"
+     ],
+     "legacy_shape_id": "ETUSA-606-dir0-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-643",
+   "short_name": "643",
+   "long_name": "Bus 643 Baraki ↔ El Harrach/Hopital Zmirli",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 06:20–18:00 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "06:20",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     2400
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "18:00",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-643-dir0",
+     "direction_id": 0,
+     "headsign": "El Harrach",
+     "osm_relation": 8186188,
+     "stops": [
+      "B5533825880",
+      "B5533825885",
+      "B5533825886",
+      "B5533825890",
+      "B5533825883",
+      "B5533825881",
+      "B5533825878",
+      "B2398209928"
+     ],
+     "legacy_shape_id": "ETUSA-643-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    },
+    {
+     "trip_id": "ETUSA-643-dir1",
+     "direction_id": 1,
+     "headsign": "Cité Youcef Boubaya (SOBIMAF)",
+     "osm_relation": 8186196,
+     "stops": [
+      "B2398209928",
+      "B5533825879",
+      "B5533825882",
+      "B5533825884",
+      "B5533825889",
+      "B5533825887",
+      "B5531759906",
+      "B5531758797"
+     ],
+     "legacy_shape_id": "ETUSA-643-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-701",
+   "short_name": "701",
+   "long_name": "Bus 701 Zéralda G.R ↔ Chevalley",
+   "color": "D97706",
+   "desc": "ETUSA — 40 DA, 05:50–18:50 (source 2024)",
+   "fare_id": "F40",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     2400
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "18:50",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-701-dir0",
+     "direction_id": 0,
+     "headsign": "Chevalley",
+     "osm_relation": 8001650,
+     "stops": [
+      "B5398740346",
+      "B5398740347",
+      "B5176251303",
+      "B5398740345",
+      "B5398740344",
+      "B5398740343",
+      "B5398740342",
+      "B5398740336",
+      "B5398740340",
+      "B5398740339",
+      "B5398740338",
+      "B5398740337",
+      "B5390579066",
+      "B5390579065",
+      "B5390579064",
+      "B5390579063",
+      "B5045336761",
+      "B3228177317",
+      "B3195853156",
+      "B1166453231"
+     ],
+     "legacy_shape_id": "ETUSA-701-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    },
+    {
+     "trip_id": "ETUSA-701-dir1",
+     "direction_id": 1,
+     "headsign": "Zéralda G.R",
+     "osm_relation": 8001677,
+     "stops": [
+      "B1468894839",
+      "B5390507841",
+      "B5390507839",
+      "B3228186997",
+      "B5390542105",
+      "B5390507842",
+      "B5390507847",
+      "B5390507848",
+      "B5398805102",
+      "B5398805097",
+      "B5398805098",
+      "B5398805096",
+      "B5398805095",
+      "B4577894391",
+      "B5398805100",
+      "B5398805099",
+      "B5398805094",
+      "B5398805093",
+      "B5398805092",
+      "B5398805091",
+      "B5398805090",
+      "B5398805089"
+     ],
+     "legacy_shape_id": "ETUSA-701-dir1-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-707",
+   "short_name": "707",
+   "long_name": "Bus 707 Chevalley ↔ Ain Benian/Plateau",
+   "color": "D97706",
+   "desc": "ETUSA — 30 DA, 06:10–18:40 (source 2024)",
+   "fare_id": "F30",
+   "windows": [
+    [
+     "06:10",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     2400
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "18:40",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-707-dir0",
+     "direction_id": 0,
+     "headsign": "Ain Benian",
+     "osm_relation": 8066555,
+     "stops": [
+      "B960842059",
+      "B5390507841",
+      "B5390507839",
+      "B3228186997",
+      "B5448423939",
+      "B5448423937",
+      "B5448423936",
+      "B4247339988",
+      "B5394374640",
+      "B5394374636",
+      "B5445150271"
+     ],
+     "legacy_shape_id": "ETUSA-707-dir0-shape-deduit",
+     "legacy_shape_source": "deduit"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-731",
+   "short_name": "731",
+   "long_name": "Bus 731 Sidi Abd Allah ↔ Chevalley",
+   "color": "D97706",
+   "desc": "ETUSA — 40 DA, 05:50–18:50 (source 2024)",
+   "fare_id": "F40",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     2400
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "18:50",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-731-dir0",
+     "direction_id": 0,
+     "headsign": "Chevalley",
+     "osm_relation": 8000586,
+     "stops": [
+      "B5397813390",
+      "B5397813388",
+      "B5397813386",
+      "B5397813381",
+      "B5397813382",
+      "B5397813380",
+      "B5397813384",
+      "B2691906122",
+      "B1469251527",
+      "B1468889927",
+      "B1469251524",
+      "B1468889926",
+      "B1468889928",
+      "B3228184540",
+      "B3195853156",
+      "B1166453231"
+     ],
+     "legacy_shape_id": "ETUSA-731-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-731-dir1",
+     "direction_id": 1,
+     "headsign": "Sidi Abd Allah",
+     "osm_relation": 8000607,
+     "stops": [
+      "B1468894839",
+      "B960842059",
+      "B1468889931",
+      "B5397854235",
+      "B1468889929",
+      "B1469251516",
+      "B1468889925",
+      "B2691906122",
+      "B5397854233",
+      "B5397854232",
+      "B5397854231",
+      "B5397854230",
+      "B5397854229",
+      "B5397854228"
+     ],
+     "legacy_shape_id": "",
+     "legacy_shape_source": "absent"
+    }
+   ]
+  },
+  {
+   "route_id": "ETUSA-732",
+   "short_name": "732",
+   "long_name": "Bus 732 Sidi Abd Allah ↔ Station 2 Mai",
+   "color": "D97706",
+   "desc": "ETUSA — 50 DA, 05:50–18:20 (source 2024)",
+   "fare_id": "F50",
+   "windows": [
+    [
+     "05:50",
+     "06:30",
+     3600
+    ],
+    [
+     "06:30",
+     "09:30",
+     2400
+    ],
+    [
+     "09:30",
+     "16:00",
+     3600
+    ],
+    [
+     "16:00",
+     "18:20",
+     2400
+    ]
+   ],
+   "directions": [
+    {
+     "trip_id": "ETUSA-732-dir0",
+     "direction_id": 0,
+     "headsign": "Station 2 Mai",
+     "osm_relation": 8408345,
+     "stops": [
+      "B5397813390",
+      "B5397813388",
+      "B5397813386",
+      "B5397813381",
+      "B5397813382",
+      "B5397813380",
+      "B5397813384",
+      "B1669297522",
+      "B958556420",
+      "B3009229269",
+      "B5448089871"
+     ],
+     "legacy_shape_id": "ETUSA-732-dir0-shape",
+     "legacy_shape_source": "osm"
+    },
+    {
+     "trip_id": "ETUSA-732-dir1",
+     "direction_id": 1,
+     "headsign": "Sidi Abd Allah",
+     "osm_relation": 8409605,
+     "stops": [
+      "B5448089871",
+      "B3068220343",
+      "B3778056946",
+      "B4312147830",
+      "B958556423",
+      "B5397854233",
+      "B5397854232",
+      "B5397854231",
+      "B5397854230",
+      "B5397854229",
+      "B5397854228"
+     ],
+     "legacy_shape_id": "ETUSA-732-dir1-shape",
+     "legacy_shape_source": "osm"
+    }
+   ]
+  }
+ ]
+}
