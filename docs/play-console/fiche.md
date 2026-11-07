@@ -162,11 +162,16 @@ Nouri is an independent app, built from open data.
 
 ## Éléments graphiques
 
-| Élément | Exigence Play | État dans le dépôt |
+Générés le 2026-11-07, dans `docs/play-console/assets/` (détails et réserves : `assets/README.md`).
+
+| Élément | Exigence Play | Fichier |
 |---|---|---|
-| Icône | PNG 512 × 512, ≤ 1 Mo | `web/public/icons/icon-512x512.png` (512 × 512) : prête. C'est aussi l'icône de `android/store_icon.png`. |
-| Image de présentation | PNG ou JPEG 1024 × 500 | **Absente** : à créer. |
-| Captures d'écran téléphone | 2 à 8, côté long ≤ 2 × côté court | `web/public/screenshots/accueil.png` et `lignes.png` font 1080 × 2340 (rapport **2,17**) : **trop allongées**, Play les refusera. À refaire en 1080 × 2160 (rapport 2) ou plus carré. |
+| Icône | PNG 512 × 512, ≤ 1 Mo | `web/public/icons/icon-512x512.png` (512 × 512) : prête, identique à `android/store_icon.png` |
+| Image de présentation | PNG ou JPEG 1024 × 500, sans alpha | `assets/image-presentation-1024x500.png` (PNG 24 bits) |
+| Captures téléphone (2 à 8) | côté long ≤ 2 × côté court | `assets/captures/{fr,ar,en}/01…04-*.png`, 1080 × 2160 (rapport 2,0), PNG 24 bits sans alpha, 4 par langue |
+
+Les anciennes captures `web/public/screenshots/*.png` (1080 × 2340, rapport 2,17) sont celles du manifeste PWA ; elles
+ne servent pas pour Play et sont laissées telles quelles.
 
 ## À confirmer avant de coller
 
