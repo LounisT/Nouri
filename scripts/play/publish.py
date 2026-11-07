@@ -103,8 +103,9 @@ def main() -> None:
             body={'track': args.track, 'releases': [release]}).execute()
         print(f'Piste « {args.track} » préparée.')
 
-        edits.validate(packageName=PACKAGE, editId=edit_id).execute()
+        validated = edits.validate(packageName=PACKAGE, editId=edit_id).execute()
         print('Validation Google : OK')
+        print('Réponse edits.validate :', json.dumps(validated, ensure_ascii=False))
 
         if args.commit:
             # Pas de changesNotSentForReview ici : une version « draft » n'est de
