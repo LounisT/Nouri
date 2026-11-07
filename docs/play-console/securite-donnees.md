@@ -98,14 +98,16 @@ politique de confidentialité, qui nomme ces services, et ne coûte que deux lig
 
 À corriger dans `web/src/app/privacy/page.tsx`, puis redéployer, **avant** de soumettre le formulaire :
 
-1. **Contradiction « ne partage pas »** — `page.tsx:41` (FR), `:102` (AR), `:163` (EN) : « Nous ne vendons ni ne
+1. ~~**Contradiction « ne partage pas »**~~ **Corrigée** (2026-11-07) — constat d'origine : — `page.tsx:41` (FR), `:102` (AR), `:163` (EN) : « Nous ne vendons ni ne
    partageons de données personnelles », alors que le formulaire déclare un **partage** avec Photon, Nominatim et
    OpenFreeMap (flux B, C, D), que la même page décrit aux lignes 54-56, 115-117, 176-178. Proposition : « Nous ne
    vendons aucune donnée. Seules les requêtes techniques décrites plus bas partent vers des services tiers. »
-2. **Adresse IP non mentionnée côté serveur** — `route.ts:162-213` garde l'IP de chaque client **en mémoire**
-   (limiteur de débit : seau à jetons, purge au bout de 120 s, `route.ts:210-213`). La politique ne parle d'IP que pour
-   OpenFreeMap (`page.tsx:56`, `:117`, `:178`). C'est éphémère et non journalisé, donc compatible avec « non collecté »,
-   mais il faut l'écrire : « notre serveur utilise brièvement votre adresse IP, en mémoire, pour limiter les abus ».
+2. ~~Adresse IP non mentionnée côté serveur~~ **Corrigé** (2026-11-07) : `route.ts:162-213` garde l'IP de chaque client
+   **en mémoire vive** pour le limiteur de débit. Attention, correction d'une erreur de ce document : les entrées
+   ne sont **pas** purgées au bout de 120 s ; `pruneBuckets` (`route.ts:208-214`) ne s'exécute que lorsque la table atteint
+   20 000 entrées (`route.ts:177,195`). Une IP reste donc en mémoire jusqu'à cette purge ou au redémarrage du serveur.
+   Jamais écrite sur disque ni dans un journal : compatible avec « non collecté » (traitement éphémère). La politique
+   le dit désormais, avec ce vocabulaire exact.
 3. **Courriel de signalement** — la politique dit qu'il est « pré-rempli » (`page.tsx:88` FR, `:149` AR, `:210` EN). Elle ne dit pas qu'il peut
    contenir des coordonnées (arrêt, départ et arrivée : `report.ts:21`, `:132`). À ajouter, avec la mention que
    l'usager le relit avant l'envoi.

@@ -9,7 +9,8 @@ import type { Locale } from '@/lib/i18n'
 //  - lib/geocoding.ts : Photon (texte tapé + centre d'Alger comme biais fixe)
 //    et Nominatim (point touché longuement sur la carte) ;
 //  - components/MapView.tsx : tuiles OpenFreeMap ;
-//  - app/api/otp : calcul d'itinéraire sur notre serveur, sans journal ;
+//  - app/api/otp : calcul d'itinéraire sur notre serveur, sans journal ; l'IP du
+//    client n'est gardée qu'en mémoire (limiteur de débit, route.ts) ;
 //  - localStorage : langue, lieux enregistrés, recherches récentes, navigation ;
 //  - aucun analytics, aucun cookie, aucune publicité, aucun compte.
 // Si l'un de ces faits change, cette page doit changer avec lui.
@@ -38,7 +39,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'En résumé',
         body: [
-          'Nouri n’a pas de compte, pas de publicité, pas de statistiques d’usage et pas de cookies. Nous ne vendons ni ne partageons de données personnelles. Ce que vous enregistrez dans l’application reste sur votre téléphone.',
+          'Nouri n’a pas de compte, pas de publicité, pas de statistiques d’usage et pas de cookies. Nous ne vendons aucune donnée. Seules les requêtes techniques décrites plus bas partent vers des services tiers (recherche d’adresses et fond de carte). Ce que vous enregistrez dans l’application reste sur votre téléphone.',
         ],
       },
       {
@@ -60,7 +61,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'Calcul d’itinéraire',
         body: [
-          'Les coordonnées du départ et de l’arrivée, ainsi que l’heure demandée, sont envoyées à notre serveur (nouri.lounis.dev) pour calculer l’itinéraire. Elles ne servent qu’à ce calcul. Nous ne conservons pas les trajets demandés et nous ne les associons à aucune identité.',
+          'Les coordonnées du départ et de l’arrivée, ainsi que l’heure demandée, sont envoyées à notre serveur (nouri.lounis.dev) pour calculer l’itinéraire. Elles ne servent qu’à ce calcul. Nous ne conservons pas les trajets demandés et nous ne les associons à aucune identité. Pour limiter les abus, notre serveur garde votre adresse IP en mémoire vive seulement (jamais dans un journal ni sur un disque) ; elle disparaît au redémarrage du serveur.',
         ],
       },
       {
@@ -99,7 +100,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'باختصار',
         body: [
-          'ليس في «نوري» حسابات ولا إعلانات ولا إحصاءات استخدام ولا ملفات تعريف ارتباط. لا نبيع بياناتك الشخصية ولا نشاركها. ما تحفظه في التطبيق يبقى على هاتفك.',
+          'ليس في «نوري» حسابات ولا إعلانات ولا إحصاءات استخدام ولا ملفات تعريف ارتباط. لا نبيع أي بيانات. لا تُرسل إلى جهات خارجية إلا الطلبات التقنية الموضحة أدناه (البحث عن العناوين وخلفية الخريطة). ما تحفظه في التطبيق يبقى على هاتفك.',
         ],
       },
       {
@@ -121,7 +122,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'حساب المسار',
         body: [
-          'تُرسل إحداثيات الانطلاق والوصول والوقت المطلوب إلى خادمنا (nouri.lounis.dev) لحساب المسار. لا تُستخدم إلا لهذا الحساب. لا نحتفظ بالرحلات المطلوبة ولا نربطها بأي هوية.',
+          'تُرسل إحداثيات الانطلاق والوصول والوقت المطلوب إلى خادمنا (nouri.lounis.dev) لحساب المسار. لا تُستخدم إلا لهذا الحساب. لا نحتفظ بالرحلات المطلوبة ولا نربطها بأي هوية. وللحدّ من الإساءة، يحتفظ خادمنا بعنوان IP الخاص بك في الذاكرة الحية فقط (لا في سجلّ ولا على قرص)، ويزول عند إعادة تشغيل الخادم.',
         ],
       },
       {
@@ -160,7 +161,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'In short',
         body: [
-          'Nouri has no accounts, no ads, no usage analytics and no cookies. We do not sell or share personal data. What you save in the app stays on your phone.',
+          'Nouri has no accounts, no ads, no usage analytics and no cookies. We do not sell any data. Only the technical requests described below are sent to third-party services (address search and map background). What you save in the app stays on your phone.',
         ],
       },
       {
@@ -182,7 +183,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'Route calculation',
         body: [
-          'The start and end coordinates, and the requested time, are sent to our server (nouri.lounis.dev) to calculate the route. They are used only for that calculation. We do not keep the trips requested and do not link them to any identity.',
+          'The start and end coordinates, and the requested time, are sent to our server (nouri.lounis.dev) to calculate the route. They are used only for that calculation. We do not keep the trips requested and do not link them to any identity. To limit abuse, our server keeps your IP address in memory only (never in a log or on disk); it disappears when the server restarts.',
         ],
       },
       {
