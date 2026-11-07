@@ -1,0 +1,12 @@
+# Sorties de build et état Gradle
+*.apk
+*.aab
+build/
+app/build/
+.gradle/
+local.properties
+# Jamais de clé dans le dépôt
+*.keystore
+*.jks
+*.json.key
+*.idsig

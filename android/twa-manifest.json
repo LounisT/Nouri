@@ -1,0 +1,45 @@
+{
+  "packageId": "dev.lounis.nouri",
+  "host": "nouri.lounis.dev",
+  "name": "Nouri",
+  "launcherName": "Nouri",
+  "display": "standalone",
+  "themeColor": "#1D6FE0",
+  "themeColorDark": "#1D6FE0",
+  "navigationColor": "#FFFFFF",
+  "navigationColorDark": "#FFFFFF",
+  "navigationDividerColor": "#E5E7EB",
+  "navigationDividerColorDark": "#E5E7EB",
+  "backgroundColor": "#1D6FE0",
+  "enableNotifications": false,
+  "startUrl": "/",
+  "iconUrl": "https://nouri.lounis.dev/icons/icon-512x512.png",
+  "maskableIconUrl": "https://nouri.lounis.dev/icons/icon-512x512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "/etc/nouri/upload.keystore",
+    "alias": "nouri-upload"
+  },
+  "appVersion": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://nouri.lounis.dev/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": true
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "orientation": "portrait",
+  "fullScopeUrl": "https://nouri.lounis.dev/",
+  "minSdkVersion": 24,
+  "additionalTrustedOrigins": [],
+  "retainedBundles": []
+}

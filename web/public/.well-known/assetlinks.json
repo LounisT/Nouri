@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dev.lounis.nouri",
+      "sha256_cert_fingerprints": [
+        "31:56:8D:07:A9:72:31:F9:71:2E:31:24:E5:7C:D9:78:38:CF:F1:FD:9E:04:00:7A:52:11:E6:AE:B1:FE:FB:F6",
+        "49:42:05:87:7C:19:8A:59:8C:28:2D:EF:4D:7D:56:09:40:0E:97:55:06:A8:22:4B:B4:8E:3B:ED:2D:01:BE:65"
+      ]
+    }
+  }
+]
