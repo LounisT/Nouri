@@ -3,6 +3,10 @@
 Réponses déduites du code au 2026-11-07 (commit `06ca59d`). Chaque réponse cite le `fichier:ligne` qui la justifie.
 Les numéros de ligne sont ceux de ce commit : ils glissent si le fichier change.
 
+**Mis à jour le 2026-11-08 :** les réponses retenues et enregistrées dans Play Console (d'après le propriétaire) remplacent
+les recommandations précédentes aux § 1, 3, 4 et 6. Elles sont plus prudentes que la « lecture stricte » : tout est déclaré
+**collecté et partagé**, avec traitement éphémère.
+
 ## Comment lire ce document
 
 Google distingue :
@@ -28,9 +32,9 @@ Faits établis (vérifiés, pas supposés) :
 
 > « Votre application collecte-t-elle ou partage-t-elle l'un des types de données utilisateur requis ? »
 
-**Réponse recommandée : Oui** (à cause du **partage** avec des services de cartographie tiers, détaillé ci-dessous).
-Si tu retiens la lecture stricte (voir § 3), la réponse peut devenir « Non » ; la lecture prudente évite tout risque
-de rejet pour sous-déclaration.
+**Réponse enregistrée dans Play : Oui.** Au sens de Google, une donnée que l'app envoie hors de l'appareil est
+« collectée », même si elle va droit à un service tiers sans passer par notre serveur (c'est le cas de Photon, Nominatim
+et OpenFreeMap), et « partagée » quand ce destinataire est un tiers.
 
 ## 2. Flux de données réels
 
@@ -52,23 +56,27 @@ Elle ne part vers le serveur (flux A) que si l'usager la choisit comme départ.
 
 « Collecté » = quitte l'appareil et reste chez nous. « Partagé » = envoyé à un tiers.
 
-### Localisation
+### Réponses retenues (enregistrées dans Play)
 
-| Type | Collecté | Partagé | Finalité | Facultatif | Justification |
-|---|---|---|---|---|---|
-| **Position précise** | **Non** (traitement éphémère côté serveur) | **Oui, lecture prudente** : les coordonnées du point touché partent chez Nominatim (flux C) | Fonctionnalités de l'application | Oui : on peut ne jamais toucher la carte longuement | Flux A et C. Serveur : aucun journal (tableau « Faits »). |
-| **Position approximative** | **Non** | **Oui, lecture prudente** : zones de carte vues par OpenFreeMap (flux D) | Fonctionnalités de l'application | Non, la carte est le cœur de l'app ; mais la position de l'usager n'y est pas envoyée | Flux D, `MapView.tsx:52`. |
+Pour les trois types : **collectée ET partagée**, **traitée de façon éphémère**, finalité **« Fonctionnement de l'appli »**
+(libellé officiel : *App functionality* / « Fonctionnalités de l'application »). Aucune autre finalité (ni publicité, ni
+analytique, ni personnalisation).
 
-Lecture stricte : un point choisi sur une carte n'est pas la localisation physique de l'usager, et une tuile
-n'identifie pas l'usager ; Nominatim et OpenFreeMap peuvent aussi être vus comme des prestataires de rendu. On peut
-alors ne rien déclarer pour la localisation. **Je recommande la lecture prudente** : elle est cohérente avec la
-politique de confidentialité, qui nomme ces services, et ne coûte que deux lignes dans la fiche.
+| Type Play | Collectée | Partagée | Éphémère | Finalité | Requise ou facultative | Flux et preuves |
+|---|---|---|---|---|---|---|
+| **Position approximative** (Localisation) | Oui | Oui | Oui | Fonctionnement de l'appli | **Requise** | Flux D : toute carte affichée envoie à OpenFreeMap les zones consultées et l'IP (`web/src/components/MapView.tsx:52`) ; flux A si « Ma position » sert de départ (`web/src/lib/otp.ts:19,455`) |
+| **Position exacte** (Localisation) | Oui | Oui | Oui | Fonctionnement de l'appli | **Facultative** | Flux A : coordonnées GPS envoyées au calculateur d'itinéraire seulement si l'usager choisit « Ma position » (`route.ts:253-259`). Flux C : coordonnées du point touché longuement, envoyées à Nominatim (`MapView.tsx:1243`, `web/src/lib/geocoding.ts:477-491`) |
+| **Historique de recherche dans l'appli** (Activité dans l'appli) | Oui | Oui | Oui | Fonctionnement de l'appli | **Facultative** | Flux B : le texte tapé part chez Photon (`web/src/lib/geocoding.ts:386-392,403`). Les « recherches récentes » restent sur l'appareil (flux E) |
 
-### Activité dans l'application
+Points à garder en tête pour la cohérence de ces réponses :
 
-| Type | Collecté | Partagé | Finalité | Facultatif | Justification |
-|---|---|---|---|---|---|
-| **Historique de recherche dans l'appli** | **Non** | **Oui** : le texte tapé part chez Photon (flux B) | Fonctionnalités de l'application | Oui | `geocoding.ts:386-403`. Les « recherches récentes » restent sur l'appareil (flux E). |
+- **« Requise » pour la position approximative** se justifie par la carte : on ne peut pas afficher la carte sans que
+  l'IP et les zones vues partent chez OpenFreeMap. La **permission de position** de l'appareil, elle, est facultative
+  (l'app marche en saisissant les adresses) : la réponse « requise » ne vaut donc que pour ce flux carte, pas pour le GPS.
+- **« Éphémère »** est vérifié pour **notre serveur** (aucun journal : tableau « Faits » ; IP en mémoire seulement, § 5 point 2).
+  Pour **Photon, Nominatim et OpenFreeMap**, nous ne pouvons pas attester de ce qu'ils conservent : voir § 6.
+- Cette déclaration est plus large que la « lecture stricte » envisagée plus tôt (rien à déclarer). C'est le choix le plus
+  sûr contre un rejet pour sous-déclaration, et il est cohérent avec la politique de confidentialité, qui nomme ces services.
 
 ### Types sans aucune donnée (tous « Non », ni collectés ni partagés)
 
@@ -89,8 +97,8 @@ politique de confidentialité, qui nomme ces services, et ne coûte que deux lig
 | Question | Réponse | Justification |
 |---|---|---|
 | Données chiffrées en transit | **Oui** | Tous les appels de l'appareil sont en HTTPS : `Caddyfile:1` (certificat Let's Encrypt automatique pour `{$DOMAIN}`), HSTS `Caddyfile:38`, `https://` en dur pour les trois tiers (`geocoding.ts:403,491` ; `MapView.tsx:52`), CSP `connect-src` limité à des origines HTTPS (`Caddyfile:24`), aucun `http://` hors localhost dans `web/src`. Pas de trafic en clair autorisé côté Android : ni `usesCleartextTraffic` ni `networkSecurityConfig` dans `android/app/src/main/AndroidManifest.xml`. **Précision** : le saut interne proxy → OpenTripPlanner est en HTTP (`docker-compose.yml:33`) mais reste sur le réseau Docker privé du serveur ; il ne sort jamais. |
-| Possibilité de demander la suppression des données | **« Non »** si le formulaire le permet : rien n'est conservé côté serveur. Les données locales s'effacent en vidant les données de l'app (Android) ou en la désinstallant. Si Play impose une réponse « Oui » pour des données partagées, renvoyer vers la section « Données enregistrées sur votre téléphone » de `https://nouri.lounis.dev/privacy` | Flux E ; politique de confidentialité |
-| URL de suppression de compte | **Sans objet** : pas de compte | Aucune création de compte dans `web/src` |
+| Possibilité de demander la suppression des données | **Non** (réponse enregistrée) | Rien n'est conservé côté serveur (§ 5 point 2) ; les données locales s'effacent en vidant les données de l'app ou en la désinstallant (flux E). La politique de confidentialité l'explique dans « Données enregistrées sur votre téléphone » |
+| URL de suppression de compte | **Sans objet** : **pas de compte** (réponse enregistrée) | Aucune création de compte dans `web/src` |
 | Validation indépendante de la sécurité | Non | Aucun audit externe |
 | Conforme à la politique Familles de Google Play | Non (app non destinée aux enfants, voir `classification-public.md`) | |
 
@@ -123,8 +131,17 @@ Aucun écart dans l'autre sens : tout ce que la politique déclare existe bien d
 
 ## 6. À confirmer par toi
 
-- Lecture **prudente** (déclarer le partage de localisation et d'historique de recherche) ou **stricte** (rien).
-- Réponse à la question sur la suppression, selon ce que le formulaire affiche réellement.
-- Les corrections de politique du § 5 (je peux les faire et redéployer sur ton accord).
+Décisions déjà prises (enregistrées dans Play) : première réponse « Oui » ; trois types collectés et partagés, éphémères,
+finalité « Fonctionnement de l'appli » ; chiffrement en transit « Oui » ; pas de compte ; suppression « Non ».
+
+Reste ouvert :
+
+- **Le caractère « éphémère » chez les tiers.** Il est exact pour notre serveur. Pour Photon (Komoot), Nominatim
+  (Fondation OSM) et OpenFreeMap, nous ne maîtrisons pas leur conservation (la politique de confidentialité de la Fondation OSM, qui
+  héberge Nominatim, prévoit des journaux d'accès : à relire avant de t'y fier). Play te demande de répondre pour les données que *tu* traites ; cocher « éphémère » pour les trois types suppose
+  que tu l'assumes aussi pour ces envois. Si tu préfères, décoche « éphémère » pour la position exacte (point touché) et
+  l'historique de recherche, qui partent *uniquement* chez des tiers.
+- **Les corrections de politique du § 5** points 3 (coordonnées dans le courriel de signalement) et 4 (contenu de la
+  session de navigation) ne sont pas encore faites ; les points 1 et 2 le sont (commit `39e5794`, en ligne).
 - Que Komoot/Photon et Nominatim sont bien utilisés comme **services publics gratuits** (sans contrat) : leurs conditions
   d'usage limitent le volume ; à surveiller si l'app prend de l'ampleur.

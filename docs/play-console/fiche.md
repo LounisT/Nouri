@@ -27,7 +27,7 @@ Le README du dépôt annonce encore « 38 lignes » : il est en retard sur les d
 **Nom de l'application** — 26 / 30
 
 ```text
-Nouri – Transports d’Alger
+Nouri – Transports à Alger
 ```
 
 **Description courte** — 78 / 80
@@ -162,13 +162,13 @@ Nouri is an independent app, built from open data.
 
 ## Éléments graphiques
 
-Générés le 2026-11-07, dans `docs/play-console/assets/` (détails et réserves : `assets/README.md`).
+**Visuels retenus pour Play : ceux de `docs/play-console/assets/`** (décision du 2026-11-08). Détails et réserves : `assets/README.md`.
 
-| Élément | Exigence Play | Fichier |
+| Élément | Exigence Play | Fichier retenu |
 |---|---|---|
-| Icône | PNG 512 × 512, ≤ 1 Mo | `web/public/icons/icon-512x512.png` (512 × 512) : prête, identique à `android/store_icon.png` |
-| Image de présentation | PNG ou JPEG 1024 × 500, sans alpha | `assets/image-presentation-1024x500.png` (PNG 24 bits) |
-| Captures téléphone (2 à 8) | côté long ≤ 2 × côté court | `assets/captures/{fr,ar,en}/01…04-*.png`, 1080 × 2160 (rapport 2,0), PNG 24 bits sans alpha, 4 par langue |
+| Icône | PNG 512 × 512, ≤ 1 Mo | `web/public/icons/icon-512x512.png` (512 × 512), identique à `android/store_icon.png` |
+| Image de présentation | PNG ou JPEG 1024 × 500, sans alpha | `assets/image-presentation-1024x500.png` : **commune** à toutes les langues |
+| Captures téléphone (2 à 8) | côté long ≤ 2 × côté court | `assets/captures/{fr,ar,en}/01…04-*.png`, **1080 × 2160** (rapport 2,0), PNG 24 bits sans alpha, 4 par langue |
 
 Les anciennes captures `web/public/screenshots/*.png` (1080 × 2340, rapport 2,17) sont celles du manifeste PWA ; elles
 ne servent pas pour Play et sont laissées telles quelles.
@@ -176,5 +176,5 @@ ne servent pas pour Play et sont laissées telles quelles.
 ## À confirmer avant de coller
 
 - La dernière phrase de chaque description (« application indépendante ») : à garder seulement si c'est exact. Les noms ETUSA, SETRAM et Métro d'Alger sont des marques d'opérateurs ; seul « ETUSA » est cité, comme nom de réseau, jamais comme éditeur.
-- Le titre : « Nouri – Transports d'Alger ». Les titres Play ne doivent pas contenir de mots-clés promotionnels ; celui-ci décrit simplement l'app.
+- Le titre FR est **« Nouri – Transports à Alger »** (26 caractères) : choix du propriétaire, enregistré le 2026-11-08. Les titres EN (« Nouri – Algiers Transit ») et AR (« نوري – مواصلات الجزائر ») n'ont pas changé.
 - L'adresse e-mail publique et un éventuel numéro de téléphone.
