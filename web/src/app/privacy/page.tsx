@@ -11,7 +11,11 @@ import type { Locale } from '@/lib/i18n'
 //  - components/MapView.tsx : tuiles OpenFreeMap ;
 //  - app/api/otp : calcul d'itinéraire sur notre serveur, sans journal ; l'IP du
 //    client n'est gardée qu'en mémoire (limiteur de débit, route.ts) ;
-//  - localStorage : langue, lieux enregistrés, recherches récentes, navigation ;
+//  - localStorage : langue, lieux enregistrés, recherches récentes, session de
+//    navigation (itinéraire + état + positions des 30 dernières secondes,
+//    hooks/useNavigationSession.ts, lib/navigation.ts « track ») ;
+//  - report.ts / map-report.ts : courriel de signalement (mailto), contenu = ligne,
+//    arrêt, coordonnées, trajet, langue, version, heure ;
 //  - aucun analytics, aucun cookie, aucune publicité, aucun compte.
 // Si l'un de ces faits change, cette page doit changer avec lui.
 
@@ -67,7 +71,8 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'Données enregistrées sur votre téléphone',
         body: [
-          'L’application mémorise localement votre langue, vos lieux enregistrés, vos recherches récentes et l’état d’une navigation en cours. Ces données ne quittent pas l’appareil. Vous pouvez les effacer en vidant les données de l’application dans les réglages d’Android, ou en la désinstallant.',
+          'L’application mémorise localement votre langue, vos lieux enregistrés, vos recherches récentes et la session de navigation en cours (détaillée plus bas). Ces données ne quittent pas l’appareil. Vous pouvez les effacer en vidant les données de l’application dans les réglages d’Android, ou en la désinstallant.',
+          'Session de navigation : pendant un trajet suivi, l’application enregistre sur l’appareil, et seulement là, l’itinéraire, l’avancement et vos dernières positions (30 secondes au plus), pour reprendre où vous en étiez si la page se recharge. La reprise est possible pendant 30 minutes au plus ; passé ce délai, ou une fois la navigation quittée ou terminée, la session est effacée (au plus tard à la prochaine ouverture de l’application). Elle n’est jamais envoyée. Seul un nouveau calcul de trajet que vous demandez en cours de route envoie votre position actuelle comme départ, comme tout calcul d’itinéraire (voir plus haut).',
           'Pour fonctionner sans réseau, l’application garde aussi en cache ses pages, ses données de lignes et des tuiles de carte.',
         ],
       },
@@ -86,7 +91,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'Contact',
         body: [
-          `Pour toute question ou pour signaler une erreur : ${CONTACT}. Le bouton « Signaler une erreur » ouvre un courriel pré-rempli dans votre application de messagerie ; rien n’est envoyé sans que vous le validiez.`,
+          `Pour toute question ou pour signaler une erreur : ${CONTACT}. Le bouton « Signaler une erreur » ouvre un courriel pré-rempli dans votre application de messagerie. Selon l’écran, il peut contenir la ligne ou l’arrêt concerné, des coordonnées (arrêt, départ et arrivée, y compris votre position si elle servait de départ) et le trajet affiché, ainsi que la langue, la version de l’application et l’heure. Il n’est envoyé que si vous le validez, depuis votre propre messagerie : relisez-le avant l’envoi.`,
           'Si cette politique change, la date ci-dessus est mise à jour.',
         ],
       },
@@ -128,7 +133,8 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'البيانات المحفوظة على هاتفك',
         body: [
-          'يحفظ التطبيق محليًا لغتك وأماكنك المحفوظة وعمليات البحث الأخيرة وحالة الملاحة الجارية. لا تغادر هذه البيانات الجهاز. يمكنك مسحها بحذف بيانات التطبيق من إعدادات أندرويد أو بإلغاء تثبيته.',
+          'يحفظ التطبيق محليًا لغتك وأماكنك المحفوظة وعمليات البحث الأخيرة وجلسة الملاحة الجارية (مشروحة أدناه). لا تغادر هذه البيانات الجهاز. يمكنك مسحها بحذف بيانات التطبيق من إعدادات أندرويد أو بإلغاء تثبيته.',
+          'جلسة الملاحة: أثناء رحلة تتابعها، يسجّل التطبيق على الجهاز وحده مسار الرحلة وتقدّمها وآخر مواضعك (30 ثانية على الأكثر)، ليستأنف من حيث وصلتَ إذا أُعيد تحميل الصفحة. يمكن الاستئناف خلال 30 دقيقة على الأكثر؛ وبعد ذلك، أو متى غادرتَ الملاحة أو انتهت، تُمسح الجلسة (في موعد أقصاه عند فتح التطبيق في المرة التالية). لا تُرسل هذه الجلسة أبدًا. وحده طلب حساب جديد للمسار أثناء الطريق يرسل موقعك الحالي كنقطة انطلاق، كأي حساب للمسار (انظر أعلاه).',
           'ليعمل التطبيق دون اتصال، يحتفظ أيضًا بصفحاته وبيانات الخطوط وبعض بلاطات الخريطة في ذاكرة مؤقتة.',
         ],
       },
@@ -147,7 +153,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'التواصل',
         body: [
-          `لأي سؤال أو للإبلاغ عن خطأ: ${CONTACT}. زر «الإبلاغ عن خطأ» يفتح رسالة بريد معبّأة مسبقًا في تطبيق البريد لديك، ولا يُرسل شيء دون موافقتك.`,
+          `لأي سؤال أو للإبلاغ عن خطأ: ${CONTACT}. زر «الإبلاغ عن خطأ» يفتح رسالة بريد معبّأة مسبقًا في تطبيق البريد لديك. بحسب الشاشة، قد تتضمن الخط أو المحطة المعنيّة وإحداثيات (المحطة، أو الانطلاق والوصول، ومنها موقعك إن كان نقطة الانطلاق) والمسار المعروض، إضافةً إلى اللغة وإصدار التطبيق والوقت. لا تُرسل إلا إذا أكدتَ إرسالها من تطبيق البريد الخاص بك: راجعها قبل الإرسال.`,
           'إذا تغيّرت هذه السياسة يُحدَّث التاريخ أعلاه.',
         ],
       },
@@ -189,7 +195,8 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'Data stored on your phone',
         body: [
-          'The app stores locally your language, saved places, recent searches and the state of a navigation in progress. This data never leaves the device. You can erase it by clearing the app’s data in Android settings, or by uninstalling it.',
+          'The app stores locally your language, saved places, recent searches and the navigation session in progress (described below). This data never leaves the device. You can erase it by clearing the app’s data in Android settings, or by uninstalling it.',
+          'Navigation session: during a trip you are following, the app stores on the device, and only there, the route, your progress and your latest positions (30 seconds at most), so it can pick up where you were if the page reloads. It can be resumed for 30 minutes at most; after that, or once the navigation is left or finished, the session is erased (at the latest the next time the app opens). It is never sent anywhere. Only a new route calculation that you request along the way sends your current position as the starting point, like any route calculation (see above).',
           'To work offline, the app also caches its pages, line data and some map tiles.',
         ],
       },
@@ -208,7 +215,7 @@ const DOCS: Record<Locale, Doc> = {
       {
         title: 'Contact',
         body: [
-          `For any question or to report an error: ${CONTACT}. The “Report an error” button opens a pre-filled email in your mail app; nothing is sent unless you confirm it.`,
+          `For any question or to report an error: ${CONTACT}. The “Report an error” button opens a pre-filled email in your mail app. Depending on the screen, it may contain the line or stop concerned, coordinates (stop, start and end points, including your location if it was the starting point) and the route shown, plus the language, app version and time. It is sent only if you confirm it from your own mail app: read it before sending.`,
           'If this policy changes, the date above is updated.',
         ],
       },

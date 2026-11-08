@@ -5,7 +5,8 @@ Les numéros de ligne sont ceux de ce commit : ils glissent si le fichier change
 
 **Mis à jour le 2026-11-08 :** les réponses retenues et enregistrées dans Play Console (d'après le propriétaire) remplacent
 les recommandations précédentes aux § 1, 3, 4 et 6. Elles sont plus prudentes que la « lecture stricte » : tout est déclaré
-**collecté et partagé**, avec traitement éphémère.
+**collecté et partagé** ; le traitement éphémère n'est coché que pour la position approximative (décoché pour la position
+exacte et l'historique de recherche, qui partent uniquement chez des tiers).
 
 ## Comment lire ce document
 
@@ -58,23 +59,27 @@ Elle ne part vers le serveur (flux A) que si l'usager la choisit comme départ.
 
 ### Réponses retenues (enregistrées dans Play)
 
-Pour les trois types : **collectée ET partagée**, **traitée de façon éphémère**, finalité **« Fonctionnement de l'appli »**
-(libellé officiel : *App functionality* / « Fonctionnalités de l'application »). Aucune autre finalité (ni publicité, ni
-analytique, ni personnalisation).
+Pour les trois types : **collectée ET partagée**, finalité **« Fonctionnement de l'appli »** (libellé officiel : *App
+functionality* / « Fonctionnalités de l'application »). Aucune autre finalité (ni publicité, ni analytique, ni
+personnalisation). **Traitement éphémère : Oui pour la position approximative seulement ; Non (décoché) pour la position
+exacte et l'historique de recherche.**
 
 | Type Play | Collectée | Partagée | Éphémère | Finalité | Requise ou facultative | Flux et preuves |
 |---|---|---|---|---|---|---|
 | **Position approximative** (Localisation) | Oui | Oui | Oui | Fonctionnement de l'appli | **Requise** | Flux D : toute carte affichée envoie à OpenFreeMap les zones consultées et l'IP (`web/src/components/MapView.tsx:52`) ; flux A si « Ma position » sert de départ (`web/src/lib/otp.ts:19,455`) |
-| **Position exacte** (Localisation) | Oui | Oui | Oui | Fonctionnement de l'appli | **Facultative** | Flux A : coordonnées GPS envoyées au calculateur d'itinéraire seulement si l'usager choisit « Ma position » (`route.ts:253-259`). Flux C : coordonnées du point touché longuement, envoyées à Nominatim (`MapView.tsx:1243`, `web/src/lib/geocoding.ts:477-491`) |
-| **Historique de recherche dans l'appli** (Activité dans l'appli) | Oui | Oui | Oui | Fonctionnement de l'appli | **Facultative** | Flux B : le texte tapé part chez Photon (`web/src/lib/geocoding.ts:386-392,403`). Les « recherches récentes » restent sur l'appareil (flux E) |
+| **Position exacte** (Localisation) | Oui | Oui | **Non** | Fonctionnement de l'appli | **Facultative** | Flux A : coordonnées GPS envoyées au calculateur d'itinéraire seulement si l'usager choisit « Ma position » (`route.ts:253-259`). Flux C : coordonnées du point touché longuement, envoyées à Nominatim (`MapView.tsx:1243`, `web/src/lib/geocoding.ts:477-491`) |
+| **Historique de recherche dans l'appli** (Activité dans l'appli) | Oui | Oui | **Non** | Fonctionnement de l'appli | **Facultative** | Flux B : le texte tapé part chez Photon (`web/src/lib/geocoding.ts:386-392,403`). Les « recherches récentes » restent sur l'appareil (flux E) |
 
 Points à garder en tête pour la cohérence de ces réponses :
 
 - **« Requise » pour la position approximative** se justifie par la carte : on ne peut pas afficher la carte sans que
   l'IP et les zones vues partent chez OpenFreeMap. La **permission de position** de l'appareil, elle, est facultative
   (l'app marche en saisissant les adresses) : la réponse « requise » ne vaut donc que pour ce flux carte, pas pour le GPS.
-- **« Éphémère »** est vérifié pour **notre serveur** (aucun journal : tableau « Faits » ; IP en mémoire seulement, § 5 point 2).
-  Pour **Photon, Nominatim et OpenFreeMap**, nous ne pouvons pas attester de ce qu'ils conservent : voir § 6.
+- **« Éphémère »** : coché pour la position approximative, décoché pour la position exacte et l'historique de recherche
+  (décision du 2026-11-08). Notre serveur, lui, ne conserve rien (aucun journal : tableau « Faits » ; IP en mémoire
+  seulement, § 5 point 2), mais ces deux types partent *uniquement* chez des tiers (Nominatim, Photon) dont nous ne
+  maîtrisons pas la conservation : ne pas affirmer l'éphémère à leur place est le choix cohérent. La position approximative
+  garde « éphémère » car elle passe aussi par notre serveur (flux A) ; pour OpenFreeMap (flux D), même réserve qu'au § 6.
 - Cette déclaration est plus large que la « lecture stricte » envisagée plus tôt (rien à déclarer). C'est le choix le plus
   sûr contre un rejet pour sous-déclaration, et il est cohérent avec la politique de confidentialité, qui nomme ces services.
 
@@ -116,12 +121,16 @@ Points à garder en tête pour la cohérence de ces réponses :
    20 000 entrées (`route.ts:177,195`). Une IP reste donc en mémoire jusqu'à cette purge ou au redémarrage du serveur.
    Jamais écrite sur disque ni dans un journal : compatible avec « non collecté » (traitement éphémère). La politique
    le dit désormais, avec ce vocabulaire exact.
-3. **Courriel de signalement** — la politique dit qu'il est « pré-rempli » (`page.tsx:88` FR, `:149` AR, `:210` EN). Elle ne dit pas qu'il peut
-   contenir des coordonnées (arrêt, départ et arrivée : `report.ts:21`, `:132`). À ajouter, avec la mention que
-   l'usager le relit avant l'envoi.
-4. **Session de navigation** — la politique cite « l'état d'une navigation en cours » ; il contient en réalité
-   l'itinéraire complet avec coordonnées et la position (`useNavigationSession.ts:104-110,136`), reprise possible pendant
-   10 à 30 min (`:114-116`). Reste sur l'appareil, donc pas d'écart de fond, mais « itinéraire en cours » est plus clair.
+3. ~~**Courriel de signalement**~~ **Corrigé** (2026-11-08) : la politique dit maintenant que le courriel pré-rempli peut contenir
+   la ligne ou l'arrêt, des coordonnées (arrêt, départ et arrivée, y compris la position si elle servait de départ) et le trajet
+   affiché, plus la langue, la version de l'app et l'heure (`report.ts:92-123`, `map-report.ts:30-41`), et qu'il n'est envoyé que
+   si l'usager le valide depuis sa propre messagerie.
+4. ~~**Session de navigation**~~ **Corrigée** (2026-11-08) : la politique décrit un paragraphe dédié : stockée uniquement sur
+   l'appareil (itinéraire, avancement, positions des 30 dernières secondes : `useNavigationSession.ts:104-110,136`,
+   `navigation.ts:633-636`), reprise possible 30 min au plus (`:114,220`), effacée ensuite ou quand on quitte (`:220-222`,
+   `:283-288`), jamais envoyée. **Nuance ajoutée par rapport au libellé « jamais envoyée »** : un recalcul demandé en cours
+   de route envoie la position actuelle comme départ (`web/src/app/page.tsx:510-519`, `useNavigationSession.ts:358-366`),
+   comme tout calcul d'itinéraire ; la politique le dit.
 5. **Position** — la politique est exacte (position sur l'appareil ; envoyée au serveur seulement comme départ). Rien à changer.
 6. **Sauvegarde Android** — `android/app/src/main/AndroidManifest.xml:35` a `allowBackup="true"`. L'app TWA ne stocke
    rien elle-même (les données du site sont dans Chrome), donc pas d'impact sur la politique ; à garder en tête si l'app
@@ -131,17 +140,14 @@ Aucun écart dans l'autre sens : tout ce que la politique déclare existe bien d
 
 ## 6. À confirmer par toi
 
-Décisions déjà prises (enregistrées dans Play) : première réponse « Oui » ; trois types collectés et partagés, éphémères,
-finalité « Fonctionnement de l'appli » ; chiffrement en transit « Oui » ; pas de compte ; suppression « Non ».
+Décisions déjà prises (enregistrées dans Play) : première réponse « Oui » ; trois types collectés et partagés, finalité
+« Fonctionnement de l'appli » ; éphémère coché pour la position approximative seulement ; chiffrement en transit « Oui » ;
+pas de compte ; suppression « Non ».
 
 Reste ouvert :
 
-- **Le caractère « éphémère » chez les tiers.** Il est exact pour notre serveur. Pour Photon (Komoot), Nominatim
-  (Fondation OSM) et OpenFreeMap, nous ne maîtrisons pas leur conservation (la politique de confidentialité de la Fondation OSM, qui
-  héberge Nominatim, prévoit des journaux d'accès : à relire avant de t'y fier). Play te demande de répondre pour les données que *tu* traites ; cocher « éphémère » pour les trois types suppose
-  que tu l'assumes aussi pour ces envois. Si tu préfères, décoche « éphémère » pour la position exacte (point touché) et
-  l'historique de recherche, qui partent *uniquement* chez des tiers.
-- **Les corrections de politique du § 5** points 3 (coordonnées dans le courriel de signalement) et 4 (contenu de la
-  session de navigation) ne sont pas encore faites ; les points 1 et 2 le sont (commit `39e5794`, en ligne).
+- **Position approximative et OpenFreeMap.** « Éphémère » reste coché ; il est exact pour notre serveur, mais nous ne
+  maîtrisons pas la conservation d'OpenFreeMap (tuiles : IP et zones vues). Si tu veux être strict, décoche-le aussi.
+- Vérifier le texte de la politique : plus aucune correction en attente (§ 5 : tous les points sont traités).
 - Que Komoot/Photon et Nominatim sont bien utilisés comme **services publics gratuits** (sans contrat) : leurs conditions
   d'usage limitent le volume ; à surveiller si l'app prend de l'ampleur.
